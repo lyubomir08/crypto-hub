@@ -4,14 +4,14 @@ const getAllCryptos = async () => {
     return await Crypto.find();
 };
 
-const addCrypto = async (name, symbol, variants) => {
-    return await Crypto.create({ name, symbol, variants });
+const addCrypto = async (name, symbol, currentPrice, description, imageUrl) => {
+    return await Crypto.create({ name, symbol, currentPrice, description, imageUrl });
 };
 
-const updateCrypto = async (id, name, symbol, variants) => {
+const updateCrypto = async (id, name, symbol, currentPrice, description, imageUrl) => {
     return await Crypto.findByIdAndUpdate(
         id,
-        { name, symbol, variants },
+        { name, symbol, currentPrice, description, imageUrl },
         { new: true, runValidators: true }
     );
 };
