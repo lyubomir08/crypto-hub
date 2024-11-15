@@ -10,10 +10,10 @@ const getAllCryptos = async (req, res) => {
 };
 
 const addCrypto = async (req, res) => {
-    const { name, symbol, variants } = req.body;
+    const { name, symbol, currentPrice, description, imageUrl } = req.body;
 
     try {
-        const newCrypto = await cryptoService.addCrypto(name, symbol, variants);
+        const newCrypto = await cryptoService.addCrypto(name, symbol, currentPrice, description, imageUrl);
         res.status(201).json(newCrypto);
     } catch (error) {
         res.status(400).json({ message: error.message });
@@ -22,10 +22,10 @@ const addCrypto = async (req, res) => {
 
 const updateCrypto = async (req, res) => {
     const { id } = req.params;
-    const { name, symbol, variants } = req.body;
+    const { name, symbol, currentPrice, description, imageUrl } = req.body;
 
     try {
-        const updatedCrypto = await cryptoService.updateCrypto(id, name, symbol, variants);
+        const updatedCrypto = await cryptoService.updateCrypto(id, name, symbol, currentPrice, description, imageUrl);
         if (!updatedCrypto) {
             return res.status(404).json({ message: 'Cryptocurrency not found' });
         }
