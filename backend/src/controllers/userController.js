@@ -1,10 +1,10 @@
 import authService from '../services/authService.js';
 
 const register = async (req, res) => {
-    const { username, email, password } = req.body;
+    const { username, email, password, rePassword } = req.body;
 
     try {
-        const newUser = await authService.registerUser(username, email, password);
+        const newUser = await authService.registerUser(username, email, password, rePassword);
         res.status(201).json(newUser);
     } catch (error) {
         res.status(400).json({ message: error.message });
