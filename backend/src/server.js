@@ -18,7 +18,8 @@ app.post('/api/users/register', userController.register);
 app.post('/api/users/login', userController.login);
 
 app.get('/api/cryptos', cryptoController.getAllCryptos);
-app.post('/api/cryptos', cryptoController.addCrypto);
+app.get('/api/cryptos/:id/details', cryptoController.getCryptoById);
+app.post('/api/cryptos/create', cryptoController.addCrypto);
 app.put('/api/cryptos/:id', cryptoController.updateCrypto);
 app.delete('/api/cryptos/:id', cryptoController.deleteCrypto);
 app.get('/api/cryptos/search', cryptoController.searchCryptos);
