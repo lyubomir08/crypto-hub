@@ -9,6 +9,20 @@ const getAllCryptos = async (req, res) => {
     }
 };
 
+const getCryptoById = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const crypto = await cryptoService.getCryptoById(id);
+        if (!crypto) {
+            return res.status(404).json({ message: 'Cryptocurrency not found' });
+        }
+        res.json(crypto);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 const addCrypto = async (req, res) => {
     const { name, symbol, currentPrice, description, imageUrl } = req.body;
 
@@ -60,4 +74,4 @@ const searchCryptos = async (req, res) => {
     }
 };
 
-export default { getAllCryptos, addCrypto, updateCrypto, deleteCrypto, searchCryptos };
+export default { getAllCryptos, getCryptoById, addCrypto, updateCrypto, deleteCrypto, searchCryptos };
