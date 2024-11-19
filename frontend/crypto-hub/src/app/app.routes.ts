@@ -12,8 +12,7 @@ export const routes: Routes = [
     {path: 'about', component: AboutComponent},
     { path: 'catalog', children: [
         {path: '', component: CatalogComponent},
-        {}
-    ] }
+    ] },
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
     {path: '404', component: ErrorComponent},
