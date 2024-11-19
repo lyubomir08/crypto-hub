@@ -2,19 +2,20 @@
     <h1 class="text-3xl font-bold mb-6">Crypto Catalog</h1>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         <!-- Bitcoin -->
+        @for (crypto of cryptos; track $index) {
         <div class="bg-white rounded-xl shadow-lg p-8 transition-transform transform hover:scale-105">
             <div class="flex items-center space-x-6">
-                <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" alt="Bitcoin"
+                <img src="{{crypto.imageUrl}}" alt="Bitcoin"
                     class="w-20 h-20 rounded-full" />
                 <div>
-                    <h2 class="text-2xl font-semibold">Bitcoin (BTC)</h2>
-                    <p class="text-gray-600 text-lg">Price: $56,000</p>
+                    <h2 class="text-2xl font-semibold">{{crypto.name}} {{crypto.symbol}}</h2>
+                    <p class="text-gray-600 text-lg">Price: ${{crypto.currentPrice}}</p>
                 </div>
             </div>
-            <span class="text-green-500 text-lg font-medium mt-4 block">+2.5%</span>
             <button class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition">
                 Details
             </button>
         </div>
+        }
     </div>
 </div>
