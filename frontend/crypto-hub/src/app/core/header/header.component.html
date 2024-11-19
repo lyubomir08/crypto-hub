@@ -6,10 +6,13 @@
             <a routerLink="cryptos" class="hover:text-blue-400">Catalog</a>
             <a routerLink="about" class="hover:text-blue-400">About</a>
             <a routerLink="search" class="hover:text-blue-400">Search</a>
-            <a routerLink="create" class="hover:text-blue-400">Create</a>
-            <a routerLink="login" class="hover:text-blue-400">Login</a>
-            <a routerLink="register" class="hover:text-blue-400">Register</a>
-            <a routerLink="logout" class="hover:text-blue-400" (click)="logout()">Logout</a>
+            @if (isLoggedIn) {
+                <a routerLink="create" class="hover:text-blue-400">Create</a>
+                <a routerLink="logout" class="hover:text-blue-400" (click)="logout()">Logout</a>
+            } @else {
+                <a routerLink="login" class="hover:text-blue-400">Login</a>
+                <a routerLink="register" class="hover:text-blue-400">Register</a>
+            }
         </nav>
     </div>
 </header>
