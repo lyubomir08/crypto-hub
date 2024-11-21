@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import userController from './controllers/userController.js';
 import cryptoController from './controllers/cryptoController.js';
+import authMiddleware from './middlewares/authMiddleware.js';
 
 dotenv.config();
 
@@ -19,14 +20,19 @@ app.post('/api/users/login', userController.login);
 
 app.get('/api/cryptos', cryptoController.getAllCryptos);
 app.get('/api/cryptos/:id/details', cryptoController.getCryptoById);
-app.post('/api/cryptos/create', cryptoController.addCrypto);
-app.put('/api/cryptos/:id', cryptoController.updateCrypto);
-app.delete('/api/cryptos/:id', cryptoController.deleteCrypto);
+app.post('/api/cryptos/create', authMiddleware, cryptoController.addCrypto);
+app.put('/api/cryptos/:id', authMiddleware, cryptoController.updateCrypto);
+app.delete('/api/cryptos/:id', authMiddleware, cryptoController.deleteCrypto);
 app.get('/api/cryptos/search', cryptoController.searchCryptos);
+
+app.post('/api/cryptos/:id/comments', authMiddleware, cryptoController.addComment);
 
 const connectDB = async () => {
     try {
-        await mongoose.connect(MONGO_URI);
+        await mongoose.connect(MONGO_URI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
         console.log('MongoDB connected');
     } catch (error) {
         console.error('Error connecting to MongoDB:', error.message);
@@ -34,7 +40,6 @@ const connectDB = async () => {
     }
 };
 
-// Start server
 const startServer = async () => {
     await connectDB();
     app.listen(PORT, () => {
