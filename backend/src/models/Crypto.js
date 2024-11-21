@@ -16,12 +16,35 @@ const cryptoSchema = new mongoose.Schema({
     },
     description: {
         type: String,
-        required: false,
+        required: true,
     },
     imageUrl: {
         type: String,
         required: true,
     },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+    },
+    comments: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User',
+                required: true,
+            },
+            text: {
+                type: String,
+                required: true,
+                trim: true,
+            },
+            createdAt: {
+                type: Date,
+                default: Date.now,
+            },
+        },
+    ],
     createdAt: {
         type: Date,
         default: Date.now,
