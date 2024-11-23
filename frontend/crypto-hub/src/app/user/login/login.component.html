@@ -1,30 +1,43 @@
 <!-- Login Page -->
 <div class="container">
-  <form class="login" action="" method="post">
-    <fieldset>
-      <h2>Login</h2>
+    <form class="login" #form="ngForm" (ngSubmit)="login(form)">
+        <fieldset>
+            <h2>Login</h2>
 
-      <p class="field field-icon">
-        <label for="email"><span><i class="fas fa-envelope"></i></span></label>
-        <input class="input-error" type="email" name="email" id="email" placeholder="Enter your email" #inputEmail />
-      </p>
-      <!-- Uncomment below to display errors -->
-      <!-- <p class="error">Email is required!</p> -->
-      <!-- <p class="error">Email is not valid!</p> -->
+            <p class="field field-icon">
+                <label for="email"><span><i class="fas fa-envelope"></i></span></label>
+                <!-- class="input-error" -->
+                <input ngModel #inputEmail="ngModel" required [appEmail]="domains" [class]="(
+                    (inputEmail?.touched && inputEmail?.errors?.['required']) ||
+                     (inputEmail?.touched && inputEmail?.errors?.['emailValidator']))
+                    ? 'input-error': ''" type="email" name="email" id="email"
+                    placeholder="Enter your email" />
+            </p>
 
-      <p class="field field-icon">
-        <label for="password"><span><i class="fas fa-lock"></i></span></label>
-        <input type="password" name="password" id="password" placeholder="Enter your password" #inputPassword />
-      </p>
-      <!-- <p class="error">Password is required!</p> -->
-      <!-- <p class="error">Password must be at least 4 characters!</p> -->
+            @if (inputEmail?.touched) {
+            <div>
+                @if (inputEmail?.errors?.['required']) {
+                <p class="error">Email is required!</p>
+                }
+                @if (inputEmail?.errors?.['emailValidator']) {
+                <p class="error">Email is not valid!</p>
+                }
+            </div>
+            }
 
-      <button (click)="login($event, inputEmail, inputPassword)">Login</button>
+            <p class="field field-icon">
+                <label for="password"><span><i class="fas fa-lock"></i></span></label>
+                <input type="password" name="password" id="password" placeholder="Enter your password" #inputPassword />
+            </p>
+            <!-- <p class="error">Password is required!</p> -->
+            <!-- <p class="error">Password must be at least 4 characters!</p> -->
 
-      <p class="text-center">
-        Don’t have an account?
-        <a routerLink="/register">Register Now</a>
-      </p>
-    </fieldset>
-  </form>
+            <button [disabled]="form.invalid">Login</button>
+
+            <p class="text-center">
+                Don’t have an account?
+                <a routerLink="/register">Register Now</a>
+            </p>
+        </fieldset>
+    </form>
 </div>
