@@ -27,10 +27,22 @@
 
             <p class="field field-icon">
                 <label for="password"><span><i class="fas fa-lock"></i></span></label>
-                <input type="password" name="password" id="password" placeholder="Enter your password" #inputPassword />
+                <input ngModel #inputPassword="ngModel" minlength="5" required [class]="(
+                    (inputPassword?.touched && inputPassword?.errors?.['required']) ||
+                     (inputPassword?.touched && inputPassword?.errors?.['minlength']))
+                    ? 'input-error': ''" type="password" name="password" id="password" placeholder="Enter your password" />
             </p>
-            <!-- <p class="error">Password is required!</p> -->
-            <!-- <p class="error">Password must be at least 4 characters!</p> -->
+
+            @if (inputPassword?.touched) {
+                <div>
+                    @if (inputPassword?.errors?.['required']) {
+                        <p class="error">Password is required!</p>
+                    }
+                    @if (inputPassword?.errors?.['minlength']) {
+                        <p class="error">Password must be at least 5 characters!</p>
+                    }
+                </div>
+            }
 
             <button [disabled]="form.invalid">Login</button>
 
