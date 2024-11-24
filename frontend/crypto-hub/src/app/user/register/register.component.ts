@@ -18,6 +18,10 @@ export class RegisterComponent {
     });
 
     register() {
-        console.log(this.form.invalid);
+        if(this.form.invalid) {
+            return;
+        }
+
+        console.log(this.form.value);
     }
 }
