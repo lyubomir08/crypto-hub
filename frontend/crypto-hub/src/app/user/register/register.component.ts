@@ -15,8 +15,10 @@ export class RegisterComponent {
     form = new FormGroup({
         username: new FormControl('', [Validators.required, Validators.minLength(5),]),
         email: new FormControl('', [Validators.required, emailValidator(DOMAINS)]),
-        password: new FormControl('', [Validators.required]),
-        rePassword: new FormControl('', [Validators.required]),
+        passGroup: new FormGroup({
+            password: new FormControl('', [Validators.required]),
+            rePassword: new FormControl('', [Validators.required]),
+        }),
     });
 
     isFieldTextMissing(controlName: string) {
