@@ -9,7 +9,7 @@
                 <label for="username">
                     <span><i class="fas fa-user"></i></span>
                 </label>
-                <input [class]="isUsernameMissing || isNotMinLength ? 'input-error' : ''" 
+                <input [class]="isFieldTextMissing('username') || isNotMinLength ? 'input-error' : ''" 
                 formControlName="username" type="text" name="username" id="username" placeholder="Enter your username" required />
             </p>
 
@@ -22,18 +22,26 @@
                     <p class="error">Username must be at least 5 characters!</p>
                     }
                 </div>
-                }
+            }
 
             <!-- Email -->
             <p class="field field-icon">
                 <label for="email">
                     <span><i class="fas fa-envelope"></i></span>
                 </label>
-                <input formControlName="email" type="email" name="email" id="email" placeholder="Enter your email address" required />
+                <input [class]="isFieldTextMissing('email') || isEmailNotValid ? 'input-error' : ''" formControlName="email" type="email" name="email" id="email" placeholder="Enter your email address" required />
             </p>
-            <!-- Uncomment to show validation error -->
-            <!-- <p class="error">Email is required!</p>
-        <p class="error">Email is not valid!</p> -->
+
+            @if (form.get('email')?.touched) {
+                <div>
+                    @if (form.get('email')?.errors?.['required']) {
+                    <p class="error">Email is required!</p>
+                    }
+                    @if (form.get('email')?.errors?.['emailValidator']) {
+                    <p class="error">Email is not valid!</p>
+                    }
+                </div>
+            }
 
             <!-- Password -->
             <p class="field field-icon">
