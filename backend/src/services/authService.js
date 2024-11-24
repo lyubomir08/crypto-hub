@@ -2,8 +2,8 @@ import User from '../models/User.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-const generateToken = (userId) => {
-    return jwt.sign({ userId }, process.env.JWT_SECRET, {
+const generateToken = async (userId) => {
+    return await jwt.sign({ userId }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRES_IN || '1h',
     });
 };
@@ -22,7 +22,7 @@ const registerUser = async (username, email, password, rePassword) => {
 
     const newUser = await User.create({ username, email, password: hashedPassword });
 
-    const token = generateToken(newUser._id);
+    const token = await generateToken(newUser._id);
 
     return {
         id: newUser._id,
@@ -43,7 +43,7 @@ const loginUser = async (email, password) => {
         throw new Error('Invalid email or password');
     }
 
-    const token = generateToken(user._id);
+    const token = await generateToken(user._id);
 
     return {
         id: user._id,
