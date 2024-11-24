@@ -9,10 +9,20 @@
                 <label for="username">
                     <span><i class="fas fa-user"></i></span>
                 </label>
-                <input formControlName="username" type="text" name="username" id="username" placeholder="Enter your username" required />
+                <input [class]="isUsernameMissing || isNotMinLength ? 'input-error' : ''" 
+                formControlName="username" type="text" name="username" id="username" placeholder="Enter your username" required />
             </p>
-            <!-- Uncomment to show validation error -->
-            <!-- <p class="error">Username is required!</p> -->
+
+            @if (form.get('username')?.touched) {
+                <div>
+                    @if (form.get('username')?.errors?.['required']) {
+                    <p class="error">Username is required!</p>
+                    }
+                    @if (form.get('username')?.errors?.['minlength']) {
+                    <p class="error">Username must be at least 5 characters!</p>
+                    }
+                </div>
+                }
 
             <!-- Email -->
             <p class="field field-icon">
@@ -46,7 +56,7 @@
             <!-- Uncomment to show validation error -->
             <!-- <p class="error">Passwords do not match!</p> -->
 
-            <button [disabled]="form.invalid" [style]="{backgroundColor: form.invalid ? 'grey' : 'initial'}">Create Account</button>
+            <button [disabled]="form.invalid" [style]="{backgroundColor: form.invalid ? 'grey' : '#234465'}">Create Account</button>
 
             <p class="text-center">
                 Already have an account?
