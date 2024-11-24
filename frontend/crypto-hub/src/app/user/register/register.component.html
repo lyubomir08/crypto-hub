@@ -9,19 +9,20 @@
                 <label for="username">
                     <span><i class="fas fa-user"></i></span>
                 </label>
-                <input [class]="isFieldTextMissing('username') || isNotMinLength ? 'input-error' : ''" 
-                formControlName="username" type="text" name="username" id="username" placeholder="Enter your username" required />
+                <input [class]="isFieldTextMissing('username') || isNotMinLength ? 'input-error' : ''"
+                    formControlName="username" type="text" name="username" id="username"
+                    placeholder="Enter your username" required />
             </p>
 
             @if (form.get('username')?.touched) {
-                <div>
-                    @if (form.get('username')?.errors?.['required']) {
-                    <p class="error">Username is required!</p>
-                    }
-                    @if (form.get('username')?.errors?.['minlength']) {
-                    <p class="error">Username must be at least 5 characters!</p>
-                    }
-                </div>
+            <div>
+                @if (form.get('username')?.errors?.['required']) {
+                <p class="error">Username is required!</p>
+                }
+                @if (form.get('username')?.errors?.['minlength']) {
+                <p class="error">Username must be at least 5 characters!</p>
+                }
+            </div>
             }
 
             <!-- Email -->
@@ -29,42 +30,73 @@
                 <label for="email">
                     <span><i class="fas fa-envelope"></i></span>
                 </label>
-                <input [class]="isFieldTextMissing('email') || isEmailNotValid ? 'input-error' : ''" formControlName="email" type="email" name="email" id="email" placeholder="Enter your email address" required />
+                <input [class]="isFieldTextMissing('email') || isEmailNotValid ? 'input-error' : ''"
+                    formControlName="email" type="email" name="email" id="email" placeholder="Enter your email address"
+                    required />
             </p>
 
             @if (form.get('email')?.touched) {
-                <div>
-                    @if (form.get('email')?.errors?.['required']) {
-                    <p class="error">Email is required!</p>
-                    }
-                    @if (form.get('email')?.errors?.['emailValidator']) {
-                    <p class="error">Email is not valid!</p>
-                    }
-                </div>
+            <div>
+                @if (form.get('email')?.errors?.['required']) {
+                <p class="error">Email is required!</p>
+                }
+                @if (form.get('email')?.errors?.['emailValidator']) {
+                <p class="error">Email is not valid!</p>
+                }
+            </div>
             }
 
-            <!-- Password -->
-            <p class="field field-icon">
-                <label for="password">
-                    <span><i class="fas fa-lock"></i></span>
-                </label>
-                <input formControlName="password" type="password" name="password" id="password" placeholder="Enter your password" required />
-            </p>
-            <!-- Uncomment to show validation error -->
-            <!-- <p class="error">Password is required!</p>
-        <p class="error">Password must be at least 4 characters!</p> -->
+            <div formGroupName="passGroup">
+                <!-- Password -->
+                <p class="field field-icon">
+                    <label for="password">
+                        <span><i class="fas fa-lock"></i></span>
+                    </label>
+                    <input [class]="(
+                        (passGroup?.get('password')?.touched &&
+                         passGroup?.get('password')?.errors?.['required'] ) ||
+                         (passGroup?.get('password')?.touched && 
+                         passGroup?.get('password')?.errors?.['minlength'])
+                      ) ? 'input-error' : ''" formControlName="password" type="password" name="password" id="password"
+                        placeholder="Enter your password" required />
+                </p>
 
-            <!-- Repeat Password -->
-            <p class="field field-icon">
-                <label for="rePassword">
-                    <span><i class="fas fa-lock"></i></span>
-                </label>
-                <input formControlName="rePassword" type="password" name="rePassword" id="rePassword" placeholder="Confirm your password" required />
-            </p>
-            <!-- Uncomment to show validation error -->
-            <!-- <p class="error">Passwords do not match!</p> -->
+                @if (passGroup?.get('password')?.touched) {
+                <div>
+                    @if (passGroup?.get('password')?.errors?.['required']) {
+                    <p class="error">Password is required!</p>
+                    }
+                    @if (passGroup?.get('password')?.errors?.['minlength']) {
+                    <p class="error">Password must be at least 5 characters!</p>
+                    }
+                </div>
+                }
 
-            <button [disabled]="form.invalid" [style]="{backgroundColor: form.invalid ? 'grey' : '#234465'}">Create Account</button>
+                <!-- Repeat Password -->
+                <p class="field field-icon">
+                    <label for="rePassword">
+                        <span><i class="fas fa-lock"></i></span>
+                    </label>
+                    <input [class]="(
+                        (passGroup?.get('rePassword')?.touched &&
+                        (passGroup?.get('rePassword')?.errors?.['required'] ||
+                        passGroup?.errors?.['matchPasswordsValidator'])) 
+                      ) ? 'input-error' : ''" formControlName="rePassword" type="password" name="rePassword"
+                        id="rePassword" placeholder="Confirm your password" required />
+                </p>
+
+                @if (passGroup?.get('rePassword')?.touched) {
+                <div>
+                    @if (passGroup?.errors?.['matchPasswordsValidator'] ||
+                    passGroup?.get('rePassword')?.errors?.['required']) {
+                    <p class="error">Passwords do not match!</p>
+                    }
+                </div>
+                }
+            </div>
+
+            <button [disabled]="form.invalid" [style]="{backgroundColor: form.invalid ? 'grey' : '#234465'}">Create
+                Account</button>
 
             <p class="text-center">
                 Already have an account?
