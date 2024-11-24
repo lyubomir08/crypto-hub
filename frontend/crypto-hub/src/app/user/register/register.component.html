@@ -1,81 +1,57 @@
 <!-- Registration Page -->
 <div class="container">
-    <form class="register" action="" method="post">
-      <fieldset>
-        <h2>Registration Form</h2>
-  
-        <!-- Username -->
-        <p class="field field-icon">
-          <label for="username">
-            <span><i class="fas fa-user"></i></span>
-          </label>
-          <input
-            type="text"
-            name="username"
-            id="username"
-            placeholder="Enter your username"
-            required
-          />
-        </p>
-        <!-- Uncomment to show validation error -->
-        <!-- <p class="error">Username is required!</p> -->
-  
-        <!-- Email -->
-        <p class="field field-icon">
-          <label for="email">
-            <span><i class="fas fa-envelope"></i></span>
-          </label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="Enter your email address"
-            required
-          />
-        </p>
-        <!-- Uncomment to show validation error -->
-        <!-- <p class="error">Email is required!</p>
+    <form class="register" [formGroup]="form" (ngSubmit)="register()">
+        <fieldset>
+            <h2>Registration Form</h2>
+
+            <!-- Username -->
+            <p class="field field-icon">
+                <label for="username">
+                    <span><i class="fas fa-user"></i></span>
+                </label>
+                <input type="text" name="username" id="username" placeholder="Enter your username" required />
+            </p>
+            <!-- Uncomment to show validation error -->
+            <!-- <p class="error">Username is required!</p> -->
+
+            <!-- Email -->
+            <p class="field field-icon">
+                <label for="email">
+                    <span><i class="fas fa-envelope"></i></span>
+                </label>
+                <input type="email" name="email" id="email" placeholder="Enter your email address" required />
+            </p>
+            <!-- Uncomment to show validation error -->
+            <!-- <p class="error">Email is required!</p>
         <p class="error">Email is not valid!</p> -->
-  
-        <!-- Password -->
-        <p class="field field-icon">
-          <label for="password">
-            <span><i class="fas fa-lock"></i></span>
-          </label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Enter your password"
-            required
-          />
-        </p>
-        <!-- Uncomment to show validation error -->
-        <!-- <p class="error">Password is required!</p>
+
+            <!-- Password -->
+            <p class="field field-icon">
+                <label for="password">
+                    <span><i class="fas fa-lock"></i></span>
+                </label>
+                <input type="password" name="password" id="password" placeholder="Enter your password" required />
+            </p>
+            <!-- Uncomment to show validation error -->
+            <!-- <p class="error">Password is required!</p>
         <p class="error">Password must be at least 4 characters!</p> -->
-  
-        <!-- Repeat Password -->
-        <p class="field field-icon">
-          <label for="rePassword">
-            <span><i class="fas fa-lock"></i></span>
-          </label>
-          <input
-            type="password"
-            name="rePassword"
-            id="rePassword"
-            placeholder="Confirm your password"
-            required
-          />
-        </p>
-        <!-- Uncomment to show validation error -->
-        <!-- <p class="error">Passwords do not match!</p> -->
-  
-        <button type="submit">Create Account</button>
-  
-        <p class="text-center">
-          Already have an account?
-          <a routerLink="/login">Log In</a>
-        </p>
-      </fieldset>
+
+            <!-- Repeat Password -->
+            <p class="field field-icon">
+                <label for="rePassword">
+                    <span><i class="fas fa-lock"></i></span>
+                </label>
+                <input type="password" name="rePassword" id="rePassword" placeholder="Confirm your password" required />
+            </p>
+            <!-- Uncomment to show validation error -->
+            <!-- <p class="error">Passwords do not match!</p> -->
+
+            <button>Create Account</button>
+
+            <p class="text-center">
+                Already have an account?
+                <a routerLink="/login">Log In</a>
+            </p>
+        </fieldset>
     </form>
 </div>
