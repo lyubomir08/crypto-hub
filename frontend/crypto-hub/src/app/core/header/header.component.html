@@ -7,7 +7,7 @@
             <a routerLink="about" class="hover:text-blue-400">About</a>
             <a routerLink="search" class="hover:text-blue-400">Search</a>
             @if (isLoggedIn) {
-                <a routerLink="create" class="hover:text-blue-400">Create</a>
+                <a routerLink="cryptos/create" class="hover:text-blue-400">Create</a>
                 <a routerLink="logout" class="hover:text-blue-400" (click)="logout()">Logout</a>
             } @else {
                 <a routerLink="login" class="hover:text-blue-400">Login</a>
