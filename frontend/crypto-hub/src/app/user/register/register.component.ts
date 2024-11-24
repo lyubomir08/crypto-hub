@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { emailValidator } from '../../utils/email.validator';
+import { DOMAINS } from '../../constants';
 
 @Component({
     selector: 'app-register',
@@ -12,15 +14,15 @@ import { RouterLink } from '@angular/router';
 export class RegisterComponent {
     form = new FormGroup({
         username: new FormControl('', [Validators.required, Validators.minLength(5),]),
-        email: new FormControl('', [Validators.required]),
+        email: new FormControl('', [Validators.required, emailValidator(DOMAINS)]),
         password: new FormControl('', [Validators.required]),
         rePassword: new FormControl('', [Validators.required]),
     });
 
-    get isUsernameMissing() {
+    isFieldTextMissing(controlName: string) {
         return (
-            this.form.get('username')?.touched &&
-            this.form.get('username')?.errors?.['required']
+            this.form.get(controlName)?.touched &&
+            this.form.get(controlName)?.errors?.['required']
         );
     }
 
@@ -28,6 +30,13 @@ export class RegisterComponent {
         return (
             this.form.get('username')?.touched &&
             this.form.get('username')?.errors?.['minlength']
+        );
+    }
+
+    get isEmailNotValid() {
+        return (
+            this.form.get('email')?.touched &&
+            this.form.get('email')?.errors?.['emailValidator']
         );
     }
 
