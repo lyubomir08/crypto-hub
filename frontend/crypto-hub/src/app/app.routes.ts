@@ -5,6 +5,7 @@ import { AboutComponent } from './about/about.component';
 import { LoginComponent } from './user/login/login.component';
 import { RegisterComponent } from './user/register/register.component';
 import { CatalogComponent } from './cryptos/catalog/catalog.component';
+import { AddCryptoComponent } from './cryptos/add-crypto/add-crypto.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -12,6 +13,7 @@ export const routes: Routes = [
     {path: 'about', component: AboutComponent},
     { path: 'cryptos', children: [
         {path: '', component: CatalogComponent},
+        {path: 'create', component: AddCryptoComponent}
     ] },
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
