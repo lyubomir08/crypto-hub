@@ -46,7 +46,7 @@
             <!-- Uncomment to show validation error -->
             <!-- <p class="error">Passwords do not match!</p> -->
 
-            <button [disabled]="form.invalid">Create Account</button>
+            <button [disabled]="form.invalid" [style]="{backgroundColor: form.invalid ? 'grey' : 'initial'}">Create Account</button>
 
             <p class="text-center">
                 Already have an account?
