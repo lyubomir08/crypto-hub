@@ -76,9 +76,10 @@ Follow these steps to run the project locally:
 ### Steps
 
 1. **Clone the repository**:
+   Github URL
    ```bash
-   git clone https://github.com/lyubomir08/crypto-hub.git
-2. **Start the client**:
+   https://github.com/lyubomir08/crypto-hub
+3. **Start the client**:
    ```bash
    cd .\frontend\crypto-hub\
    and type "ng serve"
