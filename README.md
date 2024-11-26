@@ -72,6 +72,9 @@ Follow these steps to run the project locally:
 3. Replace `<Your-MongoDB-Connection-String>` with your MongoDB connection string (e.g., from MongoDB Atlas or your local MongoDB instance).
 4. Replace `<Your-Secret-Key>` with a strong secret key for JWT authentication.
 
+### **Install dependencies**
+
+- In both frontend/crypto-hub and backend folder type "npm i".
 
 ### Steps
 
