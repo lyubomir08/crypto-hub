@@ -5,6 +5,7 @@ import cors from 'cors';
 import userController from './controllers/userController.js';
 import cryptoController from './controllers/cryptoController.js';
 import authMiddleware from './middlewares/authMiddleware.js';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
@@ -14,6 +15,8 @@ const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/cryptoApp'
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 app.post('/api/users/register', userController.register);
 app.post('/api/users/login', userController.login);
