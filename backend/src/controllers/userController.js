@@ -28,4 +28,4 @@ const logout = async (req, res) => {
     res.clearCookie('auth');
 };
 
-export default { register, login };
+export default { register, login, logout };
