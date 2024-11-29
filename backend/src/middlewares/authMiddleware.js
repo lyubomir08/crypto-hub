@@ -3,15 +3,15 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const authMiddleware = async (req, res, next) => {
-    const token = req.headers.authorization?.split(' ')[1];
+const authMiddleware = (req, res, next) => {
+    const token = req.cookies['auth'];
 
     if (!token) {
         return next();
     }
 
     try {
-        const decoded = await jwt.verify(token, process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.userId = decoded.userId;
         req.isAuthenticated = true;
 
