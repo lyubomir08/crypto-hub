@@ -1,6 +1,6 @@
 import User from '../models/User.js';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import jwt from '../utils/jwt.js';
 
 const generateToken = async (userId) => {
     return await jwt.sign({ userId }, process.env.JWT_SECRET, {
