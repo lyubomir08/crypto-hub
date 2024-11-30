@@ -53,4 +53,13 @@ const loginUser = async (email, password) => {
     };
 };
 
-export default { registerUser, loginUser };
+const getUserProfile = async (userId) => {
+    const user = await User.findOne({ _id: userId }, { password: 0, __v: 0 });
+
+    if (!user) {
+        throw new Error('User not found');
+    }
+    return user;
+};
+
+export default { registerUser, loginUser, getUserProfile };
