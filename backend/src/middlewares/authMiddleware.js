@@ -1,13 +1,8 @@
-import jwt from '../utils/jwt.js';
-import dotenv from 'dotenv';
-
-dotenv.config();
-
 const authMiddleware = async (req, res, next) => {
     const token = req.cookies['auth'];
 
     if (!token) {
-        return next();
+        return res.status(401).json({ message: 'Not authenticated' });
     }
 
     try {
