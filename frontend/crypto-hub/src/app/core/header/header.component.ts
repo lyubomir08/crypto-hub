@@ -17,7 +17,8 @@ export class HeaderComponent {
     constructor(private userService: UserService, private router: Router) {}
 
     logout() {
-        this.userService.logout();
-        this.router.navigate(['/home']);
+        this.userService.logout().subscribe(() => {
+            this.router.navigate(['/home']);
+        });
     }
 }
