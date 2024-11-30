@@ -36,7 +36,8 @@ const getProfileInfo = async (req, res) => {
 };
 
 const logout = async (req, res) => {
-    res.clearCookie('auth');
+    res.clearCookie('auth', { path: '/' });
+    res.status(200).send({ message: 'Logout successful' })
 };
 
 export default { register, login, logout, getProfileInfo };
