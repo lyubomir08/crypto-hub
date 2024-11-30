@@ -1,16 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Crypto } from './types/crypto';
-import { environment } from '../environments/environment.development';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ApiService {
-  constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) { }
 
-  getCryptos() {
-    const { apiUrl } = environment;
-    return this.http.get<Crypto[]>(`${apiUrl}/cryptos`);
-  }
+    getCryptos() {
+        return this.http.get<Crypto[]>(`/api/cryptos`);
+    }
 }
