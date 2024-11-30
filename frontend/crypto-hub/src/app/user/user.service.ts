@@ -1,9 +1,15 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { UserForAuth } from '../types/user';
+import { BehaviorSubject, tap } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
 })
 export class UserService {
+    private user$$ = new BehaviorSubject<UserForAuth | undefined>(undefined);
+    private user$ = this.user$$.asObservable();
+
     USER_KEY = '[user]';
     user: object | null = null;
 
@@ -11,7 +17,7 @@ export class UserService {
         return !!this.user;
     }
 
-    constructor() {
+    constructor(private http: HttpClient) {
         try {
             const lsUser = localStorage.getItem(this.USER_KEY) || '';
             this.user = JSON.parse(lsUser);
@@ -20,16 +26,10 @@ export class UserService {
         }
     }
 
-    login() {
-        this.user = {
-            firstName: 'John',
-            email: 'john.doe@abv.bg',
-            phoneNumber: '123-123-213',
-            password: '123123',
-            id: 'asdasdsadsadsa',
-        };
-
-        localStorage.setItem(this.USER_KEY, JSON.stringify(this.user));
+    login(email: string, password: string) {
+        return this.http.post<UserForAuth>(`/api/login`, { email, password }).pipe(tap(user => {
+            this.user$$.next(user);
+        }));
     }
 
     logout() {
