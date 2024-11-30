@@ -18,9 +18,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.post('/api/users/register', userController.register);
-app.post('/api/users/login', userController.login);
-app.get('/api/users/logout', userController.logout);
+app.post('/api/register', userController.register);
+app.post('/api/login', userController.login);
+app.get('/api/logout', userController.logout);
 
 app.get('/api/cryptos', cryptoController.getAllCryptos);
 app.get('/api/cryptos/:id/details', cryptoController.getCryptoById);
