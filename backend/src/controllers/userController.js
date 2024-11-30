@@ -6,7 +6,7 @@ const register = async (req, res) => {
     try {
         const newUser = await authService.registerUser(username, email, password, rePassword);
         res.cookie("auth", newUser.token, { httpOnly: true, sameSite: 'none', secire: true });
-        res.status(201).json(newUser);
+        res.status(201).json({ id: newUser.id, username: newUser.username, email: newUser.email});
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -18,7 +18,7 @@ const login = async (req, res) => {
     try {
         const userData = await authService.loginUser(email, password);
         res.cookie("auth", userData.token, { httpOnly: true, sameSite: 'none', secure: true });
-        res.json(userData);
+        res.json({ id: userData.id, username: userData.username, email: userData.email});
     } catch (error) {
         res.status(401).json({ message: error.message });
     }
