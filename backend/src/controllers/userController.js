@@ -24,8 +24,19 @@ const login = async (req, res) => {
     }
 };
 
+const getProfileInfo = async (req, res) => {
+    const userId = req.userId;
+
+    try {
+        const userProfile = await authService.getUserProfile(userId);
+        res.status(200).json(userProfile);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+};
+
 const logout = async (req, res) => {
     res.clearCookie('auth');
 };
 
-export default { register, login, logout };
+export default { register, login, logout, getProfileInfo };
