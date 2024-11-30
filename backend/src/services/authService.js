@@ -54,7 +54,7 @@ const loginUser = async (email, password) => {
 };
 
 const getUserProfile = async (userId) => {
-    const user = await User.findOne({ _id: userId });
+    const user = await User.findOne({ _id: userId }, { password: 0, __v: 0 });
     
     if (!user) {
         throw new Error('User not found');
