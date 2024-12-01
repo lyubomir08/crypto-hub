@@ -5,4 +5,5 @@ export interface Crypto {
     description: string;
     imageUrl: string;
     createdAt?: Date;
+    _id: string;
 }
