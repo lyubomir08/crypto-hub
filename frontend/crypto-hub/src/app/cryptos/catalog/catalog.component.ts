@@ -12,12 +12,14 @@ import { CommonModule } from '@angular/common';
 })
 export class CatalogComponent implements OnInit {
   cryptos: Crypto[] = [];
+  isLoading: boolean = true;
 
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.apiService.getCryptos().subscribe((c) => {
       this.cryptos = c;
+      this.isLoading = false;
     });
   };
 }
