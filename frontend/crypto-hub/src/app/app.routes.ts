@@ -8,6 +8,7 @@ import { CatalogComponent } from './cryptos/catalog/catalog.component';
 import { AddCryptoComponent } from './cryptos/add-crypto/add-crypto.component';
 import { ErrorMsgComponent } from './core/error-msg/error-msg.component';
 import { SearchCryptoComponent } from './cryptos/search-crypto/search-crypto.component';
+import { DetailedCryptoComponent } from './cryptos/detailed-crypto/detailed-crypto.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -16,6 +17,7 @@ export const routes: Routes = [
     {
         path: 'cryptos', children: [
             { path: '', component: CatalogComponent },
+            {path: ':cryptoId/details', component: DetailedCryptoComponent},
             {
                 path: 'create', loadComponent: () =>
                     import('./cryptos/add-crypto/add-crypto.component').then((c) => c.AddCryptoComponent),
