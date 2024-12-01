@@ -20,7 +20,8 @@
                     <p class="text-gray-600 text-lg">Price: ${{crypto.currentPrice}}</p>
                 </div>
             </div>
-            <button [routerLink]="[crypto._id, './details']" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition">
+            <button [routerLink]="[ crypto._id, 'details']"
+                class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition">
                 Details
             </button>
         </div>
