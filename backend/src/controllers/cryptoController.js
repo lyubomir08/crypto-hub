@@ -72,7 +72,7 @@ const searchCryptos = async (req, res) => {
     const { query } = req.query;
 
     try {
-        const cryptos = await cryptoService.searchCryptos(query);
+        const cryptos = await cryptoService.searchCryptos(query.name, query.symbol);
         res.json(cryptos);
     } catch (error) {
         res.status(500).json({ message: error.message });
