@@ -80,16 +80,11 @@
         <div class="form-group">
             <label for="imageUrl">Image URL</label>
             <input type="text" id="imageUrl" name="imageUrl" ngModel #inputImageUrl="ngModel"
-                placeholder="Enter an image URL" required pattern="^https?:\/\/+" />
+                placeholder="Enter an image URL" required />
             @if (inputImageUrl?.touched) {
             @if (inputImageUrl?.errors?.['required']) {
             <div class="error">
                 Crypto URL is required!
-            </div>
-            }
-            @if (inputImageUrl?.errors?.['pattern']) {
-            <div class="error">
-                Crypto URL is invalid! Ensure it starts with "http://" or "https://".
             </div>
             }
             }
