@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../api.service';
 import { Crypto } from '../../types/crypto';
 import { CommonModule } from '@angular/common';
+import { LoaderComponent } from '../../shared/loader/loader.component';
 
 @Component({
   selector: 'app-catalog',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LoaderComponent],
   templateUrl: './catalog.component.html',
   styleUrl: './catalog.component.css',
 })
