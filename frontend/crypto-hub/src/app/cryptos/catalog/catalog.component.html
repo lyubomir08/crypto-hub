@@ -1,12 +1,18 @@
 <div class="container mx-auto p-6">
-    <h1 class="text-3xl font-bold mb-6">Crypto Catalog</h1>
+    <h1 class="text-3xl font-bold mb-6 text-center">Crypto Catalog</h1>
+
+    @if (!cryptos || cryptos.length === 0) {
+    <div class="flex justify-center items-center h-40 text-center text-gray-500">
+        <p class="text-xl font-bold">No cryptocurrencies available. Please add some to the catalog.</p>
+    </div>
+    }
+
+    @if (cryptos && cryptos.length > 0) {
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Bitcoin -->
         @for (crypto of cryptos; track $index) {
         <div class="bg-white rounded-xl shadow-lg p-8 transition-transform transform hover:scale-105">
             <div class="flex items-center space-x-6">
-                <img src="{{crypto.imageUrl}}" alt="Bitcoin"
-                    class="w-20 h-20 rounded-full" />
+                <img src="{{crypto.imageUrl}}" alt="Bitcoin" class="w-20 h-20 rounded-full" />
                 <div>
                     <h2 class="text-2xl font-semibold">{{crypto.name}} {{crypto.symbol}}</h2>
                     <p class="text-gray-600 text-lg">Price: ${{crypto.currentPrice}}</p>
@@ -18,4 +24,5 @@
         </div>
         }
     </div>
+    }
 </div>
