@@ -17,6 +17,10 @@ export class ApiService {
         return this.http.post<Crypto>('/api/cryptos/create', payload);
     }
 
+    getOneCrypto(id: string) {
+        return this.http.get<Crypto>(`/api/cryptos/${id}/details`);
+    }
+
     searchCryptos(name: string, symbol: string) {
         let params = new HttpParams();
 
