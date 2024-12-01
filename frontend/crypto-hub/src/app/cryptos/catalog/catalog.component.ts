@@ -3,11 +3,12 @@ import { ApiService } from '../../api.service';
 import { Crypto } from '../../types/crypto';
 import { CommonModule } from '@angular/common';
 import { LoaderComponent } from '../../shared/loader/loader.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-catalog',
   standalone: true,
-  imports: [CommonModule, LoaderComponent],
+  imports: [CommonModule, LoaderComponent, RouterLink],
   templateUrl: './catalog.component.html',
   styleUrl: './catalog.component.css',
 })
