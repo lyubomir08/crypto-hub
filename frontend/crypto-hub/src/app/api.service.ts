@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Crypto } from './types/crypto';
+import { Crypto, CryptoDetails } from './types/crypto';
 
 @Injectable({
     providedIn: 'root'
@@ -18,7 +18,7 @@ export class ApiService {
     }
 
     getOneCrypto(id: string) {
-        return this.http.get<Crypto>(`/api/cryptos/${id}/details`);
+        return this.http.get<CryptoDetails>(`/api/cryptos/${id}/details`);
     }
 
     searchCryptos(name: string, symbol: string) {
