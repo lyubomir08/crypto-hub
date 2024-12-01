@@ -4,5 +4,5 @@ export interface Crypto {
     currentPrice: number;
     description: string;
     imageUrl: string;
-    createdAt: Date;
+    createdAt?: Date;
 }
