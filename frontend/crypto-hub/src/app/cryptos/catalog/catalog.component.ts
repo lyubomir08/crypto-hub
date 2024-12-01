@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../api.service';
 import { Crypto } from '../../types/crypto';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-catalog',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './catalog.component.html',
   styleUrl: './catalog.component.css',
 })
