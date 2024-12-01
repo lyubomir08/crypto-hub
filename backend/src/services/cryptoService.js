@@ -25,13 +25,18 @@ const deleteCrypto = async (id) => {
     return deletedCrypto;
 };
 
-const searchCryptos = async (query) => {
-    return await Crypto.find({
-        $or: [
-            { name: { $regex: query, $options: 'i' } },
-            { symbol: { $regex: query, $options: 'i' } },
-        ],
-    });
+const searchCryptos = async (name, symbol) => {
+    let query = {};
+
+    if (name) {
+        query.name = new RegExp(name, 'i');
+    }
+
+    if (symbol) {
+        query.symbol = new RegExp(symbol, 'i');
+    }
+
+    return Crypto.find(query);
 };
 
 const getCryptoById = async (id) => {
