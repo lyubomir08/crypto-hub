@@ -40,5 +40,6 @@ export class SearchCryptoComponent implements OnInit {
                 this.isLoading = false;
             },
         );
+        form.reset();
     }
 }
