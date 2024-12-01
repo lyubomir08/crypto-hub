@@ -36,7 +36,7 @@ const searchCryptos = async (name, symbol) => {
         query.symbol = new RegExp(symbol, 'i');
     }
 
-    return Crypto.find(query);
+    return await Crypto.find(query);
 };
 
 const getCryptoById = async (id) => {

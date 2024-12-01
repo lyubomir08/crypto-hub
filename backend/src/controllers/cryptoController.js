@@ -69,10 +69,10 @@ const deleteCrypto = async (req, res) => {
 };
 
 const searchCryptos = async (req, res) => {
-    const { query } = req.query;
+    const { name, symbol } = req.query;
 
     try {
-        const cryptos = await cryptoService.searchCryptos(query.name, query.symbol);
+        const cryptos = await cryptoService.searchCryptos(name, symbol);
         res.json(cryptos);
     } catch (error) {
         res.status(500).json({ message: error.message });
