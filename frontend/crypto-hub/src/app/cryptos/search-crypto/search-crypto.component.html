@@ -1,1 +1,64 @@
-<p>search-crypto works!</p>
+<div class="container mx-auto p-6">
+    <form class="bg-white rounded-lg shadow-md p-6 space-y-4 max-w-md mx-auto" #form="ngForm" (ngSubmit)="search(form)">
+        <h2 class="text-2xl font-bold text-center mb-4">Search Cryptocurrencies</h2>
+
+        <div class="flex flex-col space-y-2">
+            <label for="search" class="text-lg font-medium text-gray-700">Name</label>
+            <input type="text" id="search" name="name" placeholder="Enter cryptocurrency name"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                ngModel #inputName="ngModel" />
+        </div>
+
+        <div class="flex flex-col space-y-2">
+            <label for="search" class="text-lg font-medium text-gray-700">Symbol</label>
+            <input type="text" id="search" name="symbol" placeholder="Enter cryptocurrency symbol"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                ngModel #inputSymbol="ngModel" />
+        </div>
+
+        <div class="flex justify-center">
+            <button type="submit"
+                class="px-6 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition">
+                Search
+            </button>
+        </div>
+    </form>
+
+    @if (isLoading) {
+    <div class="mt-4 text-center">
+        <app-loader />
+    </div>
+    }
+
+    @if (cryptos.length > 0) {
+    <div class="mt-6 bg-white rounded-lg shadow-md p-6 space-y-4">
+        <h3 class="text-xl font-bold text-center">Search Results</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            @for (crypto of cryptos; track $index) {
+            <div
+                class="bg-white rounded-lg shadow-lg shadow-gray-800/50 p-6 transition-transform transform hover:scale-105">
+                <div class="flex items-center space-x-5">
+                    <img src="{{crypto.imageUrl}}" alt="{{crypto.name}}" class="w-16 h-16 rounded-full object-cover" />
+                    <div>
+                        <h2 class="text-xl font-semibold">{{crypto.name}} ({{crypto.symbol}})</h2>
+                        <p class="text-gray-600 text-base mt-1">Price: ${{crypto.currentPrice}}</p>
+                    </div>
+                </div>
+                <button [routerLink]="[crypto._id, './details']"
+                    class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md shadow-md hover:shadow-lg transition">
+                    Details
+                </button>
+            </div>
+            }
+        </div>
+    </div>
+    }
+
+    @if (!cryptos.length && !isLoading) {
+    <div class="flex justify-center items-center h-40 text-center text-gray-500">
+        <p class="text-xl font-bold">
+            No cryptocurrencies found. Try searching with different criteria or add new ones to the catalog.
+        </p>
+    </div>
+    }
+</div>
