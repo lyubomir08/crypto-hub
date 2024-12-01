@@ -7,6 +7,7 @@ import { RegisterComponent } from './user/register/register.component';
 import { CatalogComponent } from './cryptos/catalog/catalog.component';
 import { AddCryptoComponent } from './cryptos/add-crypto/add-crypto.component';
 import { ErrorMsgComponent } from './core/error-msg/error-msg.component';
+import { SearchCryptoComponent } from './cryptos/search-crypto/search-crypto.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -21,6 +22,7 @@ export const routes: Routes = [
             },
         ]
     },
+    {path: 'search', component: SearchCryptoComponent},
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'error', component: ErrorMsgComponent },
