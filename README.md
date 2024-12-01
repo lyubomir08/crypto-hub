@@ -8,6 +8,37 @@ This project is built using the **MEAN stack**: Angular for the front-end, Node.
 
 ---
 
+### **Set up environment variables**:
+
+1. In the `backend` folder, create a `.env` file with the following variables:
+     ```bash
+     PORT=5000
+     MONGODB_URI=<Your-MongoDB-Connection-String>
+     JWT_SECRET=<Your-Secret-Key>
+
+3. Replace `<Your-MongoDB-Connection-String>` with your MongoDB connection string (e.g., from MongoDB Atlas or your local MongoDB instance).
+4. Replace `<Your-Secret-Key>` with a strong secret key for JWT authentication.
+
+### **Install dependencies**
+
+- In both frontend/crypto-hub and backend folder type "npm i".
+
+### Steps
+
+1. **Clone the repository**:
+   Github URL
+   ```bash
+   https://github.com/lyubomir08/crypto-hub
+3. **Start the client**:
+   ```bash
+   cd .\frontend\crypto-hub\
+   and type "ng serve"
+4. **Start the server**:
+   - open new terminal and type:
+   ```bash
+   cd .\backend\
+   and type "npm start"
+
 ## 🌟 Features
 
 ### Public Pages
@@ -61,35 +92,6 @@ Follow these steps to run the project locally:
 - MongoDB installed and running locally or access to a cloud MongoDB service.
 - Angular CLI installed globally.
 
-### **Set up environment variables**:
 
-1. In the `backend` folder, create a `.env` file with the following variables:
-     ```bash
-     PORT=5000
-     MONGODB_URI=<Your-MongoDB-Connection-String>
-     JWT_SECRET=<Your-Secret-Key>
-
-3. Replace `<Your-MongoDB-Connection-String>` with your MongoDB connection string (e.g., from MongoDB Atlas or your local MongoDB instance).
-4. Replace `<Your-Secret-Key>` with a strong secret key for JWT authentication.
-
-### **Install dependencies**
-
-- In both frontend/crypto-hub and backend folder type "npm i".
-
-### Steps
-
-1. **Clone the repository**:
-   Github URL
-   ```bash
-   https://github.com/lyubomir08/crypto-hub
-3. **Start the client**:
-   ```bash
-   cd .\frontend\crypto-hub\
-   and type "ng serve"
-4. **Start the server**:
-   - open new terminal and type:
-   ```bash
-   cd .\backend\
-   and type "npm start"
 
    
