@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserForAuth } from '../types/user';
-import { BehaviorSubject, tap } from 'rxjs';
+import { BehaviorSubject, catchError, of, tap, throwError } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
@@ -43,8 +43,19 @@ export class UserService {
     }
 
     getProfile() {
-        return this.http.get<UserForAuth>('/api/users/profile').pipe(tap((user) => {
-            this.user$$.next(user);
-        }));
+        return this.http.get<UserForAuth | null>('/api/users/profile').pipe(
+            tap((user) => {
+                this.user$$.next(user || null);
+            }),
+            catchError((error) => {
+                if (error.status === 401) {
+                    this.user$$.next(null);
+                    console.warn('User is not authenticated:', error.message);
+                    return of(null);
+                }
+                console.error('Error fetching profile:', error.message);
+                return throwError(() => error);
+            })
+        );
     }
 }
