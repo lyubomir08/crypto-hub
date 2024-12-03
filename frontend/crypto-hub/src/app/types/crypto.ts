@@ -3,6 +3,7 @@ export interface Crypto {
     symbol: string;
     currentPrice: number;
     imageUrl: string;
+    owner: string;
     _id: string;
 }
 
@@ -15,4 +16,5 @@ export interface CryptoDetails {
     createdAt?: Date;
     comments: any[];
     _id: string;
+    owner: string;
 }
