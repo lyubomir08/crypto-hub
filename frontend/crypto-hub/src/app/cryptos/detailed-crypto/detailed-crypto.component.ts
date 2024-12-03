@@ -18,22 +18,41 @@ export class DetailedCryptoComponent implements OnInit {
     isLoading: boolean = true;
     currentUser: UserForAuth | null = null;
 
+    isOwner: boolean = false;
+
     constructor(private apiService: ApiService, private route: ActivatedRoute, private userService: UserService) { }
 
     ngOnInit(): void {
         const id = this.route.snapshot.params['cryptoId'];
-
-        this.userService.getProfile().subscribe((user) => {
-            this.currentUser = user;       
+        
+        // if(this.userService.user) {
+        //     this.currentUser = this.userService.user?._id as any;
+        // }
+        this.userService.getProfile().subscribe({
+            next: (user) => {
+                this.currentUser = user;
+            },
+            error: (err) => {
+                console.error('Error fetching user profile:', err.message);
+                this.currentUser = null;
+            },
         });
 
-        this.apiService.getOneCrypto(id).subscribe((crypto: CryptoDetails) => {
-            this.crypto = crypto;
-            this.isLoading = false;
+        this.apiService.getOneCrypto(id).subscribe({
+            next: (crypto: CryptoDetails) => {
+                this.crypto = crypto;
+                this.isLoading = false;
+
+                this.checkOwnership(crypto);
+            },
+            error: (err) => {
+                console.error('Error fetching crypto details:', err.message);
+                this.isLoading = false;
+            },
         });
     }
 
-    isOwner(): boolean {
-        return this.currentUser?._id == this.crypto?.owner;
+    private checkOwnership(crypto: CryptoDetails): void {
+        this.isOwner = crypto.owner?._id == this.currentUser?._id;
     }
 }
