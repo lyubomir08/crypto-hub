@@ -30,8 +30,8 @@ app.get('/api/users/profile',  authMiddleware, userController.getProfileInfo);
 app.get('/api/cryptos', cryptoController.getAllCryptos);
 app.get('/api/cryptos/:id/details', cryptoController.getCryptoById);
 app.post('/api/cryptos/create', authMiddleware, cryptoController.addCrypto);
-app.put('/api/cryptos/:id', authMiddleware, cryptoController.updateCrypto);
-app.delete('/api/cryptos/:id', authMiddleware, cryptoController.deleteCrypto);
+app.put('/api/cryptos/:id/edit', authMiddleware, cryptoController.updateCrypto);
+app.delete('/api/cryptos/:id/delete', authMiddleware, cryptoController.deleteCrypto);
 app.get('/api/cryptos/search', cryptoController.searchCryptos);
 
 app.post('/api/cryptos/:id/comments', authMiddleware, cryptoController.addComment);
