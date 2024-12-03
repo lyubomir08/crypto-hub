@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../api.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CryptoDetails } from '../../types/crypto';
 import { LoaderComponent } from '../../shared/loader/loader.component';
 import { UserForAuth } from '../../types/user';
@@ -20,10 +20,14 @@ export class DetailedCryptoComponent implements OnInit {
 
     isOwner: boolean = false;
 
-    constructor(private apiService: ApiService, private route: ActivatedRoute, private userService: UserService) { }
+    constructor(private router: Router, private apiService: ApiService, private route: ActivatedRoute, private userService: UserService) { }
+
+    get cryptoId(): string {
+        return this.route.snapshot.params['cryptoId'];
+    }
 
     ngOnInit(): void {
-        const id = this.route.snapshot.params['cryptoId'];
+        const cryptoId = this.cryptoId;
         
         // if(this.userService.user) {
         //     this.currentUser = this.userService.user?._id as any;
@@ -38,7 +42,7 @@ export class DetailedCryptoComponent implements OnInit {
             },
         });
 
-        this.apiService.getOneCrypto(id).subscribe({
+        this.apiService.getOneCrypto(cryptoId).subscribe({
             next: (crypto: CryptoDetails) => {
                 this.crypto = crypto;
                 this.isLoading = false;
@@ -49,6 +53,14 @@ export class DetailedCryptoComponent implements OnInit {
                 console.error('Error fetching crypto details:', err.message);
                 this.isLoading = false;
             },
+        });
+    }
+
+    deleteCrypto() {
+        const cryptoId = this.cryptoId;
+
+        this.apiService.deleteCrypto(cryptoId).subscribe(() => {
+            this.router.navigate(['/cryptos']);
         });
     }
 
