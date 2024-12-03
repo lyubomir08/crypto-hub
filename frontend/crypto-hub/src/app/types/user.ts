@@ -3,4 +3,5 @@ export interface UserForAuth {
     username: string;
     password: string;
     rePassword: string;
+    _id?: string;
 }
