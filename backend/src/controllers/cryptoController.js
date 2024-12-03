@@ -55,9 +55,9 @@ const deleteCrypto = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const crypto = await cryptoService.getCryptoById(id);
+        const crypto = await cryptoService.getCryptoById(id);   
 
-        if (!crypto || crypto.owner.toString() !== req.userId) {
+        if (!crypto || crypto.owner?._id.toString() !== req.userId) {
             return res.status(403).json({ message: 'Unauthorized to delete this cryptocurrency' });
         }
 
