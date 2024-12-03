@@ -16,5 +16,11 @@ export interface CryptoDetails {
     createdAt?: Date;
     comments: any[];
     _id: string;
-    owner: string;
+    owner: OwnerDetails;
+}
+
+export interface OwnerDetails {
+    _id: string;
+    username: string;
+    email: string;
 }
