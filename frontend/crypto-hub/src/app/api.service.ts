@@ -33,4 +33,8 @@ export class ApiService {
 
         return this.http.get<Crypto[]>('/api/cryptos/search', { params });
     }
+
+    deleteCrypto(id: string) {
+        return this.http.delete(`/api/cryptos/${id}/delete`);
+    }
 }
