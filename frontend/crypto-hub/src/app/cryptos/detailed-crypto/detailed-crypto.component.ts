@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../api.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CryptoDetails } from '../../types/crypto';
 import { LoaderComponent } from '../../shared/loader/loader.component';
 import { UserForAuth } from '../../types/user';
@@ -9,7 +9,7 @@ import { UserService } from '../../user/user.service';
 @Component({
     selector: 'app-detailed-crypto',
     standalone: true,
-    imports: [LoaderComponent],
+    imports: [LoaderComponent, RouterLink],
     templateUrl: './detailed-crypto.component.html',
     styleUrl: './detailed-crypto.component.css'
 })
