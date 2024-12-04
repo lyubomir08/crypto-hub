@@ -28,9 +28,7 @@ export class EditCryptoComponent implements OnInit {
         });
 
         if (this.form) {
-            console.log(this.crypto);
-            
-            this.form.setValue({
+            this.form?.setValue({
                 name: this.crypto?.name,
                 symbol: this.crypto?.symbol,
                 currentPrice: this.crypto?.currentPrice,
