@@ -25,10 +25,10 @@ export class DetailedCryptoComponent implements OnInit {
     get cryptoId(): string {
         return this.route.snapshot.params['cryptoId'];
     }
-    
+
     ngOnInit(): void {
         const cryptoId = this.cryptoId;
-        
+
         this.userService.getProfile().subscribe({
             next: (user) => {
                 this.currentUser = user;
@@ -52,6 +52,11 @@ export class DetailedCryptoComponent implements OnInit {
     }
 
     deleteCrypto() {
+        const choice = confirm("Are you sure you want to delete that crypto?");
+        if (!choice) {
+            return;
+        }
+
         const cryptoId = this.cryptoId;
 
         this.apiService.deleteCrypto(cryptoId).subscribe(() => {
