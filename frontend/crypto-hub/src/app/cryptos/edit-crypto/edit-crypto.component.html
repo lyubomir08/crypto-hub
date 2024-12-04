@@ -1,4 +1,7 @@
 <div class="edit-crypto-container">
+    @if (isLoading) {
+    <app-loader />
+    } @else {
     <h1>Edit Cryptocurrency</h1>
     <form #form="ngForm" (ngSubmit)="editCrypto()">
         <div class="form-group">
@@ -8,14 +11,10 @@
             @if (inputName?.touched) {
             <div>
                 @if (inputName?.errors?.['required']) {
-                <div class="error">
-                    Crypto name is required!
-                </div>
+                <div class="error">Crypto name is required!</div>
                 }
                 @if (inputName?.errors?.['minlength']) {
-                <div class="error">
-                    Crypto name must be at least 3 characters!
-                </div>
+                <div class="error">Crypto name must be at least 3 characters!</div>
                 }
             </div>
             }
@@ -28,14 +27,10 @@
             @if (inputSymbol?.touched) {
             <div>
                 @if (inputSymbol?.errors?.['required']) {
-                <div class="error">
-                    Crypto symbol is required!
-                </div>
+                <div class="error">Crypto symbol is required!</div>
                 }
                 @if (inputSymbol?.errors?.['minlength']) {
-                <div class="error">
-                    Crypto symbol must be at least 2 characters!
-                </div>
+                <div class="error">Crypto symbol must be at least 2 characters!</div>
                 }
             </div>
             }
@@ -46,16 +41,14 @@
             <input type="number" id="currentPrice" name="currentPrice" ngModel #inputPrice="ngModel"
                 placeholder="Enter current price" required min="0.01" />
             @if (inputPrice?.touched) {
-            @if (inputPrice?.errors?.['required']) {
-            <div class="error">
-                Crypto price is required!
+            <div>
+                @if (inputPrice?.errors?.['required']) {
+                <div class="error">Crypto price is required!</div>
+                }
+                @if (inputPrice?.errors?.['min']) {
+                <div class="error">Crypto price must cost at least 0.01</div>
+                }
             </div>
-            }
-            @if (inputPrice?.errors?.['min']) {
-            <div class="error">
-                Crypto price must cost at least 0.01
-            </div>
-            }
             }
         </div>
 
@@ -64,16 +57,14 @@
             <textarea id="description" name="description" ngModel #inputDescription="ngModel"
                 placeholder="Enter a description" rows="4" required minlength="10"></textarea>
             @if (inputDescription?.touched) {
-            @if (inputDescription?.errors?.['required']) {
-            <div class="error">
-                Crypto description is required!
+            <div>
+                @if (inputDescription?.errors?.['required']) {
+                <div class="error">Crypto description is required!</div>
+                }
+                @if (inputDescription?.errors?.['minlength']) {
+                <div class="error">Description must be at least 10 characters!</div>
+                }
             </div>
-            }
-            @if (inputDescription?.errors?.['minlength']) {
-            <div class="error">
-                Crypto description must be at least 10 characters!
-            </div>
-            }
             }
         </div>
 
@@ -82,14 +73,16 @@
             <input type="text" id="imageUrl" name="imageUrl" ngModel #inputImageUrl="ngModel"
                 placeholder="Enter an image URL" required />
             @if (inputImageUrl?.touched) {
-            @if (inputImageUrl?.errors?.['required']) {
-            <div class="error">
-                Crypto URL is required!
+            <div>
+                @if (inputImageUrl?.errors?.['required']) {
+                <div class="error">Crypto URL is required!</div>
+                }
             </div>
-            }
             }
         </div>
 
         <button class="btn" [disabled]="form.invalid">Save Changes</button>
     </form>
+    }
+
 </div>
