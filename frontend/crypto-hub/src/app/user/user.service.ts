@@ -50,7 +50,6 @@ export class UserService implements OnDestroy {
             catchError((error) => {
                 if (error.status === 401) {
                     this.user$$.next(null);
-                    console.warn('User is not authenticated:', error.message);
                     return of(null);
                 }
                 console.error('Error fetching profile:', error.message);
