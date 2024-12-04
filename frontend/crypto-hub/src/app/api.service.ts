@@ -37,4 +37,9 @@ export class ApiService {
     deleteCrypto(id: string) {
         return this.http.delete(`/api/cryptos/${id}/delete`);
     }
+
+    updateCrypto(id: string, name: string, symbol: string, currentPrice: number, description: string, imageUrl: string) {
+        const payload = { name, symbol, currentPrice, description, imageUrl };
+        return this.http.put<CryptoDetails>(`/api/cryptos/${id}/edit`, payload);
+    }
 }
