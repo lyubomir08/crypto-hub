@@ -25,19 +25,15 @@ export class DetailedCryptoComponent implements OnInit {
     get cryptoId(): string {
         return this.route.snapshot.params['cryptoId'];
     }
-
+    
     ngOnInit(): void {
         const cryptoId = this.cryptoId;
         
-        // if(this.userService.user) {
-        //     this.currentUser = this.userService.user?._id as any;
-        // }
         this.userService.getProfile().subscribe({
             next: (user) => {
                 this.currentUser = user;
             },
             error: (err) => {
-                console.error('Error fetching user profile:', err.message);
                 this.currentUser = null;
             },
         });
@@ -50,7 +46,6 @@ export class DetailedCryptoComponent implements OnInit {
                 this.checkOwnership(crypto);
             },
             error: (err) => {
-                console.error('Error fetching crypto details:', err.message);
                 this.isLoading = false;
             },
         });
