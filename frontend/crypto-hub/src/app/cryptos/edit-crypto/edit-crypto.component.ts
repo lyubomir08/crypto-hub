@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ApiService } from '../../api.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CryptoDetails } from '../../types/crypto';
+import { CryptoDetails, EditDetails } from '../../types/crypto';
 import { LoaderComponent } from '../../shared/loader/loader.component';
 
 @Component({
@@ -10,11 +10,18 @@ import { LoaderComponent } from '../../shared/loader/loader.component';
     standalone: true,
     imports: [FormsModule, LoaderComponent],
     templateUrl: './edit-crypto.component.html',
-    styleUrl: './edit-crypto.component.css'
+    styleUrls: ['./edit-crypto.component.css']
 })
 export class EditCryptoComponent implements OnInit {
     @ViewChild('editForm') editForm: NgForm | undefined;
-    crypto: CryptoDetails | null = null;
+    crypto: EditDetails = {
+        _id: '',
+        name: '',
+        symbol: '',
+        currentPrice: 0,
+        description: '',
+        imageUrl: ''
+    };
     isLoading: boolean = true;
 
     constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) { }
@@ -25,30 +32,23 @@ export class EditCryptoComponent implements OnInit {
         this.apiService.getOneCrypto(cryptoId).subscribe((crypto) => {
             this.crypto = crypto;
             this.isLoading = false;
-
-            this.editForm?.setValue({
-                name: this.crypto?.name,
-                symbol: this.crypto?.symbol,
-                currentPrice: this.crypto?.currentPrice,
-                description: this.crypto?.description,
-                imageUrl: this.crypto?.imageUrl
-            });
         });
     }
 
-    editCrypto() {
-        if (!this.crypto) {
-            return;
-        }
-        const { name, symbol, currentPrice, description, imageUrl } = this.crypto;
-        const id = this.crypto?._id;
+    editCrypto(): void {
+        if (!this.crypto._id) return;
 
-        this.apiService.updateCrypto(id as any, name, symbol, currentPrice, description, imageUrl).subscribe(() => {
-            this.router.navigate(['/cryptos']);
-        });
+        this.apiService.updateCrypto(
+            this.crypto._id,
+            this.crypto.name,
+            this.crypto.symbol,
+            this.crypto.currentPrice,
+            this.crypto.description,
+            this.crypto.imageUrl
+        ).subscribe(() => this.router.navigate(['/cryptos']));
     }
 
-    onCancel(event: Event) {
+    onCancel(event: Event): void {
         event.preventDefault();
         history.back();
     }
