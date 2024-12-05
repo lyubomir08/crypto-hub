@@ -42,4 +42,18 @@ export class ApiService {
         const payload = { name, symbol, currentPrice, description, imageUrl };
         return this.http.put<CryptoDetails>(`/api/cryptos/${id}/edit`, payload);
     }
+
+    addComment(cryptoId: string, text: string) {
+        const payload = { text };
+        return this.http.post<Comment>(`/api/cryptos/${cryptoId}/comments`, payload);
+    }
+
+    updateComment(cryptoId: string, commentId: string, text: string) {
+        const payload = { text };
+        return this.http.put<Comment>(`/api/cryptos/${cryptoId}/comments/${commentId}`, payload);
+    }
+
+    deleteComment(cryptoId: string, commentId: string) {
+        return this.http.delete(`/api/cryptos/${cryptoId}/comments/${commentId}`);
+    }
 }
