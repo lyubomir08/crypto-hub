@@ -13,7 +13,7 @@ import { LoaderComponent } from '../../shared/loader/loader.component';
     styleUrl: './edit-crypto.component.css'
 })
 export class EditCryptoComponent implements OnInit {
-    @ViewChild('form') form: NgForm | undefined;
+    @ViewChild('editForm') editForm: NgForm | undefined;
     crypto: CryptoDetails | null = null;
     isLoading: boolean = true;
 
@@ -25,17 +25,15 @@ export class EditCryptoComponent implements OnInit {
         this.apiService.getOneCrypto(cryptoId).subscribe((crypto) => {
             this.crypto = crypto;
             this.isLoading = false;
-        });
 
-        if (this.form) {
-            this.form?.setValue({
+            this.editForm?.setValue({
                 name: this.crypto?.name,
                 symbol: this.crypto?.symbol,
                 currentPrice: this.crypto?.currentPrice,
                 description: this.crypto?.description,
                 imageUrl: this.crypto?.imageUrl
             });
-        }
+        });
     }
 
     editCrypto() {
@@ -48,6 +46,10 @@ export class EditCryptoComponent implements OnInit {
         this.apiService.updateCrypto(id as any, name, symbol, currentPrice, description, imageUrl).subscribe(() => {
             this.router.navigate(['/cryptos']);
         });
+    }
 
+    onCancel(event: Event) {
+        event.preventDefault();
+        history.back();
     }
 }
