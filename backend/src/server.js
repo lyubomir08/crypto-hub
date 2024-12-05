@@ -35,6 +35,8 @@ app.delete('/api/cryptos/:id/delete', authMiddleware, cryptoController.deleteCry
 app.get('/api/cryptos/search', cryptoController.searchCryptos);
 
 app.post('/api/cryptos/:id/comments', authMiddleware, cryptoController.addComment);
+app.put('/api/cryptos/:id/comments/:commentId', authMiddleware, cryptoController.updateComment);
+app.delete('/api/cryptos/:id/comments/:commentId', authMiddleware, cryptoController.deleteComment);
 
 const connectDB = async () => {
     try {

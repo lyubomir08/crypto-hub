@@ -59,6 +59,38 @@ const addComment = async (cryptoId, userId, text) => {
     return comment;
 };
 
+const updateComment = async (cryptoId, commentId, userId, text) => {
+    const crypto = await Crypto.findById(cryptoId);
+    if (!crypto) throw new Error('Cryptocurrency not found');
+
+    const comment = crypto.comments.id(commentId);
+    if (!comment) throw new Error('Comment not found');
+
+    if (comment.user.toString() !== userId) {
+        throw new Error('Unauthorized to update this comment');
+    }
+
+    comment.text = text;
+    await crypto.save();
+    return comment;
+};
+
+const deleteComment = async (cryptoId, commentId, userId) => {
+    const crypto = await Crypto.findById(cryptoId);
+    if (!crypto) throw new Error('Cryptocurrency not found');
+
+    const comment = crypto.comments.id(commentId);
+    if (!comment) throw new Error('Comment not found');
+
+    if (comment.user.toString() !== userId) {
+        throw new Error('Unauthorized to delete this comment');
+    }
+
+    comment.remove();
+    await crypto.save();
+    return { message: 'Comment deleted successfully' };
+};
+
 export default {
     getAllCryptos,
     addCrypto,
@@ -67,4 +99,6 @@ export default {
     searchCryptos,
     getCryptoById,
     addComment,
+    updateComment,
+    deleteComment
 };

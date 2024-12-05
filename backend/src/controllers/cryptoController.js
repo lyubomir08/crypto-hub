@@ -92,6 +92,31 @@ const addComment = async (req, res) => {
     }
 };
 
+const updateComment = async (req, res) => {
+    const { id, commentId } = req.params;
+    const { text } = req.body;
+
+    try {
+        const userId = req.userId;
+        const updatedComment = await cryptoService.updateComment(id, commentId, userId, text);
+        res.json(updatedComment);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
+const deleteComment = async (req, res) => {
+    const { id, commentId } = req.params;
+
+    try {
+        const userId = req.userId;
+        const response = await cryptoService.deleteComment(id, commentId, userId);
+        res.json(response);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
 export default {
     getAllCryptos,
     getCryptoById,
@@ -100,4 +125,6 @@ export default {
     deleteCrypto,
     searchCryptos,
     addComment,
+    updateComment,
+    deleteComment,
 };
