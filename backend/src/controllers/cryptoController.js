@@ -40,7 +40,7 @@ const updateCrypto = async (req, res) => {
     try {
         const crypto = await cryptoService.getCryptoById(id);
 
-        if (!crypto || crypto.owner.toString() !== req.userId) {
+        if (!crypto || crypto.owner?._id.toString() !== req.userId) {
             return res.status(403).json({ message: 'Unauthorized to update this cryptocurrency' });
         }
 
