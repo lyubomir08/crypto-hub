@@ -7,16 +7,12 @@ export const LoggedInGuard: CanActivateFn = (
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
 ) => {
-    const userService = inject(UserService);
     const router = inject(Router);
 
-    return userService.getProfile().pipe(
-        map((user) => {
-            if (user) {
-                router.navigate(['/home']);
-                return false;
-            }
-            return true;
-        })
-    )
+    if (localStorage.getItem('user')) {
+        router.navigate(['/home']);
+        return false;
+    }
+
+    return true;
 };
