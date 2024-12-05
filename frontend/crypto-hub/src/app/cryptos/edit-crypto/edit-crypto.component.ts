@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ApiService } from '../../api.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CryptoDetails, EditDetails } from '../../types/crypto';
+import { EditDetails } from '../../types/crypto';
 import { LoaderComponent } from '../../shared/loader/loader.component';
 
 @Component({
