@@ -52,11 +52,14 @@ const addComment = async (cryptoId, userId, text) => {
     const crypto = await Crypto.findById(cryptoId);
     if (!crypto) throw new Error('Cryptocurrency not found');
 
-    const comment = { user: userId, text };
-    crypto.comments.push(comment);
+    const comment = { user: userId, text, createdAt: new Date() };
 
+    crypto.comments.push(comment);
     await crypto.save();
-    return comment;
+
+    const populatedComment = await crypto.comments[crypto.comments.length - 1].populate('user', 'username email');
+
+    return populatedComment;
 };
 
 const updateComment = async (cryptoId, commentId, userId, text) => {
