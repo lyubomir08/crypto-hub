@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Crypto, CryptoDetails } from './types/crypto';
+import { Comment } from './types/Comment';
 
 @Injectable({
     providedIn: 'root'
