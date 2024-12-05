@@ -45,7 +45,7 @@ export class EditCryptoComponent implements OnInit {
             this.crypto.currentPrice,
             this.crypto.description,
             this.crypto.imageUrl
-        ).subscribe(() => this.router.navigate(['/cryptos']));
+        ).subscribe(() => this.router.navigate(['/cryptos', this.crypto?._id, 'details']));
     }
 
     onCancel(event: Event): void {
