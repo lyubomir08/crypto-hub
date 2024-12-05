@@ -1,7 +1,5 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
-import { map } from 'rxjs';
-import { UserService } from '../user/user.service';
 
 export const LoggedInGuard: CanActivateFn = (
     route: ActivatedRouteSnapshot,
