@@ -5,11 +5,12 @@ import { CryptoDetails } from '../../types/crypto';
 import { LoaderComponent } from '../../shared/loader/loader.component';
 import { UserForAuth } from '../../types/user';
 import { UserService } from '../../user/user.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-detailed-crypto',
     standalone: true,
-    imports: [LoaderComponent, RouterLink],
+    imports: [LoaderComponent, RouterLink, DatePipe],
     templateUrl: './detailed-crypto.component.html',
     styleUrl: './detailed-crypto.component.css'
 })
@@ -63,6 +64,36 @@ export class DetailedCryptoComponent implements OnInit {
             this.router.navigate(['/cryptos']);
         });
     }
+
+    addComment(inputText: HTMLTextAreaElement) {
+        const text = inputText.value.trim();
+    
+        if (!text) {
+            return;
+        }
+    
+        if (!this.crypto) {
+            return;
+        }
+    
+        this.apiService.addComment(this.cryptoId, text).subscribe({
+            next: (newComment) => {
+                if (!this.crypto!.comments) {
+                    this.crypto!.comments = [];
+                }
+
+                this.crypto!.comments.push(newComment);
+    
+                inputText.value = '';
+    
+                console.log(newComment);
+            },
+            error: (err) => {
+                console.error('Failed to add comment:', err);
+            },
+        });
+    }
+    
 
     private checkOwnership(crypto: CryptoDetails): void {
         this.isOwner = crypto.owner?._id == this.currentUser?._id;
