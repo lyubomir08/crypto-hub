@@ -42,8 +42,11 @@ const searchCryptos = async (name, symbol) => {
 const getCryptoById = async (id) => {
     const crypto = await Crypto.findById(id)
         .populate('owner', 'username email')
-        .populate('comments.user', 'username email');
-
+        .populate({
+            path: 'comments.user',
+            select: 'username email',
+        });
+        
     if (!crypto) throw new Error('Cryptocurrency not found');
     return crypto;
 };
@@ -57,8 +60,12 @@ const addComment = async (cryptoId, userId, text) => {
     crypto.comments.push(comment);
     await crypto.save();
 
-    const populatedComment = await crypto.comments[crypto.comments.length - 1].populate('user', 'username email');
+    await crypto.populate({
+        path: 'comments.user',
+        select: 'username email',
+    });
 
+    const populatedComment = crypto.comments[crypto.comments.length - 1];
     return populatedComment;
 };
 
