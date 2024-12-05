@@ -10,6 +10,8 @@ import { ErrorMsgComponent } from './core/error-msg/error-msg.component';
 import { SearchCryptoComponent } from './cryptos/search-crypto/search-crypto.component';
 import { DetailedCryptoComponent } from './cryptos/detailed-crypto/detailed-crypto.component';
 import { EditCryptoComponent } from './cryptos/edit-crypto/edit-crypto.component';
+import { AuthGuard } from './guards/auth.guard';
+import { LoggedInGuard } from './guards/loggedIn.guard';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -22,13 +24,14 @@ export const routes: Routes = [
             {
                 path: 'create', loadComponent: () =>
                     import('./cryptos/add-crypto/add-crypto.component').then((c) => c.AddCryptoComponent),
+                canActivate: [AuthGuard]
             },
-            {path: ':cryptoId/edit', component: EditCryptoComponent },
+            {path: ':cryptoId/edit', component: EditCryptoComponent, canActivate: [AuthGuard] },
         ]
     },
     {path: 'search', component: SearchCryptoComponent},
-    { path: 'login', component: LoginComponent },
-    { path: 'register', component: RegisterComponent },
+    { path: 'login', component: LoginComponent, canActivate: [LoggedInGuard] },
+    { path: 'register', component: RegisterComponent, canActivate: [LoggedInGuard] },
     { path: 'error', component: ErrorMsgComponent },
     { path: '404', component: PageNotFoundComponent },
     { path: '**', redirectTo: '/404', pathMatch: 'full' },
