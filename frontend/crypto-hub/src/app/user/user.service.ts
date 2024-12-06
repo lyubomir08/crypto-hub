@@ -24,10 +24,17 @@ export class UserService implements OnDestroy {
     }
 
     login(email: string, password: string) {
-        return this.http.post<UserForAuth>(`/api/users/login`, { email, password }).pipe(tap(user => {
-            this.user$$.next(user);
-            localStorage.setItem('user', user?.email);
-        }));
+        return this.http.post<UserForAuth>(`/api/users/login`, { email, password })
+            .pipe(
+                tap(user => {
+                    this.user$$.next(user);
+                    localStorage.setItem('user', user?.email);
+                }),
+                catchError((err) => {
+                    console.error('Login error:', err);
+                    return throwError(() => err);
+                })
+            );
     }
 
     register(username: string, email: string, password: string, rePassword: string) {
