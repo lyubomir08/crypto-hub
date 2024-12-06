@@ -16,18 +16,25 @@ import { RouterLink } from '@angular/router';
 export class SearchCryptoComponent implements OnInit {
     cryptos: Crypto[] = [];
     isLoading = true;
+    errorMessage: string | null = null;
 
     constructor(private apiService: ApiService) { }
 
     ngOnInit(): void {
-        this.apiService.getCryptos().subscribe((data) => {
-            this.cryptos = data;
-            this.isLoading = false;
-        });
+        this.apiService.getCryptos().subscribe({
+            next: (data) => {
+                this.cryptos = data;
+                this.isLoading = false;
+            },
+            error: (error) => {
+                this.errorMessage = 'Failed to load cryptos. Please try again later.';
+                this.isLoading = false;
+            }
+        })
     }
 
     search(form: NgForm) {
-        if(form.invalid) {
+        if (form.invalid) {
             return;
         }
 
@@ -40,6 +47,10 @@ export class SearchCryptoComponent implements OnInit {
                 this.cryptos = data;
                 this.isLoading = false;
             },
+            (err) => {
+                this.errorMessage = 'An error occurred while searching for cryptos. Please try again.';
+                this.isLoading = false;
+            }
         );
         form.reset();
     }
