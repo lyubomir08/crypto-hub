@@ -4,7 +4,7 @@ import jwt from '../utils/jwt.js';
 
 const generateToken = async (userId) => {
     return await jwt.sign({ userId }, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRES_IN || '1h',
+        expiresIn: process.env.JWT_EXPIRES_IN || '12h',
     });
 };
 
