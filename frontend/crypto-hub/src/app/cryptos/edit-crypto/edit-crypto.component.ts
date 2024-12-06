@@ -23,15 +23,22 @@ export class EditCryptoComponent implements OnInit {
         imageUrl: ''
     };
     isLoading: boolean = true;
+    errorMessage: string | null = null;
 
     constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit(): void {
         const cryptoId = this.route.snapshot.params['cryptoId'];
 
-        this.apiService.getOneCrypto(cryptoId).subscribe((crypto) => {
-            this.crypto = crypto;
-            this.isLoading = false;
+        this.apiService.getOneCrypto(cryptoId).subscribe({
+            next: (data) => {
+                this.crypto = data;
+                this.isLoading = false;
+            },
+            error: (err) => {
+                this.errorMessage = err?.message;
+                this.isLoading = false;
+            }
         });
     }
 
@@ -45,7 +52,14 @@ export class EditCryptoComponent implements OnInit {
             this.crypto.currentPrice,
             this.crypto.description,
             this.crypto.imageUrl
-        ).subscribe(() => this.router.navigate(['/cryptos', this.crypto?._id, 'details']));
+        ).subscribe({
+            next: () => {
+                this.router.navigate(['/cryptos', this.crypto?._id, 'details'])
+            },
+            error: (err) => {
+                this.errorMessage = err?.message;
+            }
+        });
     }
 
     onCancel(event: Event): void {
