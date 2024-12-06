@@ -34,5 +34,7 @@ export class LoginComponent {
                 this.errorMessage = err?.message || 'An error occurred. Please try again.';
             }
         });
+
+        form.reset();
     }
 }

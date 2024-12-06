@@ -15,13 +15,14 @@ import { RouterLink } from '@angular/router';
 })
 export class SearchCryptoComponent implements OnInit {
     cryptos: Crypto[] = [];
-    isLoading = false;
+    isLoading = true;
 
     constructor(private apiService: ApiService) { }
 
     ngOnInit(): void {
         this.apiService.getCryptos().subscribe((data) => {
             this.cryptos = data;
+            this.isLoading = false;
         });
     }
 
