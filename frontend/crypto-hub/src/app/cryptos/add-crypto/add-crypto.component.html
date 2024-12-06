@@ -1,5 +1,10 @@
 <div class="create-crypto-container">
     <h1>Create Cryptocurrency</h1>
+    @if (errorMessage) {
+        <div class="fixed top-16 right-4 bg-red-500 text-white p-4 rounded shadow-lg z-50">
+            <p>{{ errorMessage }}</p>
+        </div>
+    }
     <form #form="ngForm" (ngSubmit)="create(form)">
         <div class="form-group">
             <label for="name">Crypto Name</label>

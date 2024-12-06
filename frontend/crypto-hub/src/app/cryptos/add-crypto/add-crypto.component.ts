@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
     styleUrl: './add-crypto.component.css'
 })
 export class AddCryptoComponent {
+    errorMessage: string | null = null;
 
     constructor(private apiService: ApiService, private router: Router) {}
 
@@ -26,8 +27,13 @@ export class AddCryptoComponent {
         const description = form.value.description;
         const imageUrl = form.value.imageUrl;
 
-        this.apiService.addCrypto(name, symbol, currentPrice, description, imageUrl).subscribe(() => {
-            this.router.navigate(['/cryptos']);
+        this.apiService.addCrypto(name, symbol, currentPrice, description, imageUrl).subscribe({
+            next: () => {
+                this.router.navigate(['/cryptos']);
+            },
+            error: (err) => {
+                this.errorMessage = err?.message;
+            }
         });
         
     }
