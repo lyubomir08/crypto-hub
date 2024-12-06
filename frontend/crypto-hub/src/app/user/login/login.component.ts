@@ -14,18 +14,25 @@ import { DOMAINS } from '../../constants';
 })
 export class LoginComponent {
     domains = DOMAINS;
+    errorMessage: string | null = null;
+
     constructor(private userService: UserService, private router: Router) { }
 
     login(form: NgForm) {
-        if(form.invalid) {
+        if (form.invalid) {
             console.error("Invalid login form");
             return;
         }
 
         const { email, password } = form.value;
-        
-        this.userService.login(email, password).subscribe(() => {
-            this.router.navigate(['/home']);
+
+        this.userService.login(email, password).subscribe({
+            next: () => {
+                this.router.navigate(['/home']);
+            },
+            error: (err) => {
+                this.errorMessage = err?.message || 'An error occurred. Please try again.';
+            }
         });
     }
 }

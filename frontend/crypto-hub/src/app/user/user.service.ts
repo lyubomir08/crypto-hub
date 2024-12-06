@@ -31,7 +31,6 @@ export class UserService implements OnDestroy {
                     localStorage.setItem('user', user?.email);
                 }),
                 catchError((err) => {
-                    console.error('Login error:', err);
                     return throwError(() => err);
                 })
             );
