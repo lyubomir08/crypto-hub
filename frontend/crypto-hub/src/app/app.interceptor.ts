@@ -1,3 +1,4 @@
+
 import { HttpInterceptorFn } from '@angular/common/http';
 import { environment } from '../environments/environment.development';
 import { catchError, throwError } from 'rxjs';
@@ -17,23 +18,18 @@ export const appInterceptor: HttpInterceptorFn = (req, next) => {
     }
 
     const errorMsgService = inject(ErrorMsgService);
-    const router = inject(Router);
 
     return next(req).pipe(
         catchError((err) => {
-            if (err.status === 401) {
-                if (req.url.endsWith('/users/profile')) {
-                    console.warn('Profile request unauthorized:', err.message);
-                    return throwError(() => err);
-                }
+            const customError = {
+                message: err?.error?.message || 'An error occurred.',
+                status: err.status || 500,
+                url: req.url,
+            };
 
-                router.navigate(['/login']);
-            } else {
-                errorMsgService.setError(err);
-                router.navigate(['/error']);
-            }
+            errorMsgService.setError(customError);
 
-            return throwError(() => err);
+            return throwError(() => customError);
         })
     );
 };

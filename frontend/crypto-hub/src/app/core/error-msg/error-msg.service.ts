@@ -11,6 +11,6 @@ export class ErrorMsgService {
     constructor() { }
 
     setError(error: any): void {
-        this.apiError$$.next(error);
+        this.apiError$$.next(error?.message);
     }
 }
