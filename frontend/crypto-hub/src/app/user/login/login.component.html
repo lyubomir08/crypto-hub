@@ -12,7 +12,6 @@
 
             <p class="field field-icon">
                 <label for="email"><span><i class="fas fa-envelope"></i></span></label>
-                <!-- class="input-error" -->
                 <input ngModel #inputEmail="ngModel" required [appEmail]="domains" [class]="(
                     (inputEmail?.touched && inputEmail?.errors?.['required']) ||
                      (inputEmail?.touched && inputEmail?.errors?.['emailValidator']))

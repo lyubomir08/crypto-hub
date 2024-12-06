@@ -18,6 +18,7 @@ export class DetailedCryptoComponent implements OnInit {
     crypto: CryptoDetails | null = null;
     isLoading: boolean = true;
     currentUser: UserForAuth | null = null;
+    errorMessage: string | null = null;
 
     isOwner: boolean = false;
 
@@ -47,6 +48,7 @@ export class DetailedCryptoComponent implements OnInit {
                 this.checkOwnership(crypto);
             },
             error: (err) => {
+                this.errorMessage = err?.message;
                 this.isLoading = false;
             },
         });
