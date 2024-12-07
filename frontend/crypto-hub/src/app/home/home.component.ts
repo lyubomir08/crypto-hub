@@ -14,26 +14,31 @@ import { CommonModule } from '@angular/common';
 })
 export class HomeComponent {
     lastThreeCryptos: Crypto[] = [];
-    isLoadingLastThree: boolean = false;
-    errorMessageLastThree: string | null = null;
+    allCryptos: Crypto[] = [];
+    isLoading: boolean = false;
+    errorMessage: string | null = null;
 
-    constructor(private apiService: ApiService) { }
+    constructor(private apiService: ApiService) {}
 
     ngOnInit() {
-        this.fetchLastThreeCryptos();
+        this.fetchAllCryptos();
     }
 
-    fetchLastThreeCryptos() {
-        this.isLoadingLastThree = true;
-        this.apiService.getLastThreeCryptos().subscribe({
+    fetchAllCryptos() {
+        this.isLoading = true;
+        this.apiService.getCryptos().subscribe({
             next: (data) => {
-                this.lastThreeCryptos = data;
-                this.isLoadingLastThree = false;
+                this.allCryptos = data;
+
+                this.lastThreeCryptos = [...data]
+                    .sort((a, b) => new Date(b?.createdAt).getTime() - new Date(a?.createdAt).getTime())
+                    .slice(0, 3);
+
+                this.isLoading = false;
             },
             error: (err) => {
-                console.error(err);
-                this.errorMessageLastThree = 'Failed to load the latest cryptocurrencies.';
-                this.isLoadingLastThree = false;
+                this.errorMessage = 'Failed to load cryptocurrencies.';
+                this.isLoading = false;
             },
         });
     }
