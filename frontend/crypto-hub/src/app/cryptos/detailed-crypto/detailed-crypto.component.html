@@ -36,38 +36,45 @@
     <div class="bg-gray-50 mt-8 p-6 rounded-xl shadow-lg border border-gray-200">
         <h2 class="text-xl font-semibold text-gray-800 mb-4">Comments</h2>
         <div class="space-y-6">
-            @for (comment of crypto?.comments; track $index) {
-            <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
-                <div class="flex justify-between items-center">
-                    <p *ngIf="isEditing !== comment?._id" class="text-gray-700 text-sm">
-                        <span class="font-bold">{{comment?.user?.username}}</span> {{comment?.text}}
-                    </p>
-                    <textarea *ngIf="isEditing === comment?._id" [(ngModel)]="comment.text"
-                        class="w-full p-2 rounded-lg border border-gray-300 focus:ring focus:ring-blue-300 text-sm">
-                                </textarea>
-                    <p class="text-xs text-gray-400">Posted on: {{comment?.createdAt | date}}</p>
+            @if (crypto?.comments!.length > 0) {
+                @for (comment of crypto?.comments; track $index) {
+                    <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
+                        <div class="flex justify-between items-center">
+                            <p *ngIf="isEditing !== comment?._id" class="text-gray-700 text-sm">
+                                <span class="font-bold">{{comment?.user?.username}}</span> {{comment?.text}}
+                            </p>
+                            <textarea *ngIf="isEditing === comment?._id" [(ngModel)]="comment.text"
+                                class="w-full p-2 rounded-lg border border-gray-300 focus:ring focus:ring-blue-300 text-sm">
+                                        </textarea>
+                            <p class="text-xs text-gray-400">Posted on: {{comment?.createdAt | date}}</p>
+                        </div>
+                        @if (comment?.user?._id == currentUser?._id) {
+                        <div class="mt-3 flex space-x-3">
+                            <button *ngIf="isEditing !== comment?._id" (click)="isEditing = comment?._id"
+                                class="bg-blue-500 text-white text-sm py-1 px-3 rounded-lg hover:bg-blue-400">
+                                Edit
+                            </button>
+                            <button *ngIf="isEditing === comment?._id" (click)="updateComment(comment?._id)"
+                                class="bg-green-500 text-white text-sm py-1 px-3 rounded-lg hover:bg-green-400">
+                                Save
+                            </button>
+                            <button *ngIf="isEditing === comment?._id" (click)="isEditing = null"
+                                class="bg-gray-500 text-white text-sm py-1 px-3 rounded-lg hover:bg-gray-400">
+                                Cancel
+                            </button>
+                            <button *ngIf="isEditing !== comment?._id" (click)="deleteComment(comment?._id)"
+                                class="bg-red-500 text-white text-sm py-1 px-3 rounded-lg hover:bg-red-400">
+                                Delete
+                            </button>
+                        </div>
+                        }
+                    </div>
+                    }
+            } @else {
+                <div class="text-center p-6 bg-gray-50 rounded-lg border border-gray-200 shadow-sm">
+                    <p class="text-xl font-semibold text-gray-800">No comments yet</p>
                 </div>
-                @if (comment?.user?._id == currentUser?._id) {
-                <div class="mt-3 flex space-x-3">
-                    <button *ngIf="isEditing !== comment?._id" (click)="isEditing = comment?._id"
-                        class="bg-blue-500 text-white text-sm py-1 px-3 rounded-lg hover:bg-blue-400">
-                        Edit
-                    </button>
-                    <button *ngIf="isEditing === comment?._id" (click)="updateComment(comment?._id)"
-                        class="bg-green-500 text-white text-sm py-1 px-3 rounded-lg hover:bg-green-400">
-                        Save
-                    </button>
-                    <button *ngIf="isEditing === comment?._id" (click)="isEditing = null"
-                        class="bg-gray-500 text-white text-sm py-1 px-3 rounded-lg hover:bg-gray-400">
-                        Cancel
-                    </button>
-                    <button *ngIf="isEditing !== comment?._id" (click)="deleteComment(comment?._id)"
-                        class="bg-red-500 text-white text-sm py-1 px-3 rounded-lg hover:bg-red-400">
-                        Delete
-                    </button>
-                </div>
-                }
-            </div>
+                
             }
             @if (currentUser && !isOwner) {
             <form>
