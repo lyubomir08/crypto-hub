@@ -37,54 +37,63 @@
         <h2 class="text-xl font-semibold text-gray-800 mb-4">Comments</h2>
         <div class="space-y-6">
             @if (crypto?.comments!.length > 0) {
-                @for (comment of crypto?.comments; track $index) {
-                    <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
-                        <div class="flex justify-between items-center">
-                            <p *ngIf="isEditing !== comment?._id" class="text-gray-700 text-sm">
-                                <span class="font-bold">{{comment?.user?.username}}</span> {{comment?.text}}
-                            </p>
-                            <textarea *ngIf="isEditing === comment?._id" [(ngModel)]="comment.text"
-                                class="w-full p-2 rounded-lg border border-gray-300 focus:ring focus:ring-blue-300 text-sm">
-                                        </textarea>
-                            <p class="text-xs text-gray-400">Posted on: {{comment?.createdAt | date}}</p>
+            @for (comment of crypto?.comments; track $index) {
+            <div class="flex items-start space-x-4 bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
+                <div class="flex-1">
+                    <div class="bg-gray-100 p-3 rounded-lg">
+                        <div class="flex items-center justify-between">
+                            <p class="text-sm font-medium text-gray-800">{{comment?.user?.username}}</p>
+                            <p class="text-xs text-gray-500">{{comment?.createdAt | date:'short'}}</p>
                         </div>
-                        @if (comment?.user?._id == currentUser?._id) {
-                        <div class="mt-3 flex space-x-3">
-                            <button *ngIf="isEditing !== comment?._id" (click)="isEditing = comment?._id"
-                                class="bg-blue-500 text-white text-sm py-1 px-3 rounded-lg hover:bg-blue-400">
-                                Edit
-                            </button>
-                            <button *ngIf="isEditing === comment?._id" (click)="updateComment(comment?._id)"
-                                class="bg-green-500 text-white text-sm py-1 px-3 rounded-lg hover:bg-green-400">
-                                Save
-                            </button>
-                            <button *ngIf="isEditing === comment?._id" (click)="isEditing = null"
-                                class="bg-gray-500 text-white text-sm py-1 px-3 rounded-lg hover:bg-gray-400">
-                                Cancel
-                            </button>
-                            <button *ngIf="isEditing !== comment?._id" (click)="deleteComment(comment?._id)"
-                                class="bg-red-500 text-white text-sm py-1 px-3 rounded-lg hover:bg-red-400">
-                                Delete
-                            </button>
-                        </div>
-                        }
+                        <p *ngIf="isEditing !== comment?._id" class="mt-2 text-gray-700 text-sm">
+                            {{comment?.text}}
+                        </p>
+                        <textarea *ngIf="isEditing === comment?._id" [(ngModel)]="comment.text"
+                            class="w-full mt-2 p-2 rounded-lg border border-gray-300 focus:ring focus:ring-blue-300 text-sm">
+                                </textarea>
+                    </div>
+                    @if (comment?.user?._id == currentUser?._id) {
+                    <div class="mt-2 flex space-x-3">
+                        <button *ngIf="isEditing !== comment?._id" (click)="isEditing = comment?._id"
+                            class="bg-blue-500 text-white text-sm py-1 px-3 rounded-lg hover:bg-blue-400">
+                            Edit
+                        </button>
+                        <button *ngIf="isEditing === comment?._id" (click)="updateComment(comment?._id)"
+                            class="bg-green-500 text-white text-sm py-1 px-3 rounded-lg hover:bg-green-400">
+                            Save
+                        </button>
+                        <button *ngIf="isEditing === comment?._id" (click)="isEditing = null"
+                            class="bg-gray-500 text-white text-sm py-1 px-3 rounded-lg hover:bg-gray-400">
+                            Cancel
+                        </button>
+                        <button *ngIf="isEditing !== comment?._id" (click)="deleteComment(comment?._id)"
+                            class="bg-red-500 text-white text-sm py-1 px-3 rounded-lg hover:bg-red-400">
+                            Delete
+                        </button>
                     </div>
                     }
-            } @else {
-                <div class="text-center p-6 bg-gray-50 rounded-lg border border-gray-200 shadow-sm">
-                    <p class="text-xl font-semibold text-gray-800">No comments yet</p>
                 </div>
-                
+            </div>
+            }
+            } @else {
+            <div class="text-center p-6 bg-gray-50 rounded-lg border border-gray-200 shadow-sm">
+                <p class="text-xl font-semibold text-gray-800">No comments yet</p>
+                <p class="text-gray-600 text-sm mt-2">Be the first to share your thoughts!</p>
+            </div>
             }
             @if (currentUser && !isOwner) {
             <form>
-                <textarea #inputText
-                    class="w-full p-4 rounded-lg border border-gray-300 focus:ring focus:ring-blue-300 text-sm" rows="4"
-                    placeholder="Write a comment..."></textarea>
-                <button (click)="addComment(inputText)" type="button"
-                    class="mt-4 bg-green-500 text-white text-sm font-medium py-2 px-4 rounded-lg hover:bg-green-400">
-                    Add Comment
-                </button>
+                <div class="flex items-start space-x-4 mt-6">
+                    <div class="flex-1">
+                        <textarea #inputText
+                            class="w-full p-4 rounded-lg border border-gray-300 focus:ring focus:ring-blue-300 text-sm"
+                            rows="4" placeholder="Write a comment..."></textarea>
+                        <button (click)="addComment(inputText)" type="button"
+                            class="mt-4 bg-green-500 text-white text-sm font-medium py-2 px-4 rounded-lg hover:bg-green-400">
+                            Add Comment
+                        </button>
+                    </div>
+                </div>
             </form>
             }
         </div>
