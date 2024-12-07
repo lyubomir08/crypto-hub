@@ -62,22 +62,27 @@ export class DetailedCryptoComponent implements OnInit {
 
         const cryptoId = this.cryptoId;
 
-        this.apiService.deleteCrypto(cryptoId).subscribe(() => {
-            this.router.navigate(['/cryptos']);
+        this.apiService.deleteCrypto(cryptoId).subscribe({
+            next: () => {
+                this.router.navigate(['/cryptos']);
+            },
+            error: (err) => {
+                this.errorMessage = 'Failed to delete the cryptocurrency.';
+            }
         });
     }
 
     addComment(inputText: HTMLTextAreaElement) {
         const text = inputText.value.trim();
-    
+
         if (!text) {
             return;
         }
-    
+
         if (!this.crypto) {
             return;
         }
-    
+
         this.apiService.addComment(this.cryptoId, text).subscribe({
             next: (newComment) => {
                 if (!this.crypto!.comments) {
@@ -85,17 +90,36 @@ export class DetailedCryptoComponent implements OnInit {
                 }
 
                 this.crypto!.comments.push(newComment);
-    
+
                 inputText.value = '';
-    
+
                 console.log(newComment);
             },
             error: (err) => {
-                console.error('Failed to add comment:', err);
+                this.errorMessage = 'Failed to add comment.';
             },
         });
     }
-    
+
+    deleteComment(commentId: string) {
+        const choice = confirm("Are you sure you want to delete this comment?");
+        if (!choice) {
+            return;
+        }
+
+        if (!this.crypto) {
+            return;
+        }
+
+        this.apiService.deleteComment(this.cryptoId, commentId).subscribe({
+            next: () => {
+                this.crypto!.comments = this.crypto!.comments.filter(comment => comment._id !== commentId);
+            },
+            error: (err) => {
+                this.errorMessage = 'Failed to delete the comment.';
+            },
+        });
+    }
 
     private checkOwnership(crypto: CryptoDetails): void {
         this.isOwner = crypto.owner?._id == this.currentUser?._id;

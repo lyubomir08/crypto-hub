@@ -96,10 +96,14 @@ const deleteComment = async (cryptoId, commentId, userId) => {
         throw new Error('Unauthorized to delete this comment');
     }
 
-    comment.remove();
+    crypto.comments = crypto.comments.filter(
+        (comment) => comment.id !== commentId
+    );
+
     await crypto.save();
     return { message: 'Comment deleted successfully' };
 };
+
 
 export default {
     getAllCryptos,
