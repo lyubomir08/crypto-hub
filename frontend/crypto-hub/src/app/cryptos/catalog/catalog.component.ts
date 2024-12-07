@@ -30,6 +30,10 @@ export class CatalogComponent implements OnInit {
                 this.errorMessage = 'Failed to load cryptocurrencies.';
             }
         });
+        
+        setTimeout(() => {
+            this.errorMessage = null;
+        }, 3500);
     }
 
 }

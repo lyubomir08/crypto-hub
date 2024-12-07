@@ -61,7 +61,7 @@ export class UserService implements OnDestroy {
                     this.user$$.next(null);
                     return of(null);
                 }
-                console.error('Error fetching profile:', error.message);
+                // console.error('Error fetching profile:', error.message);
                 return throwError(() => error);
             })
         );

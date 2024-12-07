@@ -35,6 +35,10 @@ export class LoginComponent {
             }
         });
 
+        setTimeout(() => {
+            this.errorMessage = null;
+        }, 2500);
+
         form.reset();
     }
 }

@@ -1,5 +1,10 @@
 <!-- Registration Page -->
 <div class="container">
+    @if (errorMessage) {
+        <div class="fixed top-16 right-4 bg-red-500 text-white p-4 rounded shadow-lg z-50">
+            <p>{{ errorMessage }}</p>
+        </div>
+    }
     <form class="register" [formGroup]="form" (ngSubmit)="register()">
         <fieldset>
             <h2>Registration Form</h2>
