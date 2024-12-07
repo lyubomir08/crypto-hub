@@ -1,18 +1,56 @@
 <section class="py-12">
     <div class="container mx-auto px-6 text-center">
-      <h2 class="text-3xl font-bold text-blue-900">
-        Welcome to <span class="text-blue-600">Crypto Hub</span>
-      </h2>
-      <p class="mt-4 text-gray-600 text-lg">
-        Effortlessly track cryptocurrencies and manage your portfolio like a pro.
-      </p>
-      <div class="mt-6 flex justify-center gap-4">
-        <a routerLink="/cryptos" class="px-5 py-2.5 bg-blue-600 text-white font-medium rounded-md shadow-md hover:shadow-lg hover:bg-blue-700 transition duration-300">
-          Explore Cryptocurrencies
-        </a>
-        <a routerLink="/search" class="px-5 py-2.5 border-2 border-blue-600 text-blue-600 font-medium rounded-md hover:bg-blue-600 hover:text-white transition duration-300">
-          Find your favourite
-        </a>
-      </div>
+        <h2 class="text-3xl font-bold text-blue-900">
+            Welcome to <span class="text-blue-600">Crypto Hub</span>
+        </h2>
+        <p class="mt-4 text-gray-600 text-lg">
+            Effortlessly track cryptocurrencies and manage your portfolio like a pro.
+        </p>
+        <div class="mt-6 flex justify-center gap-4">
+            <a routerLink="/cryptos"
+                class="px-5 py-2.5 bg-blue-600 text-white font-medium rounded-md shadow-md hover:shadow-lg hover:bg-blue-700 transition duration-300">
+                Explore Cryptocurrencies
+            </a>
+            <a routerLink="/search"
+                class="px-5 py-2.5 border-2 border-blue-600 text-blue-600 font-medium rounded-md hover:bg-blue-600 hover:text-white transition duration-300">
+                Find your favourite
+            </a>
+        </div>
     </div>
-  </section>
+</section>
+
+
+<div class="container mx-auto p-6">
+    @if (errorMessage) {
+    <div class="fixed top-16 right-4 bg-red-500 text-white p-4 rounded shadow-lg z-50">
+        <p>{{ errorMessage }}</p>
+    </div>
+    }
+
+    @if (isLoading) {
+    <app-loader></app-loader>
+    } @else {
+    <!-- Show last three cryptos -->
+    <div>
+        <h2 class="text-2xl font-bold mb-4">Latest Cryptocurrencies</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            @for (crypto of lastThreeCryptos; track $index) {
+            <div class="bg-white rounded-xl shadow-lg p-8 transition-transform transform hover:scale-105">
+                <div class="flex items-center space-x-6">
+                    <img src="{{crypto?.imageUrl}}" alt="{{crypto.name}}" class="w-20 h-20 rounded-full" />
+                    <div>
+                        <h2 class="text-2xl font-semibold">{{crypto.name}} - ({{crypto.symbol}})</h2>
+                        <p class="text-gray-600 text-lg">Price: ${{crypto.currentPrice}}</p>
+                    </div>
+                </div>
+                <button [routerLink]="['/cryptos', crypto._id, 'details']"
+                    class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition">
+                    Details
+                </button>
+            </div>
+            }
+        </div>
+    </div>
+    }
+
+</div>
