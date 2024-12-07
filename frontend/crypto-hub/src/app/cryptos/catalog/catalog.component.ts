@@ -27,7 +27,7 @@ export class CatalogComponent implements OnInit {
             },
             error: (err) => {
                 this.isLoading = false;
-                this.errorMessage = err?.message || 'Failed to load cryptocurrencies. Please try again later.';
+                this.errorMessage = 'Failed to load cryptocurrencies.';
             }
         });
     }
