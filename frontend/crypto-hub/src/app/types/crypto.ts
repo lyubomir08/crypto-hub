@@ -1,12 +1,15 @@
 export interface Crypto {
+    _id: string;
     name: string;
     symbol: string;
     currentPrice: number;
     description?: string;
     imageUrl: string;
     owner: string;
-    _id: string;
+    createdAt: string;
+    updatedAt?: string;
 }
+
 
 export interface CryptoDetails {
     name: string;
