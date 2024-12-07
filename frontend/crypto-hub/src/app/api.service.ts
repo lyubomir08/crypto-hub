@@ -13,6 +13,10 @@ export class ApiService {
         return this.http.get<Crypto[]>(`/api/cryptos`);
     }
 
+    getLastThreeCryptos() {
+        return this.http.get<Crypto[]>('/api/cryptos?sort=createdAt&order=desc&limit=3');
+    }    
+
     addCrypto(name: string, symbol: string, currentPrice: number, description: string, imageUrl: string) {
         const payload = { name, symbol, currentPrice, description, imageUrl };
         return this.http.post<Crypto>('/api/cryptos/create', payload);
