@@ -9,7 +9,7 @@
     } @else {
     <div class="bg-white shadow-lg rounded-xl border border-gray-200 p-6 flex space-x-6">
         <div class="w-1/3">
-            <img src="{{crypto?.imageUrl}}" alt="Crypto Image" class="w-full h-auto rounded-lg shadow">
+            <img src="{{crypto?.imageUrl}}" alt="Crypto Image" class="w-full h-auto rounded-lg shadow" />
         </div>
         <div class="w-2/3">
             <div class="mb-4">
@@ -50,11 +50,11 @@
                         </p>
                         <textarea *ngIf="isEditing === comment?._id" [(ngModel)]="comment.text"
                             class="w-full mt-2 p-2 rounded-lg border border-gray-300 focus:ring focus:ring-blue-300 text-sm">
-                                </textarea>
+                            </textarea>
                     </div>
                     @if (comment?.user?._id == currentUser?._id) {
                     <div class="mt-2 flex space-x-3">
-                        <button *ngIf="isEditing !== comment?._id" (click)="isEditing = comment?._id"
+                        <button *ngIf="isEditing !== comment?._id" (click)="editComment(comment)"
                             class="bg-blue-500 text-white text-sm py-1 px-3 rounded-lg hover:bg-blue-400">
                             Edit
                         </button>
@@ -62,7 +62,7 @@
                             class="bg-green-500 text-white text-sm py-1 px-3 rounded-lg hover:bg-green-400">
                             Save
                         </button>
-                        <button *ngIf="isEditing === comment?._id" (click)="isEditing = null"
+                        <button *ngIf="isEditing === comment?._id" (click)="cancelEdit(comment)"
                             class="bg-gray-500 text-white text-sm py-1 px-3 rounded-lg hover:bg-gray-400">
                             Cancel
                         </button>

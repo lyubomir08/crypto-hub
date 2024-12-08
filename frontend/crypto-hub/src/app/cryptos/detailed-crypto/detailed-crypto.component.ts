@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
     standalone: true,
     imports: [LoaderComponent, RouterLink, DatePipe, CommonModule, FormsModule],
     templateUrl: './detailed-crypto.component.html',
-    styleUrl: './detailed-crypto.component.css'
+    styleUrls: ['./detailed-crypto.component.css'],
 })
 export class DetailedCryptoComponent implements OnInit {
     crypto: CryptoDetails | null = null;
@@ -22,6 +22,7 @@ export class DetailedCryptoComponent implements OnInit {
     errorMessage: string | null = null;
     isEditing: string | null = null;
     isOwner: boolean = false;
+    originalCommentText: { [key: string]: string } = {};
 
     constructor(
         private router: Router,
@@ -96,6 +97,18 @@ export class DetailedCryptoComponent implements OnInit {
         });
     }
 
+    editComment(comment: any): void {
+        this.isEditing = comment._id;
+        this.originalCommentText[comment._id] = comment.text;
+    }
+
+    cancelEdit(comment: any): void {
+        if (this.originalCommentText[comment._id]) {
+            comment.text = this.originalCommentText[comment._id];
+        }
+        this.isEditing = null;
+    }
+
     updateComment(commentId: string): void {
         const comment = this.crypto?.comments.find((c) => c._id === commentId);
         if (!comment || !comment.text.trim()) {
@@ -106,6 +119,7 @@ export class DetailedCryptoComponent implements OnInit {
         this.apiService.updateComment(this.cryptoId, commentId, comment.text).subscribe({
             next: () => {
                 this.isEditing = null;
+                delete this.originalCommentText[commentId];
                 this.loadCryptoDetails();
             },
             error: () => (this.errorMessage = 'Failed to update the comment.'),
