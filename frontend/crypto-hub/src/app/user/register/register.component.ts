@@ -66,7 +66,7 @@ export class RegisterComponent {
 
         this.userService.register(username!, email!, password!, rePassword!).subscribe({
             next: () => {
-                this.router.navigate(['/home']);
+                this.router.navigate(['/login']);
             },
             error: (err) => {
                 this.errorMessage =

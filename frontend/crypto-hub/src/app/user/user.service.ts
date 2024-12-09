@@ -38,10 +38,7 @@ export class UserService implements OnDestroy {
 
     register(username: string, email: string, password: string, rePassword: string) {
         return this.http.post<UserForAuth>(`/api/users/register`, { email, username, password, rePassword })
-            .pipe(tap(user => {
-                this.user$$.next(user);
-                localStorage.setItem('user', user?.email);
-            }));
+            .pipe(tap(user => {  }));
     }
 
     logout() {
