@@ -5,8 +5,7 @@ const register = async (req, res) => {
 
     try {
         const newUser = await authService.registerUser(username, email, password, rePassword);
-        res.cookie("auth", newUser.token, { httpOnly: true, sameSite: 'none', secire: true });
-        res.status(201).json({ id: newUser.id, username: newUser.username, email: newUser.email});
+        res.status(201).json({ id: newUser.id, username: newUser.username, email: newUser.email });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }

@@ -22,13 +22,10 @@ const registerUser = async (username, email, password, rePassword) => {
 
     const newUser = await User.create({ username, email, password: hashedPassword });
 
-    const token = await generateToken(newUser._id);
-
     return {
         id: newUser._id,
         username: newUser.username,
         email: newUser.email,
-        token,
     };
 };
 
