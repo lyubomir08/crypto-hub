@@ -43,7 +43,7 @@ export class EditCryptoComponent implements OnInit {
     }
 
     editCrypto(): void {
-        if (!this.crypto._id) return;
+        if (!this.crypto) return;
 
         this.apiService.updateCrypto(
             this.crypto._id,
@@ -54,7 +54,7 @@ export class EditCryptoComponent implements OnInit {
             this.crypto.imageUrl
         ).subscribe({
             next: () => {
-                this.router.navigate(['/cryptos', this.crypto?._id, 'details'])
+                this.router.navigate(['/cryptos', this.crypto?._id, 'details']);
             },
             error: (err) => {
                 this.errorMessage = err?.message;

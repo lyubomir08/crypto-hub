@@ -74,8 +74,10 @@ export class RegisterComponent {
             },
         });
 
+        this.form.reset();
+
         setTimeout(() => {
             this.errorMessage = null;
-        }, 3000);
+        }, 2500);
     }
 }

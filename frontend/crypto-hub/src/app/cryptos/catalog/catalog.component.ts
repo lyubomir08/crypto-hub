@@ -33,7 +33,7 @@ export class CatalogComponent implements OnInit {
         
         setTimeout(() => {
             this.errorMessage = null;
-        }, 3500);
+        }, 2500);
     }
 
 }

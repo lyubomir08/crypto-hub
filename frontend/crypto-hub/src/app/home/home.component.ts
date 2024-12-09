@@ -22,6 +22,8 @@ export class HomeComponent {
 
     ngOnInit() {
         this.fetchAllCryptos();
+
+        setTimeout(() => this.errorMessage = null, 2500);
     }
 
     fetchAllCryptos() {

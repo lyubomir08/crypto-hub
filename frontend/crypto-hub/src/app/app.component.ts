@@ -11,6 +11,4 @@ import { AuthenticateComponent } from './authenticate/authenticate.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
-  title = 'crypto-hub';
-}
+export class AppComponent {}

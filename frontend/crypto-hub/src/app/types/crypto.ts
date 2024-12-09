@@ -10,7 +10,6 @@ export interface Crypto {
     updatedAt?: string;
 }
 
-
 export interface CryptoDetails {
     name: string;
     symbol: string;

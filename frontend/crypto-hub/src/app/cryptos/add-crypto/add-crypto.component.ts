@@ -36,5 +36,6 @@ export class AddCryptoComponent {
             }
         });
         
+        setTimeout(() => this.errorMessage = null, 3000);
     }
 }

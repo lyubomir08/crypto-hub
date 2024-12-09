@@ -30,7 +30,7 @@ export class SearchCryptoComponent implements OnInit {
                 this.errorMessage = 'Failed to load cryptos. Please try again later.';
                 this.isLoading = false;
             }
-        })
+        });
     }
 
     search(form: NgForm) {
