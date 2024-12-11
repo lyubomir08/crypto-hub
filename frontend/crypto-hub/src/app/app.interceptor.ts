@@ -2,8 +2,6 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { environment } from '../environments/environment.development';
 import { catchError, throwError } from 'rxjs';
-import { inject } from '@angular/core';
-import { ErrorMsgService } from './core/error-msg/error-msg.service';
 
 const { apiUrl } = environment;
 const API = '/api';
@@ -16,8 +14,6 @@ export const appInterceptor: HttpInterceptorFn = (req, next) => {
         });
     }
 
-    const errorMsgService = inject(ErrorMsgService);
-
     return next(req).pipe(
         catchError((err) => {
             const customError = {
@@ -25,8 +21,6 @@ export const appInterceptor: HttpInterceptorFn = (req, next) => {
                 status: err.status || 500,
                 url: req.url,
             };
-
-            errorMsgService.setError(customError);
 
             return throwError(() => customError);
         })

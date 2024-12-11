@@ -6,7 +6,6 @@ import { LoginComponent } from './user/login/login.component';
 import { RegisterComponent } from './user/register/register.component';
 import { CatalogComponent } from './cryptos/catalog/catalog.component';
 import { AddCryptoComponent } from './cryptos/add-crypto/add-crypto.component';
-import { ErrorMsgComponent } from './core/error-msg/error-msg.component';
 import { SearchCryptoComponent } from './cryptos/search-crypto/search-crypto.component';
 import { DetailedCryptoComponent } from './cryptos/detailed-crypto/detailed-crypto.component';
 import { EditCryptoComponent } from './cryptos/edit-crypto/edit-crypto.component';
@@ -32,7 +31,6 @@ export const routes: Routes = [
     {path: 'search', component: SearchCryptoComponent},
     { path: 'login', component: LoginComponent, canActivate: [LoggedInGuard] },
     { path: 'register', component: RegisterComponent, canActivate: [LoggedInGuard] },
-    { path: 'error', component: ErrorMsgComponent },
     { path: '404', component: PageNotFoundComponent },
     { path: '**', redirectTo: '/404', pathMatch: 'full' },
 ];
