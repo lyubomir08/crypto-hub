@@ -36,3 +36,10 @@ export interface EditDetails {
     description: string,
     imageUrl: string;
 }
+
+export interface LivePrices {
+    [key: string]: {
+        usd: number;
+    };
+}
+
