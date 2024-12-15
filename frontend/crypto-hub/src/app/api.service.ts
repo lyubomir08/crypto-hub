@@ -1,14 +1,26 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Crypto, CryptoDetails } from './types/crypto';
+import { Crypto, CryptoDetails, LivePrices } from './types/crypto';
 import { Comment } from './types/comment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ApiService {
+    private coingeckoUrl = 'https://api.coingecko.com/api/v3';
+
     constructor(private http: HttpClient) { }
 
+    getLivePrices(ids: string[], vsCurrency: string = 'usd') {
+        const idsParam = ids.join(',');
+        return this.http.get<LivePrices>(`${this.coingeckoUrl}/simple/price`, {
+            params: {
+                ids: idsParam,
+                vs_currencies: vsCurrency,
+            },
+        });
+    }
+    
     getCryptos() {
         return this.http.get<Crypto[]>(`/api/cryptos`);
     }  
