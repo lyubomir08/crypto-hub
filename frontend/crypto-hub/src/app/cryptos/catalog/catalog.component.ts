@@ -40,7 +40,12 @@ export class CatalogComponent implements OnInit {
     private fetchStaticCryptos(): void {
         this.apiService.getCryptos().subscribe({
             next: (cryptos) => {
-                this.cryptos = cryptos;
+                this.cryptos = cryptos.map((crypto) => {
+                    return {
+                        ...crypto,
+                        currentPrice: 'Loading...'
+                    };
+                }) as any;
                 this.isLoading = false;
 
                 const symbols = cryptos.map((crypto) => crypto.symbol.toLowerCase());

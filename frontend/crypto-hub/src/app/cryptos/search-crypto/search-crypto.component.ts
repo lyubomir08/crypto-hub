@@ -18,22 +18,44 @@ export class SearchCryptoComponent implements OnInit {
     isLoading = true;
     errorMessage: string | null = null;
 
-    constructor(private apiService: ApiService) { }
+    private symbolToIdMap: { [key: string]: string } = {
+        btc: 'bitcoin',
+        eth: 'ethereum',
+        bnb: 'binancecoin',
+        xrp: 'ripple',
+        ada: 'cardano',
+        sol: 'solana',
+        doge: 'dogecoin',
+        matic: 'polygon',
+        dot: 'polkadot',
+        ltc: 'litecoin',
+        asd: 'asd',
+    };
+
+    constructor(private apiService: ApiService) {}
 
     ngOnInit(): void {
         this.apiService.getCryptos().subscribe({
             next: (data) => {
-                this.cryptos = data;
+                this.cryptos = data.map((d) => {
+                    return {
+                        ...d,
+                        currentPrice: 'Loading...'
+                    };
+                }) as any;
                 this.isLoading = false;
+
+                const symbols = data.map((crypto) => crypto.symbol.toLowerCase());
+                this.fetchLivePrices(symbols);
             },
             error: (error) => {
                 this.errorMessage = 'Failed to load cryptos. Please try again later.';
                 this.isLoading = false;
-            }
+            },
         });
     }
 
-    search(form: NgForm) {
+    search(form: NgForm): void {
         if (form.invalid) {
             return;
         }
@@ -42,16 +64,49 @@ export class SearchCryptoComponent implements OnInit {
 
         this.isLoading = true;
 
-        this.apiService.searchCryptos(name, symbol).subscribe(
-            (data) => {
+        this.apiService.searchCryptos(name, symbol).subscribe({
+            next: (data) => {
                 this.cryptos = data;
+
+                const symbols = data.map((crypto) => crypto.symbol.toLowerCase());
+                this.fetchLivePrices(symbols);
+
                 this.isLoading = false;
             },
-            (err) => {
+            error: (err) => {
                 this.errorMessage = 'An error occurred while searching for cryptos. Please try again.';
                 this.isLoading = false;
-            }
-        );
+            },
+        });
+
         form.reset();
+    }
+
+    private fetchLivePrices(symbols: string[]): void {
+        const ids = symbols
+            .map((symbol) => this.symbolToIdMap[symbol])
+            .filter((id) => id);
+
+        if (ids.length === 0) {
+            console.error('No valid CoinGecko IDs to fetch prices.');
+            return;
+        }
+
+        this.apiService.getLivePrices(ids).subscribe({
+            next: (livePrices) => {
+                this.cryptos = this.cryptos.map((crypto) => {
+                    const id = this.symbolToIdMap[crypto.symbol.toLowerCase()];
+                    const priceData = livePrices[id];
+                    return {
+                        ...crypto,
+                        currentPrice: priceData?.usd || 'Loading...',
+                    };
+                }) as Crypto[];
+            },
+            error: () => {
+                this.errorMessage = 'Failed to fetch live prices.';
+                setTimeout(() => (this.errorMessage = null), 2500);
+            },
+        });
     }
 }
