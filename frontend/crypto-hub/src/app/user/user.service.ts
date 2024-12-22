@@ -28,13 +28,21 @@ export class UserService implements OnDestroy {
             .pipe(
                 tap(user => {
                     this.user$$.next(user);
+
                     localStorage.setItem('user', user?.email);
+
+                    if (user?.email === 'admin123@gmail.com') {
+                        localStorage.setItem('role', 'admin');
+                    } else {
+                        localStorage.setItem('role', 'user');
+                    }
                 }),
                 catchError((err) => {
                     return throwError(() => err);
                 })
             );
     }
+
 
     register(username: string, email: string, password: string, rePassword: string) {
         return this.http.post<UserForAuth>(`/api/users/register`, { email, username, password, rePassword });
@@ -44,6 +52,7 @@ export class UserService implements OnDestroy {
         return this.http.post('/api/users/logout', {}).pipe(tap((user) => {
             this.user$$.next(null);
             localStorage.removeItem('user');
+            localStorage.removeItem('role');
         }));
     }
 
