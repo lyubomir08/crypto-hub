@@ -21,6 +21,7 @@ export class UserService implements OnDestroy {
         this.userSubscription = this.user$.subscribe((user) => {
             this.user = user;
         });
+        this.initializeUserFromLocalStorage();
     }
 
     login(email: string, password: string) {
@@ -43,17 +44,18 @@ export class UserService implements OnDestroy {
             );
     }
 
-
     register(username: string, email: string, password: string, rePassword: string) {
         return this.http.post<UserForAuth>(`/api/users/register`, { email, username, password, rePassword });
     }
 
     logout() {
-        return this.http.post('/api/users/logout', {}).pipe(tap((user) => {
-            this.user$$.next(null);
-            localStorage.removeItem('user');
-            localStorage.removeItem('role');
-        }));
+        return this.http.post('/api/users/logout', {}).pipe(
+            tap(() => {
+                this.user$$.next(null);
+                localStorage.removeItem('user');
+                localStorage.removeItem('role');
+            })
+        );
     }
 
     getProfile() {
@@ -66,10 +68,27 @@ export class UserService implements OnDestroy {
                     this.user$$.next(null);
                     return of(null);
                 }
-                // console.error('Error fetching profile:', error.message);
+                console.error('Error fetching profile:', error.message);
                 return throwError(() => error);
             })
         );
+    }
+
+    getRole(): string | null {
+        return localStorage.getItem('role');
+    }
+
+    isAdmin(): boolean {
+        return this.getRole() === 'admin';
+    }
+
+    initializeUserFromLocalStorage() {
+        const userEmail = localStorage.getItem('user');
+        const role = localStorage.getItem('role');
+
+        if (userEmail) {
+            this.user$$.next({ email: userEmail, role } as any);
+        }
     }
 
     ngOnDestroy(): void {
