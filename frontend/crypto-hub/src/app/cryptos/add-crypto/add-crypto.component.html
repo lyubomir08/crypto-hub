@@ -1,5 +1,5 @@
 <div class="create-crypto-container">
-    <h1>Create Cryptocurrency</h1>
+    <h1>Add Cryptocurrency</h1>
     @if (errorMessage) {
         <div class="fixed top-16 right-4 bg-red-500 text-white p-4 rounded shadow-lg z-50">
             <p>{{ errorMessage }}</p>
@@ -95,7 +95,6 @@
             }
         </div>
 
-
-        <button class="btn" [disabled]="form.invalid">Create Crypto</button>
+        <button class="btn" [disabled]="form.invalid">Add Crypto</button>
     </form>
 </div>
