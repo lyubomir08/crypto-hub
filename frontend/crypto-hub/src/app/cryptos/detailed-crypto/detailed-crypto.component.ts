@@ -24,6 +24,20 @@ export class DetailedCryptoComponent implements OnInit {
     isOwner: boolean = false;
     originalCommentText: { [key: string]: string } = {};
 
+    private symbolToIdMap: { [key: string]: string } = {
+        btc: 'bitcoin',
+        eth: 'ethereum',
+        bnb: 'binancecoin',
+        xrp: 'ripple',
+        ada: 'cardano',
+        sol: 'solana',
+        doge: 'dogecoin',
+        matic: 'polygon',
+        dot: 'polkadot',
+        ltc: 'litecoin',
+        asd: 'asd'
+    };
+
     constructor(
         private router: Router,
         private apiService: ApiService,
@@ -47,10 +61,32 @@ export class DetailedCryptoComponent implements OnInit {
                 this.crypto = crypto;
                 this.isLoading = false;
                 this.checkOwnership(crypto);
+                this.fetchLivePrice(crypto.symbol); // Fetch live price
             },
             error: (err) => {
                 this.errorMessage = err?.message || 'Failed to load cryptocurrency details.';
                 this.isLoading = false;
+            },
+        });
+    }
+
+    private fetchLivePrice(symbol: string): void {
+        const id = this.symbolToIdMap[symbol.toLowerCase()];
+        if (!id) {
+            console.error('No valid CoinGecko ID to fetch price.');
+            return;
+        }
+
+        this.apiService.getLivePrices([id]).subscribe({
+            next: (livePrices) => {
+                const priceData = livePrices[id];
+                if (this.crypto) {
+                    this.crypto.currentPrice = priceData?.usd || this.crypto.currentPrice;
+                }
+            },
+            error: () => {
+                this.errorMessage = 'Failed to fetch live price.';
+                setTimeout(() => (this.errorMessage = null), 2500);
             },
         });
     }
