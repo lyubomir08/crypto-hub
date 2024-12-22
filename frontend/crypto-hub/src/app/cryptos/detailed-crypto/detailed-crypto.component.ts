@@ -49,6 +49,10 @@ export class DetailedCryptoComponent implements OnInit {
         return this.route.snapshot.params['cryptoId'];
     }
 
+    get isAdmin(): boolean {
+        return this.userService.isAdmin();
+    }    
+
     ngOnInit(): void {
         this.loadUserProfile();
         this.loadCryptoDetails();

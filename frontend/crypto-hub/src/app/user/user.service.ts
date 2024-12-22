@@ -21,7 +21,6 @@ export class UserService implements OnDestroy {
         this.userSubscription = this.user$.subscribe((user) => {
             this.user = user;
         });
-        this.initializeUserFromLocalStorage();
     }
 
     login(email: string, password: string) {
@@ -80,15 +79,6 @@ export class UserService implements OnDestroy {
 
     isAdmin(): boolean {
         return this.getRole() === 'admin';
-    }
-
-    initializeUserFromLocalStorage() {
-        const userEmail = localStorage.getItem('user');
-        const role = localStorage.getItem('role');
-
-        if (userEmail) {
-            this.user$$.next({ email: userEmail, role } as any);
-        }
     }
 
     ngOnDestroy(): void {
