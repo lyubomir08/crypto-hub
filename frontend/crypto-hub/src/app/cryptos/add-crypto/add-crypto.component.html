@@ -47,24 +47,6 @@
         </div>
 
         <div class="form-group">
-            <label for="currentPrice">Current Price</label>
-            <input type="number" id="currentPrice" name="currentPrice" ngModel #inputPrice="ngModel"
-                placeholder="Enter current price" required min="0.01" />
-            @if (inputPrice?.touched) {
-            @if (inputPrice?.errors?.['required']) {
-            <div class="error">
-                Crypto price is required!
-            </div>
-            }
-            @if (inputPrice?.errors?.['min']) {
-            <div class="error">
-                Crypto price must cost at least 0.01
-            </div>
-            }
-            }
-        </div>
-
-        <div class="form-group">
             <label for="description">Description</label>
             <textarea id="description" name="description" ngModel #inputDescription="ngModel"
                 placeholder="Enter a description" rows="4" required minlength="10"></textarea>
