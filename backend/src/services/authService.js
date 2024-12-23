@@ -2,10 +2,15 @@ import User from '../models/User.js';
 import bcrypt from 'bcrypt';
 import jwt from '../utils/jwt.js';
 
-const generateToken = async (userId) => {
-    return await jwt.sign({ userId }, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRES_IN || '12h',
-    });
+const generateToken = (user) => {
+    return jwt.sign(
+        {
+            userId: user._id,
+            email: user.email,
+        },
+        process.env.JWT_SECRET,
+        { expiresIn: '1d' }
+    );
 };
 
 const registerUser = async (username, email, password, rePassword) => {

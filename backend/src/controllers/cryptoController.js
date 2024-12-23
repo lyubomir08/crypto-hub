@@ -1,4 +1,7 @@
 import cryptoService from '../services/cryptoService.js';
+import User from '../models/User.js';
+
+const isAdmin = (email) => email === 'admin123@gmail.com';
 
 const getAllCryptos = async (req, res) => {
     try {
@@ -40,7 +43,14 @@ const updateCrypto = async (req, res) => {
     try {
         const crypto = await cryptoService.getCryptoById(id);
 
-        if (!crypto || crypto.owner?._id.toString() !== req.userId) {
+        if (!crypto) {
+            return res.status(404).json({ message: 'Cryptocurrency not found' });
+        }
+
+        const user = await User.findById(req.userId);
+        const userEmail = user.email;
+
+        if (crypto.owner?._id.toString() !== req.userId && !isAdmin(userEmail)) {
             return res.status(403).json({ message: 'Unauthorized to update this cryptocurrency' });
         }
 
@@ -55,9 +65,16 @@ const deleteCrypto = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const crypto = await cryptoService.getCryptoById(id);   
+        const crypto = await cryptoService.getCryptoById(id);
 
-        if (!crypto || crypto.owner?._id.toString() !== req.userId) {
+        if (!crypto) {
+            return res.status(404).json({ message: 'Cryptocurrency not found' });
+        }
+
+        const user = await User.findById(req.userId);
+        const userEmail = user.email;
+
+        if (crypto.owner?._id.toString() !== req.userId && !isAdmin(userEmail)) {
             return res.status(403).json({ message: 'Unauthorized to delete this cryptocurrency' });
         }
 
