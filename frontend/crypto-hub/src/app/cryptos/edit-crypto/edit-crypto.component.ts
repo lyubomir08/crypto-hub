@@ -4,6 +4,7 @@ import { ApiService } from '../../api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EditDetails } from '../../types/crypto';
 import { LoaderComponent } from '../../shared/loader/loader.component';
+import { symbolToIdMap } from '../../constants';
 
 @Component({
     selector: 'app-edit-crypto',
@@ -25,20 +26,6 @@ export class EditCryptoComponent implements OnInit {
     isLoading: boolean = true;
     errorMessage: string | null = null;
 
-    private symbolToIdMap: { [key: string]: string } = {
-        btc: 'bitcoin',         
-        eth: 'ethereum',        
-        bnb: 'binancecoin',     
-        xrp: 'ripple',          
-        ada: 'cardano',         
-        sol: 'solana',          
-        doge: 'dogecoin',       
-        matic: 'polygon',       
-        dot: 'polkadot',        
-        ltc: 'litecoin',
-        asd: 'asd'
-    };
-
     constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit(): void {
@@ -59,7 +46,7 @@ export class EditCryptoComponent implements OnInit {
     editCrypto(): void {
         if (!this.crypto) return;
     
-        const cryptoId = this.symbolToIdMap[this.crypto.symbol.toLowerCase()];
+        const cryptoId = symbolToIdMap[this.crypto.symbol.toLowerCase()];
         if (!cryptoId) {
             this.errorMessage = 'No valid CoinGecko ID to fetch price.';
             return;

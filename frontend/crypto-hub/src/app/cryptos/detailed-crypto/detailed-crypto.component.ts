@@ -7,6 +7,7 @@ import { UserForAuth } from '../../types/user';
 import { UserService } from '../../user/user.service';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { symbolToIdMap } from '../../constants';
 
 @Component({
     selector: 'app-detailed-crypto',
@@ -23,20 +24,6 @@ export class DetailedCryptoComponent implements OnInit {
     isEditing: string | null = null;
     isOwner: boolean = false;
     originalCommentText: { [key: string]: string } = {};
-
-    private symbolToIdMap: { [key: string]: string } = {
-        btc: 'bitcoin',
-        eth: 'ethereum',
-        bnb: 'binancecoin',
-        xrp: 'ripple',
-        ada: 'cardano',
-        sol: 'solana',
-        doge: 'dogecoin',
-        matic: 'polygon',
-        dot: 'polkadot',
-        ltc: 'litecoin',
-        asd: 'asd'
-    };
 
     constructor(
         private router: Router,
@@ -65,7 +52,7 @@ export class DetailedCryptoComponent implements OnInit {
                 this.crypto = crypto;
                 this.isLoading = false;
                 this.checkOwnership(crypto);
-                this.fetchLivePrice(crypto.symbol); // Fetch live price
+                this.fetchLivePrice(crypto.symbol);
             },
             error: (err) => {
                 this.errorMessage = err?.message || 'Failed to load cryptocurrency details.';
@@ -75,7 +62,7 @@ export class DetailedCryptoComponent implements OnInit {
     }
 
     private fetchLivePrice(symbol: string): void {
-        const id = this.symbolToIdMap[symbol.toLowerCase()];
+        const id = symbolToIdMap[symbol.toLowerCase()];
         if (!id) {
             console.error('No valid CoinGecko ID to fetch price.');
             return;
