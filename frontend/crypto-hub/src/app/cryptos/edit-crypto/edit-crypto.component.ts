@@ -25,6 +25,20 @@ export class EditCryptoComponent implements OnInit {
     isLoading: boolean = true;
     errorMessage: string | null = null;
 
+    private symbolToIdMap: { [key: string]: string } = {
+        btc: 'bitcoin',         
+        eth: 'ethereum',        
+        bnb: 'binancecoin',     
+        xrp: 'ripple',          
+        ada: 'cardano',         
+        sol: 'solana',          
+        doge: 'dogecoin',       
+        matic: 'polygon',       
+        dot: 'polkadot',        
+        ltc: 'litecoin',
+        asd: 'asd'
+    };
+
     constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit(): void {
@@ -44,23 +58,47 @@ export class EditCryptoComponent implements OnInit {
 
     editCrypto(): void {
         if (!this.crypto) return;
-
-        this.apiService.updateCrypto(
-            this.crypto._id,
-            this.crypto.name,
-            this.crypto.symbol,
-            this.crypto.currentPrice,
-            this.crypto.description,
-            this.crypto.imageUrl
-        ).subscribe({
-            next: () => {
-                this.router.navigate(['/cryptos', this.crypto?._id, 'details']);
+    
+        const cryptoId = this.symbolToIdMap[this.crypto.symbol.toLowerCase()];
+        if (!cryptoId) {
+            this.errorMessage = 'No valid CoinGecko ID to fetch price.';
+            return;
+        }
+    
+        this.apiService.getLivePrices([cryptoId]).subscribe({
+            next: (livePrices) => {
+                const livePrice = livePrices[cryptoId]?.usd;
+                if (!livePrice) {
+                    this.errorMessage = 'Live price could not be fetched.';
+                    return;
+                }
+    
+                const updatedCrypto = {
+                    ...this.crypto,
+                    currentPrice: livePrice,
+                };
+    
+                this.apiService.updateCrypto(
+                    updatedCrypto._id,
+                    updatedCrypto.name,
+                    updatedCrypto.symbol,
+                    updatedCrypto.currentPrice,
+                    updatedCrypto.description,
+                    updatedCrypto.imageUrl
+                ).subscribe({
+                    next: () => this.router.navigate(['/cryptos', updatedCrypto._id, 'details']),
+                    error: (err) => {
+                        this.errorMessage = err?.message || 'Failed to update cryptocurrency details.';
+                    },
+                });
             },
             error: (err) => {
-                this.errorMessage = err?.message;
-            }
+                this.errorMessage = `Failed to fetch live price: ${err.message}`;
+            },
         });
     }
+    
+    
 
     onCancel(event: Event): void {
         event.preventDefault();
