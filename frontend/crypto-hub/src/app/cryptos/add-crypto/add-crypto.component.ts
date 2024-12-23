@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ApiService } from '../../api.service';
 import { Router } from '@angular/router';
-import { symbolToIdMap } from '../../constants'; // Импортирайте вашия map със символите
+import { symbolToIdMap } from '../../constants';
 
 @Component({
     selector: 'app-add-crypto',
@@ -23,11 +23,10 @@ export class AddCryptoComponent {
         }
 
         const name = form.value.name;
-        const symbol = form.value.symbol.toLowerCase(); // Уверете се, че символът е малки букви
+        const symbol = form.value.symbol.toLowerCase();
         const description = form.value.description;
         const imageUrl = form.value.imageUrl;
 
-        // Извличане на текущата цена чрез API
         const id = symbolToIdMap[symbol];
         if (!id) {
             this.errorMessage = `Symbol ${symbol} is not supported.`;
@@ -45,7 +44,6 @@ export class AddCryptoComponent {
                     return;
                 }
 
-                // Изпращане на криптовалутата със зададената текуща цена
                 this.apiService
                     .addCrypto(name, symbol, currentPrice, description, imageUrl)
                     .subscribe({
