@@ -66,7 +66,7 @@ export class EditCryptoComponent implements OnInit {
         }
     
         this.apiService.getLivePrices([cryptoId]).subscribe({
-            next: (livePrices) => {
+            next: (livePrices) => {             
                 const livePrice = livePrices[cryptoId]?.usd;
                 if (!livePrice) {
                     this.errorMessage = 'Live price could not be fetched.';
@@ -98,8 +98,6 @@ export class EditCryptoComponent implements OnInit {
         });
     }
     
-    
-
     onCancel(event: Event): void {
         event.preventDefault();
         history.back();
