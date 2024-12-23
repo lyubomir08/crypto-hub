@@ -80,8 +80,7 @@
                 <p class="text-xl font-semibold text-gray-800">No comments yet</p>
             </div>
             }
-            @if (currentUser && !isOwner) {
-            <form>
+            <form *ngIf="currentUser && (isOwner || isAdmin || !isOwner)">
                 <div class="flex items-start space-x-4 mt-6">
                     <div class="flex-1">
                         <textarea #inputText
@@ -93,8 +92,7 @@
                         </button>
                     </div>
                 </div>
-            </form>
-            }
+            </form>            
         </div>
     </div>
     }
