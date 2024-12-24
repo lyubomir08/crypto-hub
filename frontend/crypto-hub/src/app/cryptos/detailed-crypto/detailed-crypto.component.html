@@ -52,7 +52,7 @@
                             class="w-full mt-2 p-2 rounded-lg border border-gray-300 focus:ring focus:ring-blue-300 text-sm">
                             </textarea>
                     </div>
-                    @if (comment?.user?._id == currentUser?._id) {
+                    @if ((comment?.user?._id == currentUser?._id) || isAdmin) {
                     <div class="mt-2 flex space-x-3">
                         <button *ngIf="isEditing !== comment?._id" (click)="editComment(comment)"
                             class="bg-blue-500 text-white text-sm py-1 px-3 rounded-lg hover:bg-blue-400">
