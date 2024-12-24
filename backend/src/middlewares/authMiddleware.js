@@ -1,4 +1,7 @@
 import jwt from "../utils/jwt.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const authMiddleware = async (req, res, next) => {
     try {
@@ -10,6 +13,8 @@ const authMiddleware = async (req, res, next) => {
 
         const decoded = await jwt.verify(token, process.env.JWT_SECRET);
         req.userId = decoded.userId;
+
+        req.isAdmin = decoded.userId === process.env.ADMIN_USER_ID;
         req.isAuthenticated = true;
 
         next();

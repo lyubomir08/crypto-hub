@@ -115,7 +115,8 @@ const updateComment = async (req, res) => {
 
     try {
         const userId = req.userId;
-        const updatedComment = await cryptoService.updateComment(id, commentId, userId, text);
+        const isAdmin = req.isAdmin;
+        const updatedComment = await cryptoService.updateComment(id, commentId, userId, text, isAdmin);
         res.json(updatedComment);
     } catch (error) {
         res.status(400).json({ message: error.message });
@@ -127,7 +128,8 @@ const deleteComment = async (req, res) => {
 
     try {
         const userId = req.userId;
-        const response = await cryptoService.deleteComment(id, commentId, userId);
+        const isAdmin = req.isAdmin;
+        const response = await cryptoService.deleteComment(id, commentId, userId, isAdmin);
         res.json(response);
     } catch (error) {
         res.status(400).json({ message: error.message });
