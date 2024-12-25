@@ -11,6 +11,7 @@ import { DetailedCryptoComponent } from './cryptos/detailed-crypto/detailed-cryp
 import { EditCryptoComponent } from './cryptos/edit-crypto/edit-crypto.component';
 import { AuthGuard } from './guards/auth.guard';
 import { LoggedInGuard } from './guards/loggedIn.guard';
+import { ProfileComponent } from './profile/profile.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -29,6 +30,7 @@ export const routes: Routes = [
         ]
     },
     {path: 'search', component: SearchCryptoComponent},
+    {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
     { path: 'login', component: LoginComponent, canActivate: [LoggedInGuard] },
     { path: 'register', component: RegisterComponent, canActivate: [LoggedInGuard] },
     { path: '404', component: PageNotFoundComponent },
