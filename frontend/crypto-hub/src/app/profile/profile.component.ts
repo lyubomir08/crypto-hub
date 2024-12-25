@@ -3,12 +3,13 @@ import { LoaderComponent } from '../shared/loader/loader.component';
 import { CommonModule } from '@angular/common';
 import { UserProfile } from '../types/user';
 import { FormsModule } from '@angular/forms';
+import { UserService } from '../user/user.service';
 
 @Component({
     selector: 'app-profile',
     standalone: true,
     templateUrl: './profile.component.html',
-    imports: [LoaderComponent, CommonModule,FormsModule],
+    imports: [LoaderComponent, CommonModule, FormsModule],
     styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent implements OnInit {
@@ -23,22 +24,25 @@ export class ProfileComponent implements OnInit {
     newUsername = '';
     newEmail = '';
 
-    constructor() { }
+    constructor(private UserService: UserService) { }
 
     ngOnInit(): void {
         this.loadUserProfile();
     }
 
     private loadUserProfile(): void {
-        this.isLoading = true;
-        setTimeout(() => {
-            this.user = {
-                username: 'JohnDoe',
-                email: 'john.doe@example.com',
-                createdAt: new Date(),
-            };
-            this.isLoading = false;
-        }, 500);
+        this.UserService.getProfile().subscribe({
+            next: (user) => {
+                setTimeout(() => {
+                    this.user = user;
+                    this.isLoading = false;
+                }, 200);
+            },
+            error: (error) => {
+                this.errorMessage = error?.message || 'An error occurred while loading the user profile.';
+                this.isLoading = false;
+            },
+        });
     }
 
     editUsername(): void {
