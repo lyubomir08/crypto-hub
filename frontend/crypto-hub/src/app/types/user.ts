@@ -4,5 +4,11 @@ export interface UserForAuth {
     password: string;
     rePassword: string;
     _id?: string;
-    createdAt?: string;
+}
+
+export interface UserProfile {
+    email: string;
+    username: string;
+    _id?: string;
+    createdAt?: string | Date;
 }
