@@ -22,7 +22,6 @@ export class DetailedCryptoComponent implements OnInit {
     currentUser: UserForAuth | null = null;
     errorMessage: string | null = null;
     isEditing: string | null = null;
-    isOwner: boolean = false;
     originalCommentText: { [key: string]: string } = {};
 
     constructor(
@@ -51,7 +50,6 @@ export class DetailedCryptoComponent implements OnInit {
             next: (crypto: CryptoDetails) => {
                 this.crypto = crypto;
                 this.isLoading = false;
-                this.checkOwnership(crypto);
                 this.fetchLivePrice(crypto.symbol);
             },
             error: (err) => {
@@ -87,10 +85,6 @@ export class DetailedCryptoComponent implements OnInit {
             next: (user) => (this.currentUser = user),
             error: () => (this.currentUser = null),
         });
-    }
-
-    private checkOwnership(crypto: CryptoDetails): void {
-        this.isOwner = crypto.owner?._id === this.currentUser?._id;
     }
 
     deleteCrypto(): void {

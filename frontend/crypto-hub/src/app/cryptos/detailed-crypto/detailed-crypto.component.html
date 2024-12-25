@@ -52,7 +52,7 @@
                             class="w-full mt-2 p-2 rounded-lg border border-gray-300 focus:ring focus:ring-blue-300 text-sm">
                             </textarea>
                     </div>
-                    @if ((comment?.user?._id == currentUser?._id) || isAdmin) {
+                    @if (isAdmin || (comment?.user?._id === currentUser?._id)) {
                     <div class="mt-2 flex space-x-3">
                         <button *ngIf="isEditing !== comment?._id" (click)="editComment(comment)"
                             class="bg-blue-500 text-white text-sm py-1 px-3 rounded-lg hover:bg-blue-400">
@@ -80,7 +80,7 @@
                 <p class="text-xl font-semibold text-gray-800">No comments yet</p>
             </div>
             }
-            <form *ngIf="currentUser && (isOwner || isAdmin || !isOwner)">
+            <form *ngIf="currentUser">
                 <div class="flex items-start space-x-4 mt-6">
                     <div class="flex-1">
                         <textarea #inputText
@@ -92,7 +92,7 @@
                         </button>
                     </div>
                 </div>
-            </form>            
+            </form>
         </div>
     </div>
     }
