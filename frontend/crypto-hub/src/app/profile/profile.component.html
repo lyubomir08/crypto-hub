@@ -11,6 +11,45 @@
             <h2 class="text-2xl font-semibold text-gray-800">{{ user?.username }}</h2>
             <p class="text-gray-600 mt-2">Email: {{ user?.email }}</p>
             <p class="text-gray-600 mt-2">Joined: {{ user?.createdAt | date:'mediumDate' }}</p>
+
+            <div class="mt-4 flex space-x-4">
+                <button 
+                    class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+                    (click)="editUsername()">
+                    Update Username
+                </button>
+                <button 
+                    class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
+                    (click)="editEmail()">
+                    Update Email
+                </button>
+            </div>
+
+            <div *ngIf="isEditingUsername" class="mt-4">
+                <input 
+                    type="text" 
+                    class="border border-gray-300 rounded w-full p-2" 
+                    [(ngModel)]="newUsername" 
+                    placeholder="Enter new username" />
+                <button 
+                    class="bg-blue-500 text-white py-2 px-4 rounded mt-2 hover:bg-blue-600"
+                    (click)="saveUsername()">
+                    Save
+                </button>
+            </div>
+
+            <div *ngIf="isEditingEmail" class="mt-4">
+                <input 
+                    type="email" 
+                    class="border border-gray-300 rounded w-full p-2" 
+                    [(ngModel)]="newEmail" 
+                    placeholder="Enter new email" />
+                <button 
+                    class="bg-green-500 text-white py-2 px-4 rounded mt-2 hover:bg-green-600"
+                    (click)="saveEmail()">
+                    Save
+                </button>
+            </div>
         </div>
     }
 </div>
