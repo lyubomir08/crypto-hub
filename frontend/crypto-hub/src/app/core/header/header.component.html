@@ -1,7 +1,7 @@
 <header class="bg-gray-800 text-white">
     <div class="container mx-auto flex justify-between items-center py-4 px-6">
         <h1 class="text-2xl font-bold">Crypto Hub</h1>
-        <nav class="space-x-4">
+        <nav class="flex items-center space-x-4">
             <a routerLink="home" class="hover:text-blue-400">Home</a>
             <a routerLink="cryptos" class="hover:text-blue-400">Catalog</a>
             <a routerLink="about" class="hover:text-blue-400">About</a>
@@ -10,7 +10,12 @@
             <ng-container *ngIf="isLoggedIn">
                 <a *ngIf="isAdmin" routerLink="cryptos/create" class="hover:text-blue-400">Add</a>
                 <a routerLink="logout" class="hover:text-blue-400" (click)="logout()">Logout</a>
-                <a routerLink="profile" class="hover:text-blue-400" (click)="logout()">Profile</a>
+                <img 
+                    src="https://softuni.bg/users/profile/showavatar/890319ff-b9f3-42fb-aef7-fcb2338f9f8d" 
+                    alt="Profile Picture" 
+                    class="w-10 h-10 rounded-full hover:cursor-pointer"
+                    routerLink="profile"
+                />
             </ng-container>
             <ng-container *ngIf="!isLoggedIn">
                 <a routerLink="login" class="hover:text-blue-400">Login</a>
