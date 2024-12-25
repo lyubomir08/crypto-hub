@@ -10,6 +10,7 @@
             <ng-container *ngIf="isLoggedIn">
                 <a *ngIf="isAdmin" routerLink="cryptos/create" class="hover:text-blue-400">Add</a>
                 <a routerLink="logout" class="hover:text-blue-400" (click)="logout()">Logout</a>
+                <a routerLink="profile" class="hover:text-blue-400" (click)="logout()">Profile</a>
             </ng-container>
             <ng-container *ngIf="!isLoggedIn">
                 <a routerLink="login" class="hover:text-blue-400">Login</a>

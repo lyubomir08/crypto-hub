@@ -30,7 +30,7 @@ export const routes: Routes = [
         ]
     },
     {path: 'search', component: SearchCryptoComponent},
-    {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
+    {path: 'profile', component: ProfileComponent},
     { path: 'login', component: LoginComponent, canActivate: [LoggedInGuard] },
     { path: 'register', component: RegisterComponent, canActivate: [LoggedInGuard] },
     { path: '404', component: PageNotFoundComponent },
