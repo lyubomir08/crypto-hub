@@ -45,7 +45,7 @@ const loginUser = async (email, password) => {
         throw new Error('Invalid email or password');
     }
 
-    const token = await generateToken(user._id);
+    const token = await generateToken(user);
 
     return {
         id: user._id,
@@ -56,7 +56,7 @@ const loginUser = async (email, password) => {
 };
 
 const getUserProfile = async (userId) => {
-    const user = await User.findOne({ _id: userId }, { password: 0, __v: 0 });
+    const user = await User.findById(userId, { password: 0, __v: 0 });
     
     if (!user) {
         throw new Error('User not found');
@@ -64,4 +64,18 @@ const getUserProfile = async (userId) => {
     return user;
 };
 
-export default { registerUser, loginUser, getUserProfile };
+const updateUserProfile = async (userId, { username, email }) => {
+    const updatedFields = {};
+    if (username) updatedFields.username = username;
+    if (email) updatedFields.email = email;
+
+    const updatedUser = await User.findByIdAndUpdate(userId, updatedFields, { new: true, fields: { password: 0 } });
+
+    if (!updatedUser) {
+        throw new Error('User not found or update failed');
+    }
+
+    return updatedUser;
+};
+
+export default { registerUser, loginUser, getUserProfile, updateUserProfile };

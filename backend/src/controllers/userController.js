@@ -1,5 +1,17 @@
 import authService from '../services/authService.js';
 
+const updateUser = async (req, res) => {
+    const userId = req.userId;
+    const { username, email } = req.body;
+
+    try {
+        const updatedUser = await authService.updateUserProfile(userId, { username, email });
+        res.status(200).json(updatedUser);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
 const register = async (req, res) => {
     const { username, email, password, rePassword } = req.body;
 
@@ -39,4 +51,4 @@ const logout = async (req, res) => {
     res.status(200).send({ message: 'Logout successful' })
 };
 
-export default { register, login, logout, getProfileInfo };
+export default { register, login, logout, getProfileInfo, updateUser };
