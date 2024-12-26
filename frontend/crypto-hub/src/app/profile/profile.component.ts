@@ -1,84 +1,70 @@
 import { Component, OnInit } from '@angular/core';
-import { LoaderComponent } from '../shared/loader/loader.component';
 import { CommonModule } from '@angular/common';
-import { UserProfile } from '../types/user';
 import { FormsModule } from '@angular/forms';
+import { LoaderComponent } from '../shared/loader/loader.component';
+import { UserProfile } from '../types/user';
 import { UserService } from '../user/user.service';
 
 @Component({
     selector: 'app-profile',
     standalone: true,
+    imports: [CommonModule, FormsModule, LoaderComponent],
     templateUrl: './profile.component.html',
-    imports: [LoaderComponent, CommonModule, FormsModule],
     styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent implements OnInit {
     user: UserProfile | null = null;
-    isLoading: boolean = true;
+    isLoading = true;
     errorMessage: string | null = null;
 
-    isEditingUsername = false;
-    isEditingEmail = false;
+    editingField: 'username' | 'email' | null = null;
+    updatedField: { username?: string; email?: string } = {};
 
-    newUsername: string = '';
-    newEmail: string = '';
-
-    constructor(private UserService: UserService) {}
+    constructor(private userService: UserService) {}
 
     ngOnInit(): void {
         this.loadUserProfile();
     }
 
     private loadUserProfile(): void {
-        this.UserService.getProfile().subscribe({
+        this.userService.getProfile().subscribe({
             next: (user) => {
-                setTimeout(() => {
-                    this.user = user;
-                    this.isLoading = false;
-                }, 200);
+                this.user = user;
+                this.isLoading = false;
             },
             error: (error) => {
-                this.errorMessage = error?.message || 'An error occurred while loading the user profile.';
+                this.errorMessage = error?.message || 'Failed to load user profile.';
                 this.isLoading = false;
             },
         });
     }
 
-    editUsername(): void {
+    editField(field: 'username' | 'email'): void {
         if (!this.user) return;
-        this.isEditingUsername = true;
-        this.newUsername = this.user.username || '';
+        this.editingField = field;
+        this.updatedField[field] = this.user[field] || '';
     }
 
-    saveUsername(): void {
-        if (!this.newUsername.trim() || !this.user) return;
+    saveField(): void {
+        if (!this.user || !this.updatedField[this.editingField!]?.trim()) return;
+    
+        const updatedValue = this.updatedField[this.editingField!]?.trim();
+    
+        this.userService.updateProfile(
+            this.editingField === 'username' ? updatedValue! : this.user.username!,
+            this.editingField === 'email' ? updatedValue! : this.user.email!
+        ).subscribe({
+            next: (updatedUser) => {
+                this.user = updatedUser;
+                this.editingField = null;
+            },
+            error: (err) => {
+                this.errorMessage = err?.message || 'Failed to update profile.';
+            }
+        });
+    }    
 
-        this.user.username = this.newUsername;
-        this.isEditingUsername = false;
-        console.log('Username updated locally:', this.newUsername);
-    }
-
-    cancelEditUsername(): void {
-        this.isEditingUsername = false;
-        this.newUsername = this.user?.username || '';
-    }
-
-    editEmail(): void {
-        if (!this.user) return;
-        this.isEditingEmail = true;
-        this.newEmail = this.user.email || '';
-    }
-
-    saveEmail(): void {
-        if (!this.newEmail.trim() || !this.user) return;
-
-        this.user.email = this.newEmail;
-        this.isEditingEmail = false;
-        console.log('Email updated locally:', this.newEmail);
-    }
-
-    cancelEditEmail(): void {
-        this.isEditingEmail = false;
-        this.newEmail = this.user?.email || '';
+    cancelEdit(): void {
+        this.editingField = null;
     }
 }

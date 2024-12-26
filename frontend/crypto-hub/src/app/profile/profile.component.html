@@ -1,72 +1,68 @@
 <div class="container mx-auto p-6 max-w-3xl">
     <h1 class="text-3xl font-bold text-gray-900 mb-6 text-center">Profile</h1>
+
+    <app-loader *ngIf="isLoading"></app-loader>
     
-    @if (isLoading) {
-        <app-loader />
-    } @else if (errorMessage) {
-        <div class="text-red-500 bg-red-100 p-4 rounded-lg border border-red-200">
-            <p>{{ errorMessage }}</p>
-        </div>
-    } @else {
-        <div class="bg-white shadow-xl rounded-lg p-6 border border-gray-200">
-            <h2 class="text-2xl font-semibold text-gray-800">{{ user?.username }}</h2>
-            <p class="text-gray-600 mt-2">Email: <span class="font-medium">{{ user?.email }}</span></p>
-            <p class="text-gray-600 mt-2">Joined: <span class="font-medium">{{ user?.createdAt | date:'mediumDate' }}</span></p>
+    <div *ngIf="errorMessage" class="fixed top-16 right-4 bg-red-500 text-white p-4 rounded shadow-lg z-50">
+        <p>{{ errorMessage }}</p>
+    </div>
 
-            <div class="mt-6 flex flex-wrap gap-4">
+    <div *ngIf="!isLoading && !errorMessage" class="bg-white shadow-lg rounded-xl border border-gray-200 p-6">
+        <h2 class="text-2xl font-semibold text-gray-800">{{ user?.username }}</h2>
+        <p class="text-gray-600 mt-2">Email: <span class="font-medium">{{ user?.email }}</span></p>
+        <p class="text-gray-600 mt-2">Joined: <span class="font-medium">{{ user?.createdAt | date:'mediumDate' }}</span></p>
+
+        <div class="mt-6 flex flex-wrap gap-4">
+            <button 
+                class="bg-blue-500 text-white py-2 px-6 rounded-lg shadow hover:bg-blue-400 transition"
+                (click)="editField('username')">
+                Update Username
+            </button>
+            <button 
+                class="bg-green-500 text-white py-2 px-6 rounded-lg shadow hover:bg-green-400 transition"
+                (click)="editField('email')">
+                Update Email
+            </button>
+        </div>
+
+        <div *ngIf="editingField === 'username'" class="mt-6">
+            <input 
+                type="text" 
+                class="border border-gray-300 rounded-lg w-full p-3 focus:ring focus:ring-blue-300 outline-none transition"
+                [(ngModel)]="updatedField.username" 
+                placeholder="Enter new username" />
+            <div class="flex gap-4 mt-3">
                 <button 
-                    class="bg-blue-500 text-white py-2 px-6 rounded-lg shadow hover:bg-blue-600 transition"
-                    (click)="editUsername()">
-                    Update Username
+                    class="bg-blue-500 text-white py-2 px-6 rounded-lg shadow hover:bg-blue-400 transition"
+                    (click)="saveField()">
+                    Save
                 </button>
                 <button 
-                    class="bg-green-500 text-white py-2 px-6 rounded-lg shadow hover:bg-green-600 transition"
-                    (click)="editEmail()">
-                    Update Email
+                    class="bg-gray-500 text-white py-2 px-6 rounded-lg shadow hover:bg-gray-400 transition"
+                    (click)="cancelEdit()">
+                    Cancel
                 </button>
             </div>
+        </div>
 
-            <!-- Edit Username Section -->
-            <div *ngIf="isEditingUsername" class="mt-6">
-                <input 
-                    type="text" 
-                    class="border border-gray-300 rounded-lg w-full p-3 focus:ring-2 focus:ring-blue-500 outline-none transition"
-                    [(ngModel)]="newUsername" 
-                    placeholder="Enter new username" />
-                <div class="flex gap-4 mt-3">
-                    <button 
-                        class="bg-blue-500 text-white py-2 px-6 rounded-lg shadow hover:bg-blue-600 transition"
-                        (click)="saveUsername()">
-                        Save
-                    </button>
-                    <button 
-                        class="bg-red-500 text-white py-2 px-6 rounded-lg shadow hover:bg-gray-500 transition"
-                        (click)="cancelEditUsername()">
-                        Cancel
-                    </button>
-                </div>
-            </div>
-
-            <!-- Edit Email Section -->
-            <div *ngIf="isEditingEmail" class="mt-6">
-                <input 
-                    type="email" 
-                    class="border border-gray-300 rounded-lg w-full p-3 focus:ring-2 focus:ring-green-500 outline-none transition"
-                    [(ngModel)]="newEmail" 
-                    placeholder="Enter new email" />
-                <div class="flex gap-4 mt-3">
-                    <button 
-                        class="bg-green-500 text-white py-2 px-6 rounded-lg shadow hover:bg-green-600 transition"
-                        (click)="saveEmail()">
-                        Save
-                    </button>
-                    <button 
-                        class="bg-red-500 text-white py-2 px-6 rounded-lg shadow hover:bg-gray-500 transition"
-                        (click)="cancelEditEmail()">
-                        Cancel
-                    </button>
-                </div>
+        <div *ngIf="editingField === 'email'" class="mt-6">
+            <input 
+                type="email" 
+                class="border border-gray-300 rounded-lg w-full p-3 focus:ring focus:ring-green-300 outline-none transition"
+                [(ngModel)]="updatedField.email" 
+                placeholder="Enter new email" />
+            <div class="flex gap-4 mt-3">
+                <button 
+                    class="bg-green-500 text-white py-2 px-6 rounded-lg shadow hover:bg-green-400 transition"
+                    (click)="saveField()">
+                    Save
+                </button>
+                <button 
+                    class="bg-gray-500 text-white py-2 px-6 rounded-lg shadow hover:bg-gray-400 transition"
+                    (click)="cancelEdit()">
+                    Cancel
+                </button>
             </div>
         </div>
-    }
+    </div>
 </div>

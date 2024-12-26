@@ -73,6 +73,16 @@ export class UserService implements OnDestroy {
         );
     }
 
+    updateProfile(username: string, email: string) {
+        return this.http.put<UserForAuth>('/api/users/update', { username, email }).pipe(
+            tap((updatedUser) => {
+                this.user$$.next(updatedUser);
+                localStorage.setItem('user', updatedUser.email);
+            }),
+            catchError((err) => throwError(() => err))
+        );
+    }    
+
     getRole(): string | null {
         return localStorage.getItem('role');
     }
