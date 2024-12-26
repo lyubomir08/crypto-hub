@@ -20,11 +20,10 @@ export class ProfileComponent implements OnInit {
     isEditingUsername = false;
     isEditingEmail = false;
 
-    // Temporary variables for new values
-    newUsername = '';
-    newEmail = '';
+    newUsername: string = '';
+    newEmail: string = '';
 
-    constructor(private UserService: UserService) { }
+    constructor(private UserService: UserService) {}
 
     ngOnInit(): void {
         this.loadUserProfile();
@@ -48,7 +47,7 @@ export class ProfileComponent implements OnInit {
     editUsername(): void {
         if (!this.user) return;
         this.isEditingUsername = true;
-        this.newUsername = this.user.username;
+        this.newUsername = this.user.username || '';
     }
 
     saveUsername(): void {
@@ -59,10 +58,15 @@ export class ProfileComponent implements OnInit {
         console.log('Username updated locally:', this.newUsername);
     }
 
+    cancelEditUsername(): void {
+        this.isEditingUsername = false;
+        this.newUsername = this.user?.username || '';
+    }
+
     editEmail(): void {
         if (!this.user) return;
         this.isEditingEmail = true;
-        this.newEmail = this.user.email;
+        this.newEmail = this.user.email || '';
     }
 
     saveEmail(): void {
@@ -71,5 +75,10 @@ export class ProfileComponent implements OnInit {
         this.user.email = this.newEmail;
         this.isEditingEmail = false;
         console.log('Email updated locally:', this.newEmail);
+    }
+
+    cancelEditEmail(): void {
+        this.isEditingEmail = false;
+        this.newEmail = this.user?.email || '';
     }
 }

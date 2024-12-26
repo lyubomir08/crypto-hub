@@ -1,54 +1,71 @@
 <div class="container mx-auto p-6 max-w-3xl">
-    <h1 class="text-3xl font-bold text-gray-800 mb-4">Profile</h1>
+    <h1 class="text-3xl font-bold text-gray-900 mb-6 text-center">Profile</h1>
+    
     @if (isLoading) {
         <app-loader />
     } @else if (errorMessage) {
-        <div class="text-red-500 bg-red-100 p-4 rounded">
+        <div class="text-red-500 bg-red-100 p-4 rounded-lg border border-red-200">
             <p>{{ errorMessage }}</p>
         </div>
     } @else {
-        <div class="bg-white shadow-lg rounded-xl p-6 border border-gray-200">
+        <div class="bg-white shadow-xl rounded-lg p-6 border border-gray-200">
             <h2 class="text-2xl font-semibold text-gray-800">{{ user?.username }}</h2>
-            <p class="text-gray-600 mt-2">Email: {{ user?.email }}</p>
-            <p class="text-gray-600 mt-2">Joined: {{ user?.createdAt | date:'mediumDate' }}</p>
+            <p class="text-gray-600 mt-2">Email: <span class="font-medium">{{ user?.email }}</span></p>
+            <p class="text-gray-600 mt-2">Joined: <span class="font-medium">{{ user?.createdAt | date:'mediumDate' }}</span></p>
 
-            <div class="mt-4 flex space-x-4">
+            <div class="mt-6 flex flex-wrap gap-4">
                 <button 
-                    class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+                    class="bg-blue-500 text-white py-2 px-6 rounded-lg shadow hover:bg-blue-600 transition"
                     (click)="editUsername()">
                     Update Username
                 </button>
                 <button 
-                    class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
+                    class="bg-green-500 text-white py-2 px-6 rounded-lg shadow hover:bg-green-600 transition"
                     (click)="editEmail()">
                     Update Email
                 </button>
             </div>
 
-            <div *ngIf="isEditingUsername" class="mt-4">
+            <!-- Edit Username Section -->
+            <div *ngIf="isEditingUsername" class="mt-6">
                 <input 
                     type="text" 
-                    class="border border-gray-300 rounded w-full p-2" 
+                    class="border border-gray-300 rounded-lg w-full p-3 focus:ring-2 focus:ring-blue-500 outline-none transition"
                     [(ngModel)]="newUsername" 
                     placeholder="Enter new username" />
-                <button 
-                    class="bg-blue-500 text-white py-2 px-4 rounded mt-2 hover:bg-blue-600"
-                    (click)="saveUsername()">
-                    Save
-                </button>
+                <div class="flex gap-4 mt-3">
+                    <button 
+                        class="bg-blue-500 text-white py-2 px-6 rounded-lg shadow hover:bg-blue-600 transition"
+                        (click)="saveUsername()">
+                        Save
+                    </button>
+                    <button 
+                        class="bg-red-500 text-white py-2 px-6 rounded-lg shadow hover:bg-gray-500 transition"
+                        (click)="cancelEditUsername()">
+                        Cancel
+                    </button>
+                </div>
             </div>
 
-            <div *ngIf="isEditingEmail" class="mt-4">
+            <!-- Edit Email Section -->
+            <div *ngIf="isEditingEmail" class="mt-6">
                 <input 
                     type="email" 
-                    class="border border-gray-300 rounded w-full p-2" 
+                    class="border border-gray-300 rounded-lg w-full p-3 focus:ring-2 focus:ring-green-500 outline-none transition"
                     [(ngModel)]="newEmail" 
                     placeholder="Enter new email" />
-                <button 
-                    class="bg-green-500 text-white py-2 px-4 rounded mt-2 hover:bg-green-600"
-                    (click)="saveEmail()">
-                    Save
-                </button>
+                <div class="flex gap-4 mt-3">
+                    <button 
+                        class="bg-green-500 text-white py-2 px-6 rounded-lg shadow hover:bg-green-600 transition"
+                        (click)="saveEmail()">
+                        Save
+                    </button>
+                    <button 
+                        class="bg-red-500 text-white py-2 px-6 rounded-lg shadow hover:bg-gray-500 transition"
+                        (click)="cancelEditEmail()">
+                        Cancel
+                    </button>
+                </div>
             </div>
         </div>
     }
