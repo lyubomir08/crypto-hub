@@ -1,64 +1,68 @@
-<div class="container mx-auto p-6 max-w-3xl">
-    <h1 class="text-3xl font-bold text-gray-900 mb-6 text-center">Profile</h1>
+<div class="container mx-auto p-8 max-w-4xl bg-gradient-to-b from-blue-50 via-white to-gray-100 rounded-xl shadow-xl">
+    <h1 class="text-4xl font-bold text-gray-900 mb-8 text-center">Profile</h1>
 
     <app-loader *ngIf="isLoading"></app-loader>
-    
-    <div *ngIf="errorMessage" class="fixed top-16 right-4 bg-red-500 text-white p-4 rounded shadow-lg z-50">
+
+    <div *ngIf="errorMessage"
+        class="fixed top-16 right-4 bg-red-500 text-white p-4 rounded shadow-lg z-50 animate-bounce">
         <p>{{ errorMessage }}</p>
     </div>
 
-    <div *ngIf="!isLoading && !errorMessage" class="bg-white shadow-lg rounded-xl border border-gray-200 p-6">
-        <h2 class="text-2xl font-semibold text-gray-800">{{ user?.username }}</h2>
-        <p class="text-gray-600 mt-2">Email: <span class="font-medium">{{ user?.email }}</span></p>
-        <p class="text-gray-600 mt-2">Joined: <span class="font-medium">{{ user?.createdAt | date:'mediumDate' }}</span></p>
+    <div *ngIf="!isLoading && !errorMessage" class="bg-white shadow-2xl rounded-xl border border-gray-300 p-8">
+        <div class="flex items-center gap-6 mb-8">
+            <img src="https://softuni.bg/users/profile/showavatar/890319ff-b9f3-42fb-aef7-fcb2338f9f8d"
+                alt="Profile Picture" class="w-24 h-24 rounded-full border border-gray-300 shadow-md" />
+            <div>
+                <h2 class="text-3xl font-semibold text-gray-800">{{ user?.username }}</h2>
+                <p class="text-gray-600 text-lg">Email: <span class="font-medium">{{ user?.email }}</span></p>
+                <p class="text-gray-600 text-lg mt-2">Joined: <span class="font-medium">{{ user?.createdAt |
+                        date:'mediumDate' }}</span></p>
+            </div>
+        </div>
 
-        <div class="mt-6 flex flex-wrap gap-4">
-            <button 
-                class="bg-blue-500 text-white py-2 px-6 rounded-lg shadow hover:bg-blue-400 transition"
+        <div class="mt-8 flex flex-wrap gap-6">
+            <button
+                class="bg-blue-600 text-white py-3 px-8 rounded-xl shadow-lg hover:bg-blue-500 transition transform hover:scale-105"
                 (click)="editField('username')">
                 Update Username
             </button>
-            <button 
-                class="bg-green-500 text-white py-2 px-6 rounded-lg shadow hover:bg-green-400 transition"
+            <button
+                class="bg-green-600 text-white py-3 px-8 rounded-xl shadow-lg hover:bg-green-500 transition transform hover:scale-105"
                 (click)="editField('email')">
                 Update Email
             </button>
         </div>
 
-        <div *ngIf="editingField === 'username'" class="mt-6">
-            <input 
-                type="text" 
-                class="border border-gray-300 rounded-lg w-full p-3 focus:ring focus:ring-blue-300 outline-none transition"
-                [(ngModel)]="updatedField.username" 
-                placeholder="Enter new username" />
-            <div class="flex gap-4 mt-3">
-                <button 
-                    class="bg-blue-500 text-white py-2 px-6 rounded-lg shadow hover:bg-blue-400 transition"
+        <div *ngIf="editingField === 'username'" class="mt-8">
+            <input type="text"
+                class="border border-gray-300 rounded-lg w-full p-4 focus:ring focus:ring-blue-300 outline-none transition shadow-md"
+                [(ngModel)]="updatedField.username" placeholder="Enter new username" />
+            <div class="flex gap-6 mt-4">
+                <button
+                    class="bg-blue-600 text-white py-3 px-8 rounded-xl shadow-lg hover:bg-blue-500 transition transform hover:scale-105"
                     (click)="saveField()">
                     Save
                 </button>
-                <button 
-                    class="bg-gray-500 text-white py-2 px-6 rounded-lg shadow hover:bg-gray-400 transition"
+                <button
+                    class="bg-gray-500 text-white py-3 px-8 rounded-xl shadow-lg hover:bg-gray-400 transition transform hover:scale-105"
                     (click)="cancelEdit()">
                     Cancel
                 </button>
             </div>
         </div>
 
-        <div *ngIf="editingField === 'email'" class="mt-6">
-            <input 
-                type="email" 
-                class="border border-gray-300 rounded-lg w-full p-3 focus:ring focus:ring-green-300 outline-none transition"
-                [(ngModel)]="updatedField.email" 
-                placeholder="Enter new email" />
-            <div class="flex gap-4 mt-3">
-                <button 
-                    class="bg-green-500 text-white py-2 px-6 rounded-lg shadow hover:bg-green-400 transition"
+        <div *ngIf="editingField === 'email'" class="mt-8">
+            <input type="email"
+                class="border border-gray-300 rounded-lg w-full p-4 focus:ring focus:ring-green-300 outline-none transition shadow-md"
+                [(ngModel)]="updatedField.email" placeholder="Enter new email" />
+            <div class="flex gap-6 mt-4">
+                <button
+                    class="bg-green-600 text-white py-3 px-8 rounded-xl shadow-lg hover:bg-green-500 transition transform hover:scale-105"
                     (click)="saveField()">
                     Save
                 </button>
-                <button 
-                    class="bg-gray-500 text-white py-2 px-6 rounded-lg shadow hover:bg-gray-400 transition"
+                <button
+                    class="bg-gray-500 text-white py-3 px-8 rounded-xl shadow-lg hover:bg-gray-400 transition transform hover:scale-105"
                     (click)="cancelEdit()">
                     Cancel
                 </button>
