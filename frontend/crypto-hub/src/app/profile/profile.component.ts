@@ -20,6 +20,7 @@ export class ProfileComponent implements OnInit {
 
     editingField: 'username' | 'email' | null = null;
     updatedField: { username?: string; email?: string } = {};
+    showAllUsers: boolean = false; // Toggle state for viewing all users
 
     constructor(private userService: UserService) {}
 
@@ -30,7 +31,7 @@ export class ProfileComponent implements OnInit {
     ngOnInit(): void {
         this.loadUserProfile();
 
-        setTimeout(() => this.errorMessage = null, 2000);
+        setTimeout(() => (this.errorMessage = null), 2000);
     }
 
     private loadUserProfile(): void {
@@ -46,7 +47,14 @@ export class ProfileComponent implements OnInit {
         });
     }
 
-    loadAllUsers(): void {
+    toggleAllUsers(): void {
+        this.showAllUsers = !this.showAllUsers;
+        if (this.showAllUsers && !this.allUsers) {
+            this.loadAllUsers();
+        }
+    }
+
+    private loadAllUsers(): void {
         this.isLoading = true;
         this.userService.getAllUsers().subscribe({
             next: (users) => {
