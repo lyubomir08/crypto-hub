@@ -81,7 +81,13 @@ export class UserService implements OnDestroy {
             }),
             catchError((err) => throwError(() => err))
         );
-    }    
+    }
+    
+    getAllUsers()  {
+        return this.http.get(`api/users`).pipe(
+            catchError((err) => throwError(() => err))
+        );
+    }
 
     getRole(): string | null {
         return localStorage.getItem('role');
