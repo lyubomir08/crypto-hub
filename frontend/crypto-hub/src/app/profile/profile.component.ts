@@ -14,6 +14,7 @@ import { UserService } from '../user/user.service';
 })
 export class ProfileComponent implements OnInit {
     user: UserProfile | null = null;
+    allUsers: UserProfile[] | null = null;
     isLoading = true;
     errorMessage: string | null = null;
 
@@ -22,8 +23,14 @@ export class ProfileComponent implements OnInit {
 
     constructor(private userService: UserService) {}
 
+    get isAdmin(): boolean {
+        return this.userService.isAdmin();
+    }
+
     ngOnInit(): void {
         this.loadUserProfile();
+
+        setTimeout(() => this.errorMessage = null, 2000);
     }
 
     private loadUserProfile(): void {
@@ -39,6 +46,22 @@ export class ProfileComponent implements OnInit {
         });
     }
 
+    loadAllUsers(): void {
+        this.isLoading = true;
+        this.userService.getAllUsers().subscribe({
+            next: (users) => {
+                this.allUsers = users as UserProfile[];
+                this.isLoading = false;
+            },
+            error: (error) => {
+                this.isLoading = false;
+                if (error.status !== 403) {
+                    this.errorMessage = error?.message || 'Failed to load users.';
+                }
+            },
+        });
+    }
+
     editField(field: 'username' | 'email'): void {
         if (!this.user) return;
         this.editingField = field;
@@ -47,22 +70,24 @@ export class ProfileComponent implements OnInit {
 
     saveField(): void {
         if (!this.user || !this.updatedField[this.editingField!]?.trim()) return;
-    
+
         const updatedValue = this.updatedField[this.editingField!]?.trim();
-    
-        this.userService.updateProfile(
-            this.editingField === 'username' ? updatedValue! : this.user.username!,
-            this.editingField === 'email' ? updatedValue! : this.user.email!
-        ).subscribe({
-            next: (updatedUser) => {
-                this.user = updatedUser;
-                this.editingField = null;
-            },
-            error: (err) => {
-                this.errorMessage = err?.message || 'Failed to update profile.';
-            }
-        });
-    }    
+
+        this.userService
+            .updateProfile(
+                this.editingField === 'username' ? updatedValue! : this.user.username!,
+                this.editingField === 'email' ? updatedValue! : this.user.email!
+            )
+            .subscribe({
+                next: (updatedUser) => {
+                    this.user = updatedUser;
+                    this.editingField = null;
+                },
+                error: (err) => {
+                    this.errorMessage = err?.message || 'Failed to update profile.';
+                },
+            });
+    }
 
     cancelEdit(): void {
         this.editingField = null;
