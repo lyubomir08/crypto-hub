@@ -14,8 +14,10 @@ const updateUser = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
     try {
-        const isAdmin = req.isAdmin;
-        const users = await authService.getAllUsers(isAdmin);
+        if (!req.isAdmin) {
+            return res.status(403).json({ message: 'Access denied. Admin only.' });
+        }
+        const users = await authService.getAllUsers();
         res.status(200).json(users);
     } catch (error) {
         res.status(400).json({ message: error.message });
@@ -39,7 +41,7 @@ const login = async (req, res) => {
     try {
         const userData = await authService.loginUser(email, password);
         res.cookie("auth", userData.token, { httpOnly: true, sameSite: 'none', secure: true });
-        res.json({ id: userData.id, username: userData.username, email: userData.email});
+        res.json({ id: userData.id, username: userData.username, email: userData.email });
     } catch (error) {
         res.status(401).json({ message: error.message });
     }
@@ -58,7 +60,7 @@ const getProfileInfo = async (req, res) => {
 
 const logout = async (req, res) => {
     res.clearCookie('auth', { path: '/' });
-    res.status(200).send({ message: 'Logout successful' })
+    res.status(200).send({ message: 'Logout successful' });
 };
 
 export default { register, login, logout, getProfileInfo, updateUser, getAllUsers };

@@ -57,7 +57,6 @@ const loginUser = async (email, password) => {
 
 const getUserProfile = async (userId) => {
     const user = await User.findById(userId, { password: 0, __v: 0 });
-    
     if (!user) {
         throw new Error('User not found');
     }
@@ -78,15 +77,11 @@ const updateUserProfile = async (userId, { username, email }) => {
     return updatedUser;
 };
 
-const getAllUsers = async (isAdmin) => {
+const getAllUsers = async () => {
     const users = await User.find({}, { password: 0, __v: 0 });
-    if (!users) {
+    if (!users.length) {
         throw new Error('No users found');
     }
-    if(!isAdmin) {
-        return res.status(403).json({ message: 'Access denied. Admin only.' });
-    }
-
     return users;
 };
 
