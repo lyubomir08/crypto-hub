@@ -12,6 +12,16 @@ const updateUser = async (req, res) => {
     }
 };
 
+const getAllUsers = async (req, res) => {
+    try {
+        const isAdmin = req.isAdmin;
+        const users = await authService.getAllUsers(isAdmin);
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
 const register = async (req, res) => {
     const { username, email, password, rePassword } = req.body;
 
@@ -51,4 +61,4 @@ const logout = async (req, res) => {
     res.status(200).send({ message: 'Logout successful' })
 };
 
-export default { register, login, logout, getProfileInfo, updateUser };
+export default { register, login, logout, getProfileInfo, updateUser, getAllUsers };

@@ -78,4 +78,16 @@ const updateUserProfile = async (userId, { username, email }) => {
     return updatedUser;
 };
 
-export default { registerUser, loginUser, getUserProfile, updateUserProfile };
+const getAllUsers = async (isAdmin) => {
+    const users = await User.find({}, { password: 0, __v: 0 });
+    if (!users) {
+        throw new Error('No users found');
+    }
+    if(!isAdmin) {
+        return res.status(403).json({ message: 'Access denied. Admin only.' });
+    }
+
+    return users;
+};
+
+export default { registerUser, loginUser, getUserProfile, updateUserProfile, getAllUsers };

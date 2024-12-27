@@ -25,6 +25,7 @@ app.post('/api/users/register', userController.register);
 app.post('/api/users/login', userController.login);
 app.post('/api/users/logout', userController.logout);
 app.put('/api/users/update', authMiddleware, userController.updateUser);
+app.get('/api/users', authMiddleware, userController.getAllUsers);
 
 app.get('/api/users/profile',  authMiddleware, userController.getProfileInfo);
 
