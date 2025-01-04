@@ -1,1 +1,33 @@
-<p>chat works!</p>
+<div class="container mx-auto p-8 max-w-4xl bg-white rounded-xl shadow-lg">
+    <h1 class="text-2xl font-bold mb-4">Chat</h1>
+  
+    <div class="chat-header mb-4">
+      <h2 class="text-lg font-semibold">Chat with {{ recipientId }}</h2>
+    </div>
+  
+    <!-- Секция със съобщения -->
+    <div class="chat-messages overflow-y-auto h-64 bg-gray-50 border rounded-lg p-4">
+      <div *ngFor="let msg of messages" class="mb-4">
+        <p>
+          <strong>{{ msg.senderId === currentUser?._id ? 'You' : 'Recipient' }}</strong>: {{ msg.content }}
+        </p>
+        <p class="text-xs text-gray-500">{{ msg.timestamp | date: 'short' }}</p>
+      </div>
+    </div>
+  
+    <!-- Поле за въвеждане на съобщение -->
+    <div class="chat-input flex mt-4">
+      <input
+        type="text"
+        [(ngModel)]="newMessage"
+        class="flex-grow border rounded px-4 py-2"
+        placeholder="Type a message"
+      />
+      <button
+        class="bg-blue-500 text-white px-4 py-2 ml-2 rounded"
+        (click)="sendMessage()">
+        Send
+      </button>
+    </div>
+  </div>
+  
