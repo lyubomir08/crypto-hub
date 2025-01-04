@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import userController from './controllers/userController.js';
 import cryptoController from './controllers/cryptoController.js';
+import chatController from './controllers/chatController.js';
 import authMiddleware from './middlewares/authMiddleware.js';
 import cookieParser from 'cookie-parser';
 
@@ -27,7 +28,10 @@ app.post('/api/users/logout', userController.logout);
 app.put('/api/users/update', authMiddleware, userController.updateUser);
 app.get('/api/users', authMiddleware, userController.getAllUsers);
 
-app.get('/api/users/profile',  authMiddleware, userController.getProfileInfo);
+app.get('/api/users/profile', authMiddleware, userController.getProfileInfo);
+
+app.get('/api/chat/messages', authMiddleware, chatController.getMessages);
+app.post('/api/chat/send', authMiddleware, chatController.sendMessage);
 
 app.get('/api/cryptos', cryptoController.getAllCryptos);
 app.get('/api/cryptos/:id/details', cryptoController.getCryptoById);
