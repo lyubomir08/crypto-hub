@@ -9,7 +9,7 @@ import cryptoController from './controllers/cryptoController.js';
 import chatController from './controllers/chatController.js';
 import authMiddleware from './middlewares/authMiddleware.js';
 import cookieParser from 'cookie-parser';
-import Message from './models/messageModel.js'; // Модел за съобщения
+import Message from './models/Message.js';
 
 dotenv.config();
 
