@@ -11,6 +11,14 @@ export class ApiService {
 
     constructor(private http: HttpClient) { }
 
+    getMessages(sender: string, recipient: string) {
+        return this.http.get(`/api/chat/messages`, { params: { senderId: sender, recipientId: recipient } });
+    }
+
+    sendMessage(sender: string, recipient: string, content: string) {
+        return this.http.post(`/api/chat/send`, { senderId: sender, recipientId: recipient, content });
+    }
+
     getLivePrices(ids: string[], vsCurrency: string = 'usd') {
         const idsParam = ids.join(',');
         return this.http.get<LivePrices>(`${this.coingeckoUrl}/simple/price`, {
