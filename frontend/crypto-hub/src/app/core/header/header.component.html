@@ -16,6 +16,12 @@
                     class="w-10 h-10 rounded-full hover:cursor-pointer"
                     routerLink="profile"
                 />
+                <a
+                    [routerLink]="['/chat', currentUser?._id]"
+                    class="hover:text-blue-400"
+                    *ngIf="isLoggedIn">
+                    Chat
+                </a>
             </ng-container>
             <ng-container *ngIf="!isLoggedIn">
                 <a routerLink="login" class="hover:text-blue-400">Login</a>
