@@ -23,6 +23,9 @@ export class DetailedCryptoComponent implements OnInit {
     errorMessage: string | null = null;
     isEditing: string | null = null;
     originalCommentText: { [key: string]: string } = {};
+    showDeleteModal: boolean = false;
+    modalMessage: string = '';
+    deleteTarget: { type: 'crypto' | 'comment'; id?: string } | null = null;
 
     constructor(
         private router: Router,
@@ -37,7 +40,7 @@ export class DetailedCryptoComponent implements OnInit {
 
     get isAdmin(): boolean {
         return this.userService.isAdmin();
-    }    
+    }
 
     ngOnInit(): void {
         this.loadUserProfile();
@@ -87,15 +90,6 @@ export class DetailedCryptoComponent implements OnInit {
         });
     }
 
-    deleteCrypto(): void {
-        if (!confirm('Are you sure you want to delete this crypto?')) return;
-
-        this.apiService.deleteCrypto(this.cryptoId).subscribe({
-            next: () => this.router.navigate(['/cryptos']),
-            error: () => (this.errorMessage = 'Failed to delete the cryptocurrency.'),
-        });
-    }
-
     addComment(inputText: HTMLTextAreaElement): void {
         const text = inputText.value.trim();
         if (!text) return;
@@ -106,15 +100,6 @@ export class DetailedCryptoComponent implements OnInit {
                 this.loadCryptoDetails();
             },
             error: () => (this.errorMessage = 'Failed to add the comment.'),
-        });
-    }
-
-    deleteComment(commentId: string): void {
-        if (!confirm('Are you sure you want to delete this comment?')) return;
-
-        this.apiService.deleteComment(this.cryptoId, commentId).subscribe({
-            next: () => this.loadCryptoDetails(),
-            error: () => (this.errorMessage = 'Failed to delete the comment.'),
         });
     }
 
@@ -146,4 +131,42 @@ export class DetailedCryptoComponent implements OnInit {
             error: () => (this.errorMessage = 'Failed to update the comment.'),
         });
     }
+
+    showDeleteConfirmation(type: 'crypto' | 'comment', id?: string): void {
+        this.deleteTarget = { type, id };
+        this.modalMessage =
+            type === 'crypto'
+                ? 'Are you sure you want to delete this cryptocurrency?'
+                : 'Are you sure you want to delete this comment?';
+        this.showDeleteModal = true;
+    }
+
+    confirmDelete(): void {
+        if (this.deleteTarget?.type === 'crypto') {
+            this.deleteCrypto();
+        } else if (this.deleteTarget?.type === 'comment' && this.deleteTarget.id) {
+            this.deleteComment(this.deleteTarget.id);
+        }
+        this.showDeleteModal = false;
+    }
+
+    cancelDelete(): void {
+        this.showDeleteModal = false;
+        this.deleteTarget = null;
+    }
+
+    private deleteCrypto(): void {
+        this.apiService.deleteCrypto(this.cryptoId).subscribe({
+            next: () => this.router.navigate(['/cryptos']),
+            error: () => (this.errorMessage = 'Failed to delete the cryptocurrency.'),
+        });
+    }
+
+    private deleteComment(commentId: string): void {
+        this.apiService.deleteComment(this.cryptoId, commentId).subscribe({
+            next: () => this.loadCryptoDetails(),
+            error: () => (this.errorMessage = 'Failed to delete the comment.'),
+        });
+    }
 }
+
