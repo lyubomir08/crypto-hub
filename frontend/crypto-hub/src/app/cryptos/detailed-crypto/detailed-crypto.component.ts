@@ -63,7 +63,7 @@ export class DetailedCryptoComponent implements OnInit {
         }
         this.showChart = !this.showChart;
         if (this.showChart) {
-            setTimeout(() => this.renderChart(), 0);
+            setTimeout(() => this.renderChart(), 100);
         }
     }    
 
