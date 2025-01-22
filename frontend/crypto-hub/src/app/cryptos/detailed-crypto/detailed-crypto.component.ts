@@ -64,7 +64,6 @@ export class DetailedCryptoComponent implements OnInit {
         this.apiService.getHistoricalPrices(this.crypto.name).subscribe({
             next: (data) => {
                 this.historicalData = data;
-                console.log(data);
                 
                 this.renderChart();
             },
@@ -203,7 +202,7 @@ export class DetailedCryptoComponent implements OnInit {
     private loadCryptoDetails(): void {
         this.isLoading = true;
         this.apiService.getOneCrypto(this.cryptoId).subscribe({
-            next: (crypto: CryptoDetails) => {
+            next: (crypto: CryptoDetails) => {  
                 this.crypto = crypto;
                 this.isLoading = false;
                 this.fetchLivePrice(crypto.symbol);
