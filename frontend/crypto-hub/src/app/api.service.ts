@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Crypto, CryptoDetails, LivePrices } from './types/crypto';
 import { Comment } from './types/comment';
+import { map, tap } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -27,6 +28,21 @@ export class ApiService {
                 vs_currencies: vsCurrency,
             },
         });
+    }
+
+    getHistoricalPrices(cryptoName: string, days: number = 30) {
+        const formattedCryptoName = cryptoName.toLowerCase();
+        const url = `${this.coingeckoUrl}/coins/${formattedCryptoName}/market_chart`;
+        const params = new HttpParams().set('vs_currency', 'usd').set('days', days.toString());
+        
+        return this.http.get<any>(url, { params }).pipe(
+            map((response: any) =>
+                response.prices.map(([timestamp, price]: [number, number]) => ({
+                    date: new Date(timestamp).toLocaleDateString(),
+                    price,
+                }))
+            )
+        );
     }
     
     getCryptos() {
