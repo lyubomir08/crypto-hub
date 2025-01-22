@@ -9,6 +9,10 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { symbolToIdMap } from '../../constants';
 
+import { ViewChild, ElementRef } from '@angular/core';
+import { Chart, registerables } from 'chart.js';
+Chart.register(...registerables);
+
 @Component({
     selector: 'app-detailed-crypto',
     standalone: true,
@@ -26,6 +30,10 @@ export class DetailedCryptoComponent implements OnInit {
     showDeleteModal: boolean = false;
     modalMessage: string = '';
     deleteTarget: { type: 'crypto' | 'comment'; id?: string } | null = null;
+
+    @ViewChild('cryptoChart') cryptoChart!: ElementRef<HTMLCanvasElement>;
+    historicalData: { date: string; price: number }[] = [];
+    chart: Chart | null = null;
 
     constructor(
         private router: Router,
@@ -47,6 +55,57 @@ export class DetailedCryptoComponent implements OnInit {
         this.loadCryptoDetails();
     }
 
+    private fetchHistoricalData(): void {
+        if (!this.crypto?.name) {
+            this.errorMessage = 'Crypto name is required to fetch historical data.';
+            return;
+        }
+    
+        this.apiService.getHistoricalPrices(this.crypto.name).subscribe({
+            next: (data) => {
+                this.historicalData = data;
+                console.log(data);
+                
+                this.renderChart();
+            },
+            error: () => {
+                this.errorMessage = 'Failed to fetch historical data.';
+            },
+        });
+    }    
+
+    private renderChart(): void {
+        if (this.chart) this.chart.destroy();
+    
+        const ctx = this.cryptoChart.nativeElement.getContext('2d');
+        this.chart = new Chart(ctx!, {
+            type: 'line',
+            data: {
+                labels: this.historicalData.map((d) => d.date),
+                datasets: [
+                    {
+                        label: 'Историческа цена (USD)',
+                        data: this.historicalData.map((d) => d.price),
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        fill: true,
+                        tension: 0.4,
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: true },
+                },
+                scales: {
+                    x: { title: { display: true, text: 'Дата' } },
+                    y: { title: { display: true, text: 'Цена (USD)' } },
+                },
+            },
+        });
+    }    
+
     private loadCryptoDetails(): void {
         this.isLoading = true;
         this.apiService.getOneCrypto(this.cryptoId).subscribe({
@@ -54,6 +113,7 @@ export class DetailedCryptoComponent implements OnInit {
                 this.crypto = crypto;
                 this.isLoading = false;
                 this.fetchLivePrice(crypto.symbol);
+                this.fetchHistoricalData();
             },
             error: (err) => {
                 this.errorMessage = err?.message || 'Failed to load cryptocurrency details.';
