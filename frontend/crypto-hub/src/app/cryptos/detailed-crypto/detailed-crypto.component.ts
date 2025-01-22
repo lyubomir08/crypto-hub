@@ -34,6 +34,7 @@ export class DetailedCryptoComponent implements OnInit {
     @ViewChild('cryptoChart') cryptoChart!: ElementRef<HTMLCanvasElement>;
     historicalData: { date: string; price: number }[] = [];
     chart: Chart | null = null;
+    showChart: boolean = false;
 
     constructor(
         private router: Router,
@@ -54,6 +55,17 @@ export class DetailedCryptoComponent implements OnInit {
         this.loadUserProfile();
         this.loadCryptoDetails();
     }
+
+    toggleChart(): void {
+        if (this.chart && this.showChart) {
+            this.chart.destroy();
+            this.chart = null;
+        }
+        this.showChart = !this.showChart;
+        if (this.showChart) {
+            setTimeout(() => this.renderChart(), 0);
+        }
+    }    
 
     private fetchHistoricalData(): void {
         if (!this.crypto?.name) {
