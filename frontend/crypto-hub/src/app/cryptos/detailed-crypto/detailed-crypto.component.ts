@@ -84,11 +84,15 @@ export class DetailedCryptoComponent implements OnInit {
                 labels: this.historicalData.map((d) => d.date),
                 datasets: [
                     {
-                        label: 'Историческа цена (USD)',
+                        label: 'Historical Price (USD)',
                         data: this.historicalData.map((d) => d.price),
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        fill: true,
+                        borderColor: '#4CAF50',
+                        backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                        borderWidth: 3,
+                        pointBackgroundColor: '#4CAF50',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#4CAF50',
                         tension: 0.4,
                     },
                 ],
@@ -96,11 +100,101 @@ export class DetailedCryptoComponent implements OnInit {
             options: {
                 responsive: true,
                 plugins: {
-                    legend: { display: true },
+                    title: {
+                        display: true,
+                        text: 'Cryptocurrency Price Over Time',
+                        color: '#333',
+                        font: {
+                            size: 20,
+                            weight: 'bold',
+                        },
+                        padding: {
+                            top: 20,
+                            bottom: 20,
+                        },
+                    },
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            color: '#555',
+                            font: {
+                                size: 14,
+                            },
+                        },
+                    },
+                    tooltip: {
+                        enabled: true,
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        titleFont: {
+                            size: 14,
+                            weight: 'bold',
+                        },
+                        bodyFont: {
+                            size: 12,
+                        },
+                        bodySpacing: 10,
+                        cornerRadius: 8,
+                        caretSize: 6,
+                    },
                 },
                 scales: {
-                    x: { title: { display: true, text: 'Дата' } },
-                    y: { title: { display: true, text: 'Цена (USD)' } },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Date',
+                            color: '#666',
+                            font: {
+                                size: 14,
+                                weight: 'bold',
+                            },
+                        },
+                        ticks: {
+                            color: '#333',
+                            font: {
+                                size: 12,
+                            },
+                            autoSkip: true,
+                            maxTicksLimit: 10,
+                        },
+                        grid: {
+                            color: 'rgba(200, 200, 200, 0.1)',
+                            lineWidth: 0.5,
+                        },
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Price (USD)',
+                            color: '#666',
+                            font: {
+                                size: 14,
+                                weight: 'bold',
+                            },
+                        },
+                        ticks: {
+                            color: '#333',
+                            font: {
+                                size: 12,
+                            },
+                            callback: function (value) {
+                                return '$' + value.toLocaleString();
+                            },
+                        },
+                        grid: {
+                            color: 'rgba(200, 200, 200, 0.1)',
+                            lineWidth: 0.5,
+                        },
+                    },
+                },
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                elements: {
+                    line: {
+                        tension: 0.4,
+                    },
                 },
             },
         });
