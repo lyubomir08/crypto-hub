@@ -2,6 +2,9 @@
     <p>{{ errorMessage }}</p>
 </div>
 
+<h2 class="text-2xl font-semibold text-gray-800 mb-4">Историческа цена</h2>
+<canvas #cryptoChart></canvas>
+
 <div class="container mx-auto p-6 font-sans max-w-5xl">
     <app-loader *ngIf="isLoading"></app-loader>
     <div *ngIf="!isLoading" class="bg-white shadow-lg rounded-xl border border-gray-200 p-6 flex space-x-6">
