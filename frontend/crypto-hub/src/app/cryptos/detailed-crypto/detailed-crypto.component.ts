@@ -97,14 +97,14 @@ export class DetailedCryptoComponent implements OnInit {
                     {
                         label: 'Historical Price (USD)',
                         data: this.historicalData.map((d) => d.price),
-                        borderColor: '#4CAF50',
-                        backgroundColor: 'rgba(76, 175, 80, 0.1)',
-                        borderWidth: 3,
-                        pointBackgroundColor: '#4CAF50',
+                        borderColor: '#2E3B4E',
+                        backgroundColor: 'rgba(46, 59, 78, 0.2)',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#2E3B4E',
                         pointBorderColor: '#fff',
                         pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: '#4CAF50',
-                        tension: 0.4,
+                        pointHoverBorderColor: '#2E3B4E',
+                        tension: 0.3,
                     },
                 ],
             },
@@ -114,7 +114,7 @@ export class DetailedCryptoComponent implements OnInit {
                     title: {
                         display: true,
                         text: 'Cryptocurrency Price Over Time',
-                        color: '#333',
+                        color: '#222',
                         font: {
                             size: 20,
                             weight: 'bold',
@@ -128,7 +128,7 @@ export class DetailedCryptoComponent implements OnInit {
                         display: true,
                         position: 'top',
                         labels: {
-                            color: '#555',
+                            color: '#444',
                             font: {
                                 size: 14,
                             },
@@ -136,7 +136,7 @@ export class DetailedCryptoComponent implements OnInit {
                     },
                     tooltip: {
                         enabled: true,
-                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        backgroundColor: 'rgba(50, 50, 50, 0.9)',
                         titleFont: {
                             size: 14,
                             weight: 'bold',
@@ -154,7 +154,7 @@ export class DetailedCryptoComponent implements OnInit {
                         title: {
                             display: true,
                             text: 'Date',
-                            color: '#666',
+                            color: '#555',
                             font: {
                                 size: 14,
                                 weight: 'bold',
@@ -166,10 +166,10 @@ export class DetailedCryptoComponent implements OnInit {
                                 size: 12,
                             },
                             autoSkip: true,
-                            maxTicksLimit: 10,
+                            maxTicksLimit: 7,
                         },
                         grid: {
-                            color: 'rgba(200, 200, 200, 0.1)',
+                            color: 'rgba(100, 100, 100, 0.1)',
                             lineWidth: 0.5,
                         },
                     },
@@ -177,7 +177,7 @@ export class DetailedCryptoComponent implements OnInit {
                         title: {
                             display: true,
                             text: 'Price (USD)',
-                            color: '#666',
+                            color: '#555',
                             font: {
                                 size: 14,
                                 weight: 'bold',
@@ -193,7 +193,7 @@ export class DetailedCryptoComponent implements OnInit {
                             },
                         },
                         grid: {
-                            color: 'rgba(200, 200, 200, 0.1)',
+                            color: 'rgba(100, 100, 100, 0.1)',
                             lineWidth: 0.5,
                         },
                     },
@@ -204,12 +204,12 @@ export class DetailedCryptoComponent implements OnInit {
                 },
                 elements: {
                     line: {
-                        tension: 0.4,
+                        tension: 0.3,
                     },
                 },
             },
         });
-    }    
+    }       
 
     private loadCryptoDetails(): void {
         this.isLoading = true;
