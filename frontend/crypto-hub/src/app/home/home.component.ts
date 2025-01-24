@@ -4,6 +4,7 @@ import { Crypto } from '../types/crypto';
 import { RouterLink } from '@angular/router';
 import { LoaderComponent } from '../shared/loader/loader.component';
 import { CommonModule } from '@angular/common';
+import { symbolToIdMap } from '../constants';
 
 @Component({
     selector: 'app-home',
@@ -17,20 +18,6 @@ export class HomeComponent implements OnInit {
     allCryptos: Crypto[] = [];
     isLoading: boolean = false;
     errorMessage: string | null = null;
-
-    private symbolToIdMap: { [key: string]: string } = {
-        btc: 'bitcoin',
-        eth: 'ethereum',
-        bnb: 'binancecoin',
-        xrp: 'ripple',
-        ada: 'cardano',
-        sol: 'solana',
-        doge: 'dogecoin',
-        matic: 'polygon',
-        dot: 'polkadot',
-        ltc: 'litecoin',
-        asd: 'asd'
-    };
 
     constructor(private apiService: ApiService) {}
 
@@ -64,7 +51,7 @@ export class HomeComponent implements OnInit {
 
     private fetchLivePrices(symbols: string[]): void {
         const ids = symbols
-            .map((symbol) => this.symbolToIdMap[symbol])
+            .map((symbol) => symbolToIdMap[symbol])
             .filter((id) => id);
 
         if (ids.length === 0) {
@@ -75,7 +62,7 @@ export class HomeComponent implements OnInit {
         this.apiService.getLivePrices(ids).subscribe({
             next: (livePrices) => {
                 this.lastThreeCryptos = this.lastThreeCryptos.map((crypto) => {
-                    const id = this.symbolToIdMap[crypto.symbol.toLowerCase()];
+                    const id = symbolToIdMap[crypto.symbol.toLowerCase()];
                     const priceData = livePrices[id];
                     return {
                         ...crypto,
