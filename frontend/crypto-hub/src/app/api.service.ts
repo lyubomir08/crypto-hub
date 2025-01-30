@@ -1,24 +1,50 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Crypto, CryptoDetails, LivePrices } from './types/crypto';
+import { Crypto, CryptoDetails, LivePrices, CryptoNewsItem, CryptoNewsResponse } from './types/crypto';
 import { Comment } from './types/comment';
 import { map, tap } from 'rxjs';
+import { environment } from '../environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ApiService {
     private coingeckoUrl = 'https://api.coingecko.com/api/v3';
+    private cryptoNewsUrl = 'https://cryptopanic.com/api/v1/posts/';
 
     constructor(private http: HttpClient) { }
 
-    getMessages(sender: string, recipient: string) {
-        return this.http.get(`/api/chat/messages`, { params: { senderId: sender, recipientId: recipient } });
-    }
+    // getMessages(sender: string, recipient: string) {
+    //     return this.http.get(`/api/chat/messages`, { params: { senderId: sender, recipientId: recipient } });
+    // }
 
-    sendMessage(sender: string, recipient: string, content: string) {
-        return this.http.post(`/api/chat/send`, { senderId: sender, recipientId: recipient, content });
+    // sendMessage(sender: string, recipient: string, content: string) {
+    //     return this.http.post(`/api/chat/send`, { senderId: sender, recipientId: recipient, content });
+    // }
+
+    getRandomCryptoNews() {
+        const params = new HttpParams()
+            .set('auth_token', environment.cryptoPanicApiKey)
+            .set('public', 'true');
+    
+        return this.http.get<CryptoNewsResponse>(this.cryptoNewsUrl, { params }).pipe(
+            map((response: CryptoNewsResponse) => {
+                if (!response.results || response.results.length === 0) {
+                    return [];
+                }
+    
+                const shuffledNews = [...response.results].sort(() => Math.random() - 0.5);
+    
+                return shuffledNews.map((news: CryptoNewsItem) => ({
+                    title: news.title,
+                    url: news.url,
+                    source: news.source?.title || 'Unknown Source',
+                    publishedAt: new Date(news.created_at).toLocaleDateString(),
+                }));
+            })
+        );
     }
+    
 
     getLivePrices(ids: string[], vsCurrency: string = 'usd') {
         const idsParam = ids.join(',');
