@@ -37,6 +37,17 @@ export interface EditDetails {
     imageUrl: string;
 }
 
+export interface CryptoNewsItem {
+    title: string;
+    url: string;
+    source: { title: string };
+    created_at: string;
+}
+
+export interface CryptoNewsResponse {
+    results: CryptoNewsItem[];
+}
+
 export interface LivePrices {
     [key: string]: {
         usd: number;
