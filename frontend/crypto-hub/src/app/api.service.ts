@@ -10,7 +10,7 @@ import { environment } from '../environments/environment';
 })
 export class ApiService {
     private coingeckoUrl = 'https://api.coingecko.com/api/v3';
-    private cryptoNewsUrl = 'https://cryptopanic.com/api/v1/posts/';
+    private cryptoNewsUrl = 'https://cryptopanic.com/api/v1/posts?auth_token=' + environment.cryptoPanicApiKey;
 
     constructor(private http: HttpClient) { }
 
@@ -23,11 +23,7 @@ export class ApiService {
     // }
 
     getRandomCryptoNews() {
-        const params = new HttpParams()
-            .set('auth_token', environment.cryptoPanicApiKey)
-            .set('public', 'true');
-    
-        return this.http.get<CryptoNewsResponse>(this.cryptoNewsUrl, { params }).pipe(
+        return this.http.get<CryptoNewsResponse>('/cryptonews?auth_token=' + environment.cryptoPanicApiKey).pipe(
             map((response: CryptoNewsResponse) => {
                 if (!response.results || response.results.length === 0) {
                     return [];
@@ -44,7 +40,6 @@ export class ApiService {
             })
         );
     }
-    
 
     getLivePrices(ids: string[], vsCurrency: string = 'usd') {
         const idsParam = ids.join(',');
