@@ -1,16 +1,14 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Crypto, CryptoDetails, LivePrices, CryptoNewsItem, CryptoNewsResponse } from './types/crypto';
+import { Crypto, CryptoDetails, LivePrices } from './types/crypto';
 import { Comment } from './types/comment';
 import { map, tap } from 'rxjs';
-import { environment } from '../environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ApiService {
     private coingeckoUrl = 'https://api.coingecko.com/api/v3';
-    private cryptoNewsUrl = 'https://cryptopanic.com/api/v1/posts?auth_token=' + environment.cryptoPanicApiKey;
 
     constructor(private http: HttpClient) { }
 
@@ -21,25 +19,6 @@ export class ApiService {
     // sendMessage(sender: string, recipient: string, content: string) {
     //     return this.http.post(`/api/chat/send`, { senderId: sender, recipientId: recipient, content });
     // }
-
-    getRandomCryptoNews() {
-        return this.http.get<CryptoNewsResponse>('/cryptonews?auth_token=' + environment.cryptoPanicApiKey).pipe(
-            map((response: CryptoNewsResponse) => {
-                if (!response.results || response.results.length === 0) {
-                    return [];
-                }
-    
-                const shuffledNews = [...response.results].sort(() => Math.random() - 0.5);
-    
-                return shuffledNews.map((news: CryptoNewsItem) => ({
-                    title: news.title,
-                    url: news.url,
-                    source: news.source?.title || 'Unknown Source',
-                    publishedAt: new Date(news.created_at).toLocaleDateString(),
-                }));
-            })
-        );
-    }
 
     getLivePrices(ids: string[], vsCurrency: string = 'usd') {
         const idsParam = ids.join(',');

@@ -5,7 +5,6 @@ import { RouterLink } from '@angular/router';
 import { LoaderComponent } from '../shared/loader/loader.component';
 import { CommonModule } from '@angular/common';
 import { symbolToIdMap } from '../constants';
-import { CryptoNewsItem } from '../types/crypto';
 
 @Component({
     selector: 'app-home',
@@ -17,7 +16,6 @@ import { CryptoNewsItem } from '../types/crypto';
 export class HomeComponent implements OnInit {
     lastThreeCryptos: Crypto[] = [];
     allCryptos: Crypto[] = [];
-    cryptoNews: CryptoNewsItem[] = [];
     isLoading: boolean = false;
     errorMessage: string | null = null;
 
@@ -25,7 +23,6 @@ export class HomeComponent implements OnInit {
 
     ngOnInit() {
         this.fetchAllCryptos();
-        this.fetchCryptoNews();
         setTimeout(() => (this.errorMessage = null), 2500);
     }
 
@@ -76,18 +73,6 @@ export class HomeComponent implements OnInit {
             error: () => {
                 this.errorMessage = 'Failed to fetch live prices.';
             },
-        });
-    }
-
-    private fetchCryptoNews(): void {
-        this.apiService.getRandomCryptoNews().subscribe({
-            next: (news: any) => {
-                console.log(news);
-                
-                this.cryptoNews = news.slice(0, 8);
-            }, error: () => {
-                this.errorMessage = 'Failed to load crypto news.';
-            }
         });
     }
 }

@@ -4,14 +4,5 @@
         "secure": false,
         "logLevel": "debug",
         "changeOrigin": true
-    },
-    "/cryptonews": {
-        "target": "https://cryptopanic.com",
-        "secure": true,
-        "changeOrigin": true,
-        "logLevel": "debug",
-        "pathRewrite": {
-            "^/cryptonews": "/api/v1/posts"
-        }
     }
 }
