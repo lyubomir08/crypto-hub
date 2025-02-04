@@ -7,6 +7,7 @@ import http from 'http'; // За съвместна работа на HTTP и We
 import userController from './controllers/userController.js';
 import cryptoController from './controllers/cryptoController.js';
 import chatController from './controllers/chatController.js';
+import articleController from './controllers/articleController.js';
 import authMiddleware from './middlewares/authMiddleware.js';
 import cookieParser from 'cookie-parser';
 import Message from './models/Message.js';
@@ -49,7 +50,13 @@ app.post('/api/cryptos/:id/comments', authMiddleware, cryptoController.addCommen
 app.put('/api/cryptos/:id/comments/:commentId', authMiddleware, cryptoController.updateComment);
 app.delete('/api/cryptos/:id/comments/:commentId', authMiddleware, cryptoController.deleteComment);
 
-// Свързване към MongoDB
+app.post('/api/articles', authMiddleware, articleController.createArticle);
+app.get('/api/articles', articleController.getApprovedArticles);
+
+app.get('/api/admin/articles/pending', authMiddleware, articleController.getPendingArticles);
+app.patch('/api/admin/articles/:id', authMiddleware, articleController.approveOrRejectArticle);
+
+
 const connectDB = async () => {
     try {
         await mongoose.connect(MONGO_URI);
