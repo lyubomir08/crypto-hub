@@ -4,7 +4,6 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import userController from './controllers/userController.js';
 import cryptoController from './controllers/cryptoController.js';
-import chatController from './controllers/chatController.js';
 import articleController from './controllers/articleController.js';
 import authMiddleware from './middlewares/authMiddleware.js';
 import cookieParser from 'cookie-parser';
