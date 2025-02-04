@@ -30,9 +30,6 @@ app.get('/api/users', authMiddleware, userController.getAllUsers);
 
 app.get('/api/users/profile', authMiddleware, userController.getProfileInfo);
 
-app.get('/api/chat/messages', authMiddleware, chatController.getMessages);
-app.post('/api/chat/send', authMiddleware, chatController.sendMessage);
-
 app.get('/api/cryptos', cryptoController.getAllCryptos);
 app.get('/api/cryptos/:id/details', cryptoController.getCryptoById);
 app.post('/api/cryptos/create', authMiddleware, cryptoController.addCrypto);
