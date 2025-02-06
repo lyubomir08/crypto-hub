@@ -1,4 +1,4 @@
-import { Component, NgModule, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Article } from '../types/article';
 import { BlogService } from './blog.service';
 import { UserService } from '../user/user.service';
@@ -17,6 +17,8 @@ export class BlogComponent implements OnInit {
     articles: Article[] = [];
     pendingArticles: Article[] = [];
     showModal = false;
+    showDeleteModal = false;
+    articleToDelete: Article | null = null;
     newArticle = { title: '', content: '' };
     isSubmitting = false;
     isLoading = false;
@@ -85,6 +87,31 @@ export class BlogComponent implements OnInit {
                 this.loadPendingArticles();
             },
             error: (err) => this.errorMessage = 'Error rejecting article: ' + err.message,
+            complete: () => this.isLoading = false
+        });
+    }
+
+    openDeleteModal(article: Article): void {
+        this.articleToDelete = article;
+        this.showDeleteModal = true;
+    }
+
+    closeDeleteModal(): void {
+        this.articleToDelete = null;
+        this.showDeleteModal = false;
+    }
+
+    confirmDeleteArticle(): void {
+        if (!this.articleToDelete) return;
+
+        this.isLoading = true;
+        this.blogService.deleteArticle(this.articleToDelete._id).subscribe({
+            next: () => {
+                this.showToast('Article deleted successfully');
+                this.loadApprovedArticles();
+                this.closeDeleteModal();
+            },
+            error: (err) => this.errorMessage = 'Error deleting article: ' + err.message,
             complete: () => this.isLoading = false
         });
     }

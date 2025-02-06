@@ -17,6 +17,10 @@ export class BlogService {
         return this.http.post<{ message: string, article: Article }>(this.apiUrl, { title, content });
     }
 
+    deleteArticle(id: string) {
+        return this.http.delete<{ message: string }>(`${this.adminApiUrl}/${id}`);
+    }
+    
     getApprovedArticles(): Observable<Article[]> {
         return this.http.get<Article[]>(this.apiUrl);
     }
