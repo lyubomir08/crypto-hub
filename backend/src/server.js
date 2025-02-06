@@ -46,6 +46,7 @@ app.get('/api/articles', articleController.getApprovedArticles);
 
 app.get('/api/admin/articles/pending', authMiddleware, articleController.getPendingArticles);
 app.patch('/api/admin/articles/:id', authMiddleware, articleController.approveOrRejectArticle);
+app.delete('/api/admin/articles/:id', authMiddleware, articleController.deleteArticle);
 
 const connectDB = async () => {
     try {

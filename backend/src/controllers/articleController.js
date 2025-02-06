@@ -12,6 +12,24 @@ const createArticle = async (req, res) => {
     }
 };
 
+const deleteArticle = async (req, res) => {
+    if (!req.isAdmin) {
+        return res.status(403).json({ message: 'Нямате права за изтриване на статии' });
+    }
+
+    const { id } = req.params;
+
+    try {
+        const article = await articleService.deleteArticle(id);
+        if (!article) {
+            return res.status(404).json({ message: 'Статията не беше намерена' });
+        }
+        res.status(200).json({ message: 'Статията е изтрита успешно' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 const getApprovedArticles = async (req, res) => {
     try {
         const articles = await articleService.getApprovedArticles();
@@ -61,5 +79,6 @@ export default {
     createArticle,
     getApprovedArticles,
     getPendingArticles,
-    approveOrRejectArticle
+    approveOrRejectArticle,
+    deleteArticle
 };

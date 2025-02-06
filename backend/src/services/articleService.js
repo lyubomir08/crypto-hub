@@ -23,9 +23,14 @@ const updateArticleStatus = async (id, status) => {
     return article;
 };
 
+const deleteArticle = async (id) => {
+    return await Article.findByIdAndDelete(id);
+};
+
 export default {
     createArticle,
     getApprovedArticles,
     getPendingArticles,
-    updateArticleStatus
+    updateArticleStatus,
+    deleteArticle
 };
