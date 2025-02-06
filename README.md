@@ -1,12 +1,49 @@
-# Crypto Hub
+# 🚀 Crypto Hub
 
 ## 📜 Project Description
 
-The **Crypto Hub** is a comprehensive single-page application (SPA) developed using Angular, designed to provide users with an intuitive interface to explore and manage cryptocurrency data. Users can search for specific cryptocurrencies, view detailed information, and manage their own crypto-related records. The app features a robust user authentication system, enabling registered users to create, edit, and manage their content.
+**Crypto Hub** is a **single-page application (SPA)** built with **Angular**, providing users with an intuitive interface to explore and manage cryptocurrency data. Users can search for specific cryptocurrencies, view detailed information, and engage with crypto-related records. The app features a **role-based authentication system**, ensuring that **only admins** can manage cryptocurrencies and approve blog articles.
 
-This project is built using the **MEAN stack**: Angular for the front-end, Node.js and MongoDB for the back-end, and Tailwind CSS for styling.
+This project is powered by the **MEAN stack**:  
+- **Front-end:** Angular  
+- **Back-end:** Node.js with Express.js  
+- **Database:** MongoDB  
+- **Styling:** Tailwind CSS  
 
 ---
+
+## ⚙️ Features
+
+### 🔓 Public Pages
+
+- **Home** – Overview of the app with highlighted features.  
+- **Catalog** – Browse all available cryptocurrencies, view details, and comments.  
+- **Search** – Find specific cryptocurrencies quickly.  
+- **About** – Learn more about the purpose and functionalities of the app.  
+- **Login/Register** – Users can create accounts and log in to access additional features.  
+- **Blog** – Browse articles related to crypto (only **admin-approved** articles are visible).  
+
+### 🔐 Private Pages (Registered Users)
+
+- **Profile Management** – Users can **update their name and email**.  
+- **Interact with Records** – Users can **comment** on cryptocurrencies.  
+
+### 🔑 Admin-Only Features
+
+- **Add Cryptocurrencies** – Only **admins** can create new cryptocurrency entries.  
+- **Edit/Delete Cryptocurrencies** – Admins can modify or remove cryptocurrencies.  
+- **Manage Comments** – Admins can edit or delete any comment.  
+- **Blog Management** – Only **admin-approved** articles will be visible in the blog.  
+
+---
+
+## 🚀 Installation and Setup
+
+### 📌 Prerequisites
+
+- **Node.js** installed on your machine  
+- **MongoDB** installed and running locally or a cloud-based MongoDB connection  
+- **Angular CLI** installed globally  
 
 ### **Set up environment variables**:
 
@@ -38,60 +75,3 @@ This project is built using the **MEAN stack**: Angular for the front-end, Node.
    ```bash
    cd .\backend\
    and type "npm start"
-
-## 🌟 Features
-
-### Public Pages
-
-- **Home**: Overview of the app with highlighted features.
-- **Catalog**: Lists all available cryptocurrencies with basic details and comments.
-- **Search**: Allows users to search for specific cryptocurrencies.
-- **About**: Provides information about the app and its purpose.
-- **Login**: Enables users to sign into their accounts.
-- **Register**: Allows new users to create an account.
-
-### Private Pages
-
-- **Create Record**: Lets logged-in users add new crypto-related entries.
-- **Edit/Delete**: Enables users to update or delete their entries.
-
-### Additional Functionalities
-
-- View detailed information about individual cryptocurrencies with comments.
-- Interact with records - comment.
-- Persistent login after refresh using JWT authentication.
-- Responsive design with Tailwind CSS for an excellent user experience across devices.
-
----
-
-## ⚙️ Technologies Used
-
-### Front-End
-
-- **Angular**: Framework for building dynamic SPA.
-- **Tailwind CSS**: Utility-first CSS framework for responsive design.
-
-### Back-End
-
-- **Node.js**: JavaScript runtime environment.
-- **Express.js**: Framework for creating the REST API.
-
-### Database
-
-- **MongoDB**: NoSQL database for storing user and cryptocurrency data.
-
----
-
-## 🚀 Installation and Setup
-
-Follow these steps to run the project locally:
-
-### Prerequisites
-
-- Node.js installed on your machine.
-- MongoDB installed and running locally or access to a cloud MongoDB service.
-- Angular CLI installed globally.
-
-
-
-   
