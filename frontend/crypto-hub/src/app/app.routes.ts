@@ -12,11 +12,13 @@ import { EditCryptoComponent } from './cryptos/edit-crypto/edit-crypto.component
 import { AuthGuard } from './guards/auth.guard';
 import { LoggedInGuard } from './guards/loggedIn.guard';
 import { ProfileComponent } from './profile/profile.component';
+import { BlogComponent } from './blog/blog.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: 'home', component: HomeComponent },
     { path: 'about', component: AboutComponent },
+    { path: 'blog', component: BlogComponent },
     {
         path: 'cryptos', children: [
             { path: '', component: CatalogComponent },
