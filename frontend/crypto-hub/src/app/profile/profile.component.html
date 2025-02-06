@@ -1,5 +1,5 @@
-<div class="container mx-auto p-8 max-w-4xl bg-gradient-to-b from-blue-50 via-white to-gray-100 rounded-xl shadow-xl">
-    <h1 class="text-4xl font-bold text-gray-900 mb-8 text-center">Profile</h1>
+<div class="container mx-auto p-8 w-full max-w-6xl bg-white rounded-xl shadow-md">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Profile</h1>
 
     <app-loader *ngIf="isLoading"></app-loader>
 
@@ -8,67 +8,61 @@
         <p>{{ errorMessage }}</p>
     </div>
 
-    <div *ngIf="!isLoading && !errorMessage" class="bg-white shadow-2xl rounded-xl border border-gray-300 p-8">
-        <div class="flex items-center gap-6 mb-8">
+    <div *ngIf="!isLoading && !errorMessage" class="bg-white shadow-md rounded-xl border border-gray-300 p-6">
+        <div class="flex items-center gap-6 mb-6">
             <img src="https://softuni.bg/users/profile/showavatar/890319ff-b9f3-42fb-aef7-fcb2338f9f8d"
-                alt="Profile Picture" class="w-24 h-24 rounded-full border border-gray-300 shadow-md" />
+                alt="Profile Picture" class="w-20 h-20 rounded-full border border-gray-300 shadow" />
             <div>
-                <h2 class="text-3xl font-semibold text-gray-800">{{ user?.username }}</h2>
-                <p class="text-gray-600 text-lg">Email: <span class="font-medium">{{ user?.email }}</span></p>
-                <p class="text-gray-600 text-lg mt-2">Joined: <span class="font-medium">{{ user?.createdAt |
-                        date:'mediumDate' }}</span></p>
+                <h2 class="text-2xl font-semibold text-gray-800">{{ user?.username }}</h2>
+                <p class="text-gray-600">Email: <span class="font-medium">{{ user?.email }}</span></p>
+                <p class="text-gray-600 mt-2">Joined: <span class="font-medium">{{ user?.createdAt | date:'mediumDate'
+                        }}</span></p>
             </div>
         </div>
 
-        <div class="mt-8 flex flex-wrap gap-6">
-            <button
-                class="bg-blue-600 text-white py-3 px-8 rounded-xl shadow-lg hover:bg-blue-500 transition transform hover:scale-105"
+        <div class="mt-6 flex flex-wrap gap-4">
+            <button class="bg-blue-500 text-white py-2 px-6 rounded-lg shadow hover:bg-blue-400 transition"
                 (click)="editField('username')">
                 Update Username
             </button>
-            <button
-                class="bg-green-600 text-white py-3 px-8 rounded-xl shadow-lg hover:bg-green-500 transition transform hover:scale-105"
+            <button class="bg-green-500 text-white py-2 px-6 rounded-lg shadow hover:bg-green-400 transition"
                 (click)="editField('email')">
                 Update Email
             </button>
             <button *ngIf="isAdmin"
-                class="bg-purple-600 text-white py-3 px-8 rounded-xl shadow-lg hover:bg-purple-500 transition transform hover:scale-105"
+                class="bg-purple-500 text-white py-2 px-6 rounded-lg shadow hover:bg-purple-400 transition"
                 (click)="toggleAllUsers()">
                 {{ showAllUsers ? 'Hide All Users' : 'View All Users' }}
             </button>
         </div>
     </div>
 
-    <div *ngIf="editingField === 'username'" class="mt-8">
+    <div *ngIf="editingField === 'username'" class="mt-6">
         <input type="text"
-            class="border border-gray-300 rounded-lg w-full p-4 focus:ring focus:ring-blue-300 outline-none transition shadow-md"
+            class="border border-gray-300 rounded-lg w-full p-3 focus:ring focus:ring-blue-300 outline-none shadow-md"
             [(ngModel)]="updatedField.username" placeholder="Enter new username" />
-        <div class="flex gap-6 mt-4">
-            <button
-                class="bg-blue-600 text-white py-3 px-8 rounded-xl shadow-lg hover:bg-blue-500 transition transform hover:scale-105"
+        <div class="flex gap-4 mt-3">
+            <button class="bg-blue-500 text-white py-2 px-6 rounded-lg shadow hover:bg-blue-400 transition"
                 (click)="saveField()">
                 Save
             </button>
-            <button
-                class="bg-gray-500 text-white py-3 px-8 rounded-xl shadow-lg hover:bg-gray-400 transition transform hover:scale-105"
+            <button class="bg-gray-400 text-white py-2 px-6 rounded-lg shadow hover:bg-gray-300 transition"
                 (click)="cancelEdit()">
                 Cancel
             </button>
         </div>
     </div>
 
-    <div *ngIf="editingField === 'email'" class="mt-8">
+    <div *ngIf="editingField === 'email'" class="mt-6">
         <input type="email"
-            class="border border-gray-300 rounded-lg w-full p-4 focus:ring focus:ring-green-300 outline-none transition shadow-md"
+            class="border border-gray-300 rounded-lg w-full p-3 focus:ring focus:ring-green-300 outline-none shadow-md"
             [(ngModel)]="updatedField.email" placeholder="Enter new email" />
-        <div class="flex gap-6 mt-4">
-            <button
-                class="bg-green-600 text-white py-3 px-8 rounded-xl shadow-lg hover:bg-green-500 transition transform hover:scale-105"
+        <div class="flex gap-4 mt-3">
+            <button class="bg-green-500 text-white py-2 px-6 rounded-lg shadow hover:bg-green-400 transition"
                 (click)="saveField()">
                 Save
             </button>
-            <button
-                class="bg-gray-500 text-white py-3 px-8 rounded-xl shadow-lg hover:bg-gray-400 transition transform hover:scale-105"
+            <button class="bg-gray-400 text-white py-2 px-6 rounded-lg shadow hover:bg-gray-300 transition"
                 (click)="cancelEdit()">
                 Cancel
             </button>
@@ -76,22 +70,22 @@
     </div>
 
     <div *ngIf="showAllUsers && allUsers && isAdmin"
-        class="bg-white shadow-2xl rounded-xl border border-gray-300 p-8 mt-8">
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">All Registered Users</h2>
+        class="bg-white shadow-md rounded-xl border border-gray-300 p-6 mt-6">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">All Registered Users</h2>
         <div class="overflow-x-auto">
-            <table class="w-full border border-gray-300">
-                <thead class="bg-gray-200">
+            <table class="w-full border border-gray-300 rounded-lg shadow-md">
+                <thead class="bg-gray-100 text-gray-700">
                     <tr>
-                        <th class="px-4 py-2">Username</th>
-                        <th class="px-4 py-2">Email</th>
-                        <th class="px-4 py-2">Joined</th>
+                        <th class="px-4 py-2 border-b">Username</th>
+                        <th class="px-4 py-2 border-b">Email</th>
+                        <th class="px-4 py-2 border-b">Joined</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let user of allUsers" class="border-b border-gray-300">
-                        <td class="px-4 py-2">{{ user.username }}</td>
-                        <td class="px-4 py-2">{{ user.email }}</td>
-                        <td class="px-4 py-2">{{ user.createdAt | date:'mediumDate' }}</td>
+                    <tr *ngFor="let user of allUsers" class="hover:bg-gray-50 transition">
+                        <td class="px-4 py-3 border-b text-center">{{ user.username }}</td>
+                        <td class="px-4 py-3 border-b text-center">{{ user.email }}</td>
+                        <td class="px-4 py-3 border-b text-center">{{ user.createdAt | date:'mediumDate' }}</td>
                     </tr>
                 </tbody>
             </table>
