@@ -1,36 +1,39 @@
 import { Injectable } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class LanguageService {
-    private availableLanguages = ['en', 'bg'];
-    private defaultLanguage = 'en';
+  private currentLang = new BehaviorSubject<string>('en');
+  private translations: any = {};
 
-    constructor(private translate: TranslateService) {
-        this.initLanguage();
+  constructor(private http: HttpClient) {
+    this.loadLanguage(this.currentLang.value);
+  }
+
+  get currentLanguage(): Observable<string> {
+    return this.currentLang.asObservable();
+  }
+
+  changeLanguage(lang: string): void {
+    if (lang !== this.currentLang.value) {
+      this.loadLanguage(lang);
     }
+  }
 
-    private initLanguage(): void {
-        this.translate.addLangs(this.availableLanguages);
-        this.translate.setDefaultLang(this.defaultLanguage);
+  private loadLanguage(lang: string): void {
+    this.http.get(`/assets/i18n/${lang}.json`).pipe(
+      tap((translations) => {
+        this.translations = translations;
+        this.currentLang.next(lang);
+      })
+    ).subscribe();
+  }
 
-        const savedLang = localStorage.getItem('language');
-        const browserLang = this.translate.getBrowserLang();
-
-        const languageToUse = savedLang ?? (browserLang?.match(/en|bg/) ? browserLang : this.defaultLanguage);
-        this.setLanguage(languageToUse);
-    }
-
-    setLanguage(lang: string): void {
-        if (this.availableLanguages.includes(lang)) {
-            this.translate.use(lang);
-            localStorage.setItem('language', lang);
-        }
-    }
-
-    getCurrentLanguage(): string {
-        return this.translate.currentLang;
-    }
+  translate(key: string): string {
+    return key.split('.').reduce((acc, part) => acc?.[part] ?? key, this.translations);
+  }
 }
