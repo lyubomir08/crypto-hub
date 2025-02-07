@@ -31,6 +31,9 @@ export class DetailedCryptoComponent implements OnInit {
     modalMessage: string = '';
     deleteTarget: { type: 'crypto' | 'comment'; id?: string } | null = null;
 
+    usdAmount: number = 0;
+    calculatedCryptoAmount: number = 0;
+
     @ViewChild('cryptoChart') cryptoChart!: ElementRef<HTMLCanvasElement>;
     historicalData: { date: string; price: number }[] = [];
     chart: Chart | null = null;
@@ -225,6 +228,14 @@ export class DetailedCryptoComponent implements OnInit {
                 this.isLoading = false;
             },
         });
+    }
+
+    calculateCryptoAmount(): void {
+        if (this.crypto?.currentPrice && this.usdAmount > 0) {
+            this.calculatedCryptoAmount = this.usdAmount / this.crypto.currentPrice;
+        } else {
+            this.calculatedCryptoAmount = 0;
+        }
     }
 
     private fetchLivePrice(symbol: string): void {
