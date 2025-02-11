@@ -21,6 +21,10 @@
                 <a routerLink="login" class="hover:text-blue-400">Login</a>
                 <a routerLink="register" class="hover:text-blue-400">Register</a>
             </ng-container>
+
+            <button (click)="toggleLanguage()" class="hover:text-blue-400">
+                {{ currentLang === 'en' ? 'BG' : 'EN' }}
+            </button>
         </nav>
     </div>
 </header>

@@ -21,6 +21,7 @@ export class LanguageService {
     changeLanguage(lang: string) {
         if (lang !== this.currentLang.value) {
             this.loadTranslations(lang);
+            this.currentLang.next(lang);
         }
     }
 
