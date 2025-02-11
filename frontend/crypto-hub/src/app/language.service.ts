@@ -7,7 +7,7 @@ import { tap } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class LanguageService {
-    private currentLang = new BehaviorSubject<string>('en');
+    private currentLang = new BehaviorSubject<string>(localStorage.getItem('language') || 'en');
     private translations: any = {};
 
     constructor(private http: HttpClient) {
@@ -20,6 +20,7 @@ export class LanguageService {
 
     changeLanguage(lang: string) {
         if (lang !== this.currentLang.value) {
+            localStorage.setItem('language', lang);
             this.loadTranslations(lang);
             this.currentLang.next(lang);
         }
