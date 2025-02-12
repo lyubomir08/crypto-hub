@@ -13,7 +13,7 @@ const generateToken = (user) => {
     );
 };
 
-const registerUser = async (username, email, password, rePassword) => {
+const registerUser = async (username, email, password, rePassword, profileImage) => {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
         throw new Error('A user with this email already exists.');
@@ -25,12 +25,13 @@ const registerUser = async (username, email, password, rePassword) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = await User.create({ username, email, password: hashedPassword });
+    const newUser = await User.create({ username, email, password: hashedPassword, profileImage: profileImage || '' });
 
     return {
         id: newUser._id,
         username: newUser.username,
         email: newUser.email,
+        profileImage: newUser.profileImage
     };
 };
 
@@ -63,10 +64,11 @@ const getUserProfile = async (userId) => {
     return user;
 };
 
-const updateUserProfile = async (userId, { username, email }) => {
+const updateUserProfile = async (userId, { username, email, profileImage }) => {
     const updatedFields = {};
     if (username) updatedFields.username = username;
     if (email) updatedFields.email = email;
+    if (profileImage) updatedFields.profileImage = profileImage;
 
     const updatedUser = await User.findByIdAndUpdate(userId, updatedFields, { new: true, fields: { password: 0 } });
 

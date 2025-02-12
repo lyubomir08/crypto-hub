@@ -2,10 +2,10 @@ import authService from '../services/authService.js';
 
 const updateUser = async (req, res) => {
     const userId = req.userId;
-    const { username, email } = req.body;
+    const { username, email, profileImage } = req.body;
 
     try {
-        const updatedUser = await authService.updateUserProfile(userId, { username, email });
+        const updatedUser = await authService.updateUserProfile(userId, { username, email, profileImage });
         res.status(200).json(updatedUser);
     } catch (error) {
         res.status(400).json({ message: error.message });
@@ -25,11 +25,11 @@ const getAllUsers = async (req, res) => {
 };
 
 const register = async (req, res) => {
-    const { username, email, password, rePassword } = req.body;
+    const { username, email, password, rePassword, profileImage } = req.body;
 
     try {
-        const newUser = await authService.registerUser(username, email, password, rePassword);
-        res.status(201).json({ id: newUser.id, username: newUser.username, email: newUser.email });
+        const newUser = await authService.registerUser(username, email, password, rePassword, profileImage);
+        res.status(201).json({ id: newUser.id, username: newUser.username, email: newUser.email, profileImage: newUser.profileImage });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
