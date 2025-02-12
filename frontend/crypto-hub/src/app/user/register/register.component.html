@@ -95,6 +95,26 @@
                 }
             </div>
 
+            <p class="field field-icon">
+                <label for="profileImage">
+                    <span><i class="fas fa-image"></i></span>
+                </label>
+                <input [class]="isFieldTextMissing('profileImage') || isInvalidImageURL ? 'input-error' : ''"
+                    formControlName="profileImage" type="text" name="profileImage" id="profileImage"
+                    placeholder="Enter profile image URL" />
+            </p>
+
+            @if (form.get('profileImage')?.touched) {
+            <div>
+                @if (form.get('profileImage')?.errors?.['required']) {
+                <p class="error">Profile image URL is required!</p>
+                }
+                @if (form.get('profileImage')?.errors?.['pattern']) {
+                <p class="error">Invalid image URL. Must be a valid link.</p>
+                }
+            </div>
+            }
+
             <button [disabled]="form.invalid" [style]="{backgroundColor: form.invalid ? 'grey' : '#234465'}">Create
                 Account</button>
 

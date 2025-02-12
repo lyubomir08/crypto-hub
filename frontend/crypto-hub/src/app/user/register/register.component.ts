@@ -26,6 +26,10 @@ export class RegisterComponent {
                 validators: [matchPasswordsValidator('password', 'rePassword')],
             }
         ),
+        profileImage: new FormControl('', [
+            Validators.required,
+            Validators.pattern('(https?:\\/\\/.+\\.(?:png|jpg|jpeg|gif))')
+        ]),
     });
 
     errorMessage: string | null = null;
@@ -57,14 +61,21 @@ export class RegisterComponent {
         return this.form.get('passGroup');
     }
 
+    get isInvalidImageURL(): boolean {
+        return (
+            this.form.get('profileImage')?.touched &&
+            this.form.get('profileImage')?.errors?.['pattern']
+        );
+    }
+
     register(): void {
         if (this.form.invalid) {
             return;
         }
 
-        const { username, email, passGroup: { password, rePassword } = {} } = this.form.value;
+        const { username, email, passGroup: { password, rePassword } = {}, profileImage } = this.form.value;
 
-        this.userService.register(username!, email!, password!, rePassword!).subscribe({
+        this.userService.register(username!, email!, password!, rePassword!, profileImage!).subscribe({
             next: () => {
                 this.router.navigate(['/login']);
             },
