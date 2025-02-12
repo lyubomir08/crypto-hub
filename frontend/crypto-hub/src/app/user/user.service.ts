@@ -43,8 +43,8 @@ export class UserService implements OnDestroy {
             );
     }
 
-    register(username: string, email: string, password: string, rePassword: string) {
-        return this.http.post<UserForAuth>(`/api/users/register`, { email, username, password, rePassword });
+    register(username: string, email: string, password: string, rePassword: string, profileImage: string) {
+        return this.http.post<UserForAuth>(`/api/users/register`, { email, username, password, rePassword, profileImage });
     }
 
     logout() {
@@ -73,8 +73,8 @@ export class UserService implements OnDestroy {
         );
     }
 
-    updateProfile(username: string, email: string) {
-        return this.http.put<UserForAuth>('/api/users/update', { username, email }).pipe(
+    updateProfile(username: string, email: string, profileImage: string) {
+        return this.http.put<UserForAuth>('/api/users/update', { username, email, profileImage }).pipe(
             tap((updatedUser) => {
                 this.user$$.next(updatedUser);
                 localStorage.setItem('user', updatedUser.email);
