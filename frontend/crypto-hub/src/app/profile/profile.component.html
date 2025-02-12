@@ -10,13 +10,13 @@
 
     <div *ngIf="!isLoading && !errorMessage" class="bg-white shadow-md rounded-xl border border-gray-300 p-6">
         <div class="flex items-center gap-6 mb-6">
-            <img src="https://softuni.bg/users/profile/showavatar/890319ff-b9f3-42fb-aef7-fcb2338f9f8d"
-                alt="Profile Picture" class="w-20 h-20 rounded-full border border-gray-300 shadow" />
+            <img [src]="user?.profileImage || 'https://via.placeholder.com/150'" 
+                alt="Profile Picture" 
+                class="w-20 h-20 rounded-full border border-gray-300 shadow" />
             <div>
                 <h2 class="text-2xl font-semibold text-gray-800">{{ user?.username }}</h2>
                 <p class="text-gray-600">Email: <span class="font-medium">{{ user?.email }}</span></p>
-                <p class="text-gray-600 mt-2">Joined: <span class="font-medium">{{ user?.createdAt | date:'mediumDate'
-                        }}</span></p>
+                <p class="text-gray-600 mt-2">Joined: <span class="font-medium">{{ user?.createdAt | date:'mediumDate' }}</span></p>
             </div>
         </div>
 
@@ -28,6 +28,10 @@
             <button class="bg-green-500 text-white py-2 px-6 rounded-lg shadow hover:bg-green-400 transition"
                 (click)="editField('email')">
                 Update Email
+            </button>
+            <button class="bg-indigo-500 text-white py-2 px-6 rounded-lg shadow hover:bg-indigo-400 transition"
+                (click)="editField('profileImage')">
+                Update Profile Image
             </button>
             <button *ngIf="isAdmin"
                 class="bg-purple-500 text-white py-2 px-6 rounded-lg shadow hover:bg-purple-400 transition"
@@ -59,6 +63,22 @@
             [(ngModel)]="updatedField.email" placeholder="Enter new email" />
         <div class="flex gap-4 mt-3">
             <button class="bg-green-500 text-white py-2 px-6 rounded-lg shadow hover:bg-green-400 transition"
+                (click)="saveField()">
+                Save
+            </button>
+            <button class="bg-gray-400 text-white py-2 px-6 rounded-lg shadow hover:bg-gray-300 transition"
+                (click)="cancelEdit()">
+                Cancel
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="editingField === 'profileImage'" class="mt-6">
+        <input type="text"
+            class="border border-gray-300 rounded-lg w-full p-3 focus:ring focus:ring-indigo-300 outline-none shadow-md"
+            [(ngModel)]="updatedField.profileImage" placeholder="Enter new profile image URL" />
+        <div class="flex gap-4 mt-3">
+            <button class="bg-indigo-500 text-white py-2 px-6 rounded-lg shadow hover:bg-indigo-400 transition"
                 (click)="saveField()">
                 Save
             </button>

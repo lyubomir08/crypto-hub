@@ -18,9 +18,9 @@ export class ProfileComponent implements OnInit {
     isLoading = true;
     errorMessage: string | null = null;
 
-    editingField: 'username' | 'email' | null = null;
-    updatedField: { username?: string; email?: string } = {};
-    showAllUsers: boolean = false; // Toggle state for viewing all users
+    editingField: 'username' | 'email' | 'profileImage' | null = null;
+    updatedField: { username?: string; email?: string; profileImage?: string } = {};
+    showAllUsers: boolean = false;
 
     constructor(private userService: UserService) {}
 
@@ -70,7 +70,7 @@ export class ProfileComponent implements OnInit {
         });
     }
 
-    editField(field: 'username' | 'email'): void {
+    editField(field: 'username' | 'email' | 'profileImage'): void {
         if (!this.user) return;
         this.editingField = field;
         this.updatedField[field] = this.user[field] || '';
@@ -84,7 +84,8 @@ export class ProfileComponent implements OnInit {
         this.userService
             .updateProfile(
                 this.editingField === 'username' ? updatedValue! : this.user.username!,
-                this.editingField === 'email' ? updatedValue! : this.user.email!
+                this.editingField === 'email' ? updatedValue! : this.user.email!,
+                this.editingField === 'profileImage' ? updatedValue! : this.user.profileImage!
             )
             .subscribe({
                 next: (updatedUser) => {
