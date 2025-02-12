@@ -28,7 +28,7 @@ export class RegisterComponent {
         ),
         profileImage: new FormControl('', [
             Validators.required,
-            Validators.pattern('(https?:\\/\\/.+\\.(?:png|jpg|jpeg|gif))')
+            Validators.pattern(/^https?:\/\//)
         ]),
     });
 

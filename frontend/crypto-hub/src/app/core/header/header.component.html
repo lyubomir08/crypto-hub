@@ -15,7 +15,7 @@
                 <a *ngIf="isAdmin" routerLink="cryptos/create" class="hover:text-blue-400">Add</a>
                 <a routerLink="logout" class="hover:text-blue-400" (click)="logout()">Logout</a>
                 <img 
-                    src="https://softuni.bg/users/profile/showavatar/890319ff-b9f3-42fb-aef7-fcb2338f9f8d" 
+                    [src]="profileImage" 
                     alt="Profile Picture" 
                     class="w-10 h-10 rounded-full hover:cursor-pointer"
                     routerLink="profile"

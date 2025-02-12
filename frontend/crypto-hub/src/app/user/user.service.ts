@@ -82,6 +82,10 @@ export class UserService implements OnDestroy {
             catchError((err) => throwError(() => err))
         );
     }
+
+    get profileImage(): string {
+        return this.user?.profileImage || 'https://softuni.bg/users/profile/showavatar/890319ff-b9f3-42fb-aef7-fcb2338f9f8d';
+    }
     
     getAllUsers()  {
         return this.http.get(`api/users`).pipe(

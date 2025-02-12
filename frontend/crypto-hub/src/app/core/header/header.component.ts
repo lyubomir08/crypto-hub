@@ -20,6 +20,10 @@ export class HeaderComponent {
         return this.userService.isAdmin();
     }
 
+    get profileImage(): string {
+        return this.userService.profileImage;
+    }
+
     constructor(
         private userService: UserService,
         private router: Router

@@ -3,6 +3,7 @@ export interface UserForAuth {
     username: string;
     password: string;
     rePassword: string;
+    profileImage?: string;
     _id?: string;
 }
 
