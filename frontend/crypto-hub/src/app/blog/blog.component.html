@@ -16,6 +16,11 @@
 
     <div *ngIf="isAdmin" class="mb-8 p-6 border border-yellow-400 rounded-xl bg-gray-100 dark:bg-gray-800 shadow-lg">
         <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">📌 Pending Approval</h2>
+
+        <div *ngIf="pendingArticles.length === 0" class="text-gray-500 dark:text-gray-400 text-center p-4">
+            🚧 No pending articles for approval.
+        </div>
+
         <div *ngFor="let article of pendingArticles"
             class="border p-6 mb-4 rounded-lg shadow-md bg-white dark:bg-gray-900 transition-all transform hover:scale-105">
             <h2 class="text-xl font-bold text-gray-900 dark:text-yellow-400">{{ article.title }}</h2>
@@ -32,6 +37,10 @@
                 </button>
             </div>
         </div>
+    </div>
+
+    <div *ngIf="articles.length === 0" class="text-gray-500 dark:text-gray-400 text-center p-6">
+        📭 No articles available. Be the first to write one!
     </div>
 
     <div *ngFor="let article of articles"
