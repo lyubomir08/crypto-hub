@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { UserForAuth } from '../types/user';
 import { BehaviorSubject, catchError, of, Subscription, tap, throwError } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
     providedIn: 'root',
@@ -31,7 +32,7 @@ export class UserService implements OnDestroy {
 
                     localStorage.setItem('user', user?.email);
 
-                    if (user?.email === 'admin123@gmail.com') {
+                    if (user?.email === environment.adminEmail) {
                         localStorage.setItem('role', 'admin');
                     } else {
                         localStorage.setItem('role', 'user');
