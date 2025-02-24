@@ -84,6 +84,10 @@ export class UserService implements OnDestroy {
         );
     }
 
+    deleteUser(userId: string) {
+        return this.http.delete(`/api/users/${userId}`);
+    }
+
     get profileImage(): string {
         return this.user?.profileImage || 'https://softuni.bg/users/profile/showavatar/890319ff-b9f3-42fb-aef7-fcb2338f9f8d';
     }

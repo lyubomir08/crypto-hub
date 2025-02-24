@@ -11,6 +11,6 @@ export interface UserProfile {
     email: string;
     username: string;
     profileImage?: string;
-    _id?: string;
+    _id: string;
     createdAt?: string | Date;
 }

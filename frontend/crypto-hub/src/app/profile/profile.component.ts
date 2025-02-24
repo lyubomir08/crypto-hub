@@ -21,6 +21,8 @@ export class ProfileComponent implements OnInit {
     editingField: 'username' | 'email' | 'profileImage' | null = null;
     updatedField: { username?: string; email?: string; profileImage?: string } = {};
     showAllUsers: boolean = false;
+    showDeleteModal: boolean = false;
+    userToDelete: UserProfile | null = null;
 
     constructor(private userService: UserService) {}
 
@@ -37,7 +39,7 @@ export class ProfileComponent implements OnInit {
     private loadUserProfile(): void {
         this.userService.getProfile().subscribe({
             next: (user) => {
-                this.user = user;
+                this.user = user as UserProfile;
                 this.isLoading = false;
             },
             error: (error) => {
@@ -89,7 +91,7 @@ export class ProfileComponent implements OnInit {
             )
             .subscribe({
                 next: (updatedUser) => {
-                    this.user = updatedUser;
+                    this.user = updatedUser as UserProfile;
                     this.editingField = null;
                 },
                 error: (err) => {
@@ -101,4 +103,29 @@ export class ProfileComponent implements OnInit {
     cancelEdit(): void {
         this.editingField = null;
     }
+
+    openDeleteModal(user: UserProfile): void {
+        this.userToDelete = user;
+        this.showDeleteModal = true;
+    }
+
+    closeDeleteModal(): void {
+        this.userToDelete = null;
+        this.showDeleteModal = false;
+    }
+
+    confirmDeleteUser(): void {
+        if (!this.userToDelete) return;
+    
+        this.userService.deleteUser(this.userToDelete._id).subscribe({
+            next: () => {
+                this.allUsers = this.allUsers?.filter(user => user._id !== this.userToDelete!._id) || null;
+                this.closeDeleteModal();
+            },
+            error: (err) => {
+                this.errorMessage = err?.message || "Failed to delete user.";
+                this.closeDeleteModal();
+            }
+        });
+    }    
 }
