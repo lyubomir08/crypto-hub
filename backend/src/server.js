@@ -27,6 +27,7 @@ app.post('/api/users/login', userController.login);
 app.post('/api/users/logout', userController.logout);
 app.put('/api/users/update', authMiddleware, userController.updateUser);
 app.get('/api/users', authMiddleware, userController.getAllUsers);
+app.delete('/api/users/:userId', authMiddleware, userController.deleteUser);
 
 app.get('/api/users/profile', authMiddleware, userController.getProfileInfo);
 

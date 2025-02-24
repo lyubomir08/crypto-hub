@@ -58,9 +58,27 @@ const getProfileInfo = async (req, res) => {
     }
 };
 
+const deleteUser = async (req, res) => {
+    try {
+        if (!req.isAdmin) {
+            return res.status(403).json({ message: "Access denied. Admin only." });
+        }
+
+        const { userId } = req.params;
+        if (!userId) {
+            return res.status(400).json({ message: "User ID is required." });
+        }
+
+        const result = await authService.deleteUserById(userId);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 const logout = async (req, res) => {
     res.clearCookie('auth', { path: '/' });
     res.status(200).send({ message: 'Logout successful' });
 };
 
-export default { register, login, logout, getProfileInfo, updateUser, getAllUsers };
+export default { register, login, logout, getProfileInfo, updateUser, getAllUsers, deleteUser };

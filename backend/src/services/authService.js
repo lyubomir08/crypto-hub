@@ -87,4 +87,12 @@ const getAllUsers = async () => {
     return users;
 };
 
-export default { registerUser, loginUser, getUserProfile, updateUserProfile, getAllUsers };
+const deleteUserById = async (userId) => {
+    const deletedUser = await User.findByIdAndDelete(userId);
+    if (!deletedUser) {
+        throw new Error("User not found.");
+    }
+    return { message: "User deleted successfully." };
+};
+
+export default { registerUser, loginUser, getUserProfile, updateUserProfile, getAllUsers, deleteUserById };
