@@ -1,6 +1,6 @@
 
 import { HttpInterceptorFn } from '@angular/common/http';
-import { environment } from '../environments/environment.development';
+import { environment } from '../environments/environment.prod';
 import { catchError, throwError } from 'rxjs';
 
 const { apiUrl } = environment;
