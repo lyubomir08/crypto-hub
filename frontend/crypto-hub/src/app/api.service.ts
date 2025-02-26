@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Crypto, CryptoDetails, LivePrices } from './types/crypto';
-import { Comment } from './types/comment';
+import { Comment } from './types/Comment';
 import { map, tap } from 'rxjs';
 
 @Injectable({
