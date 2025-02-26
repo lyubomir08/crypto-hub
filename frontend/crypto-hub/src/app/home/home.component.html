@@ -48,4 +48,8 @@
             </div>
         </div>
     </section>
+
+    <div class="text-center text-gray-600 text-2xl mt-6" *ngIf="!isLoading && lastThreeCryptos.length === 0">
+        <p>⚠️ No cryptocurrencies available at the moment. Please check back later.</p>
+    </div>
 </div>
