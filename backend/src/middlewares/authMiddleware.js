@@ -14,7 +14,7 @@ const authMiddleware = async (req, res, next) => {
         const decoded = await jwt.verify(token, process.env.JWT_SECRET);
         req.userId = decoded.userId;
 
-        req.isAdmin = decoded.userId === process.env.ADMIN_USER_ID;
+        req.isAdmin = decoded.email === process.env.ADMIN_EMAIL;
         req.isAuthenticated = true;
 
         next();
