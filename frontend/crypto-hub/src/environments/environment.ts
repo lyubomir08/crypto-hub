@@ -1,4 +1,5 @@
 export const environment = {
-    apiUrl: 'http://localhost:5000/api',
+    production: true,
+    apiUrl: 'https://crypto-hub-9rg4.onrender.com/api',
     adminEmail: "admin123@gmail.com"
 };
