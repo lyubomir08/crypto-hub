@@ -14,10 +14,27 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/cryptoApp';
 
-app.use(cors({
-    origin: ['http://localhost:4200', 'https://lyubomir08.github.io/crypto-hub'],
+const corsOptions = {
+    origin: ['http://localhost:4200', 'https://lyubomir08.github.io'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
-}));
+};
+
+app.use(cors(corsOptions));
+
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', 'true');
+
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(204);
+    }
+
+    next();
+});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
