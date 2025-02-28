@@ -93,7 +93,7 @@ export class UserService implements OnDestroy {
     }
     
     getAllUsers()  {
-        return this.http.get(`https://crypto-hub-9rg4.onrender.com/api/users`).pipe(
+        return this.http.get(`api/users`).pipe(
             catchError((err) => throwError(() => err))
         );
     }
