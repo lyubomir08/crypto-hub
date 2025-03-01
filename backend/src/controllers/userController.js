@@ -77,7 +77,12 @@ const deleteUser = async (req, res) => {
 };
 
 const logout = async (req, res) => {
-    res.clearCookie('auth', { path: '/' });
+    res.clearCookie('auth', {
+        path: '/',
+        httpOnly: true,
+        sameSite: 'none',
+        secure: true
+    });
     res.status(200).send({ message: 'Logout successful' });
 };
 
