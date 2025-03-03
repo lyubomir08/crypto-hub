@@ -26,7 +26,7 @@ This project is powered by the **MEAN stack**:
 ### 🔐 Private Pages (Registered Users)
 
 - **Profile Management** – Users can **update their name and email**.  
-- **Interact with Records** – Users can **comment** on cryptocurrencies.  
+- **Interact with Records** – Users can **comment** on cryptocurrencies and **create** articles.  
 
 ### 🔑 Admin-Only Features
 
