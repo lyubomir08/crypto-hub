@@ -1,4 +1,4 @@
-# 🚀 Crypto Hub
+# 🚀 Crypto Hub - https://lyubomir08.github.io/crypto-hub/
 
 ## 📜 Project Description
 
