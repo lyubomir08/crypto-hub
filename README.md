@@ -1,4 +1,4 @@
-# 🚀 Crypto Hub - https://lyubomir08.github.io/crypto-hub/
+# 🚀 Crypto Hub
 
 ## 📜 Project Description
 
@@ -43,7 +43,9 @@ This project is powered by the **MEAN stack**:
 
 - **Node.js** installed on your machine  
 - **MongoDB** installed and running locally or a cloud-based MongoDB connection  
-- **Angular CLI** installed globally  
+- **Angular CLI** installed globally
+
+## Go and see it - https://lyubomir08.github.io/crypto-hub/
 
 ### **Set up environment variables**:
 
