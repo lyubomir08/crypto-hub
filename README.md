@@ -33,7 +33,9 @@ This project is powered by the **MEAN stack**:
 - **Add Cryptocurrencies** – Only **admins** can create new cryptocurrency entries.  
 - **Edit/Delete Cryptocurrencies** – Admins can modify or remove cryptocurrencies.  
 - **Manage Comments** – Admins can edit or delete any comment.  
-- **Blog Management** – Only **admin-approved** articles will be visible in the blog.  
+- **Blog Management** – Only **admin-approved** articles will be visible in the blog.
+
+## Go and see it - https://lyubomir08.github.io/crypto-hub/
 
 ---
 
@@ -44,8 +46,6 @@ This project is powered by the **MEAN stack**:
 - **Node.js** installed on your machine  
 - **MongoDB** installed and running locally or a cloud-based MongoDB connection  
 - **Angular CLI** installed globally
-
-## Go and see it - https://lyubomir08.github.io/crypto-hub/
 
 ### **Set up environment variables**:
 
